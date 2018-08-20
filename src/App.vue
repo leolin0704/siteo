@@ -1,29 +1,37 @@
 <template>
 <div id="app">
-    <el-container>
-        <el-header>Header</el-header>
-        <el-container>
-            <el-aside width="200px">Aside</el-aside>
-            <el-main>Main</el-main>
-        </el-container>
-    </el-container>
+    <router-view>
+    </router-view>
 </div>
 </template>
 
 <script>
 export default {
   name: "app",
-  components: {}
+  components: {
+  }
 };
 </script>
 
-<style>
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+<style lang="scss">
+html,body{
+  height: 100%;
+  margin:0;
+  padding:0;
+  font-family: "Helvetica Neue",Helvetica,"Microsoft YaHei","微软雅黑",Arial,sans-serif;
+  background-color: #ddd;
 }
+#app {
+  height:100%;
+  position: relative;
+}
+
+    .el-container{
+        height:100%;
+        
+        .el-header{
+          background-color: #fff; 
+        }
+    }
+
 </style>
