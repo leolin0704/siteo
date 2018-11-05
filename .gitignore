@@ -1,0 +1,11 @@
+/.vs
+/Siteo.BLL/bin
+/Siteo.BLL/obj
+/Siteo.DAL/obj
+/Siteo.DAL/bin
+/Siteo.EFModel/obj
+/Siteo.EFModel/bin
+/Siteo.Frontend/obj
+/Siteo.Frontend/bin
+/Siteo.WebAPI/obj
+/Siteo.WebAPI/bin
