@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Siteo.BLL;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,6 +11,12 @@ namespace Siteo.Frontend.Controllers
     {
         public ActionResult Index()
         {
+            return View();
+        }
+
+        public ActionResult Test()
+        {
+            ViewBag.Roles = new TRoleBLL().Query(c => true);
             return View();
         }
 

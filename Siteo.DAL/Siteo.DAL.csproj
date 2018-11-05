@@ -49,6 +49,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="TRoleDAL.cs" />
+    <Compile Include="TAdminUserDAL.cs" />
     <Compile Include="TNoticeDAL.cs" />
     <Compile Include="TBannerDAL.cs" />
     <Compile Include="BaseDAL.cs" />

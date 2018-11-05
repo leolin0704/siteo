@@ -21,5 +21,6 @@ namespace Siteo.EFModel
         public string LastUpdateBy { get; set; }
         public System.DateTime CreateDate { get; set; }
         public string CreateBy { get; set; }
+        public int IsDeleted { get; set; }
     }
 }

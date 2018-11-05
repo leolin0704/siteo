@@ -12,18 +12,18 @@ namespace Siteo.EFModel
     using System;
     using System.Collections.Generic;
     
-    public partial class TBanner
+    public partial class TAdminUserRole
     {
         public int ID { get; set; }
-        public string Title { get; set; }
-        public string LinkUrl { get; set; }
-        public string ImgSrc { get; set; }
-        public int Order { get; set; }
-        public string PositionKey { get; set; }
+        public int AdminUserID { get; set; }
+        public int RoleID { get; set; }
+        public int IsDeleted { get; set; }
         public Nullable<System.DateTime> LastUpdateDate { get; set; }
         public string LastUpdateBy { get; set; }
         public System.DateTime CreateDate { get; set; }
         public string CreateBy { get; set; }
-        public int IsDeleted { get; set; }
+    
+        public virtual TAdminUser TAdminUser { get; set; }
+        public virtual TRole TRole { get; set; }
     }
 }

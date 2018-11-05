@@ -1,0 +1,12 @@
+﻿@{
+    ViewBag.Title = "Roles";
+}
+
+@{
+    var roles = ViewBag.Roles;
+}
+
+@for (int i = 0; i < roles.Count; i++)
+{
+    @roles[i].Name <br />
+}
