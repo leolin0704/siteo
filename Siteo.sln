@@ -1,0 +1,54 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2035
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DAL", "DAL", "{622B6C23-A21A-4400-90B6-D8ED842A3018}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Siteo.DAL", "Siteo.DAL\Siteo.DAL.csproj", "{5E53A490-9468-411D-B9C5-FF3CD19F8CDD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EFModel", "EFModel", "{C9388B35-04C2-4676-AC89-10659B94F345}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Siteo.EFModel", "Siteo.EFModel\Siteo.EFModel.csproj", "{F97FA225-CAD2-49A0-BE60-0F6E5D45E505}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BLL", "BLL", "{183245CE-DFB9-4113-B122-4C7F99580C48}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Siteo.BLL", "Siteo.BLL\Siteo.BLL.csproj", "{811C9916-7C78-43B3-A50C-1E3C1D8825A9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Siteo.Frontend", "Siteo.Frontend\Siteo.Frontend.csproj", "{7C3278F2-3E0D-4638-B9F7-71DF581B39B2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5E53A490-9468-411D-B9C5-FF3CD19F8CDD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E53A490-9468-411D-B9C5-FF3CD19F8CDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E53A490-9468-411D-B9C5-FF3CD19F8CDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E53A490-9468-411D-B9C5-FF3CD19F8CDD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F97FA225-CAD2-49A0-BE60-0F6E5D45E505}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F97FA225-CAD2-49A0-BE60-0F6E5D45E505}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F97FA225-CAD2-49A0-BE60-0F6E5D45E505}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F97FA225-CAD2-49A0-BE60-0F6E5D45E505}.Release|Any CPU.Build.0 = Release|Any CPU
+		{811C9916-7C78-43B3-A50C-1E3C1D8825A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{811C9916-7C78-43B3-A50C-1E3C1D8825A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{811C9916-7C78-43B3-A50C-1E3C1D8825A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{811C9916-7C78-43B3-A50C-1E3C1D8825A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C3278F2-3E0D-4638-B9F7-71DF581B39B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C3278F2-3E0D-4638-B9F7-71DF581B39B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C3278F2-3E0D-4638-B9F7-71DF581B39B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C3278F2-3E0D-4638-B9F7-71DF581B39B2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5E53A490-9468-411D-B9C5-FF3CD19F8CDD} = {622B6C23-A21A-4400-90B6-D8ED842A3018}
+		{F97FA225-CAD2-49A0-BE60-0F6E5D45E505} = {C9388B35-04C2-4676-AC89-10659B94F345}
+		{811C9916-7C78-43B3-A50C-1E3C1D8825A9} = {183245CE-DFB9-4113-B122-4C7F99580C48}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7EFDF2B3-692C-4FC7-B735-AA1C7104038F}
+	EndGlobalSection
+EndGlobal

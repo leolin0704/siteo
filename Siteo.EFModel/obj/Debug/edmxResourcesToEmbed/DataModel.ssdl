@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SiteoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="TBanner">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Title" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="LinkUrl" Type="nvarchar" MaxLength="500" />
+    <Property Name="ImgSrc" Type="nvarchar" MaxLength="500" Nullable="false" />
+    <Property Name="Order" Type="int" Nullable="false" />
+    <Property Name="PositionKey" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="LastUpdateDate" Type="datetime" />
+    <Property Name="LastUpdateBy" Type="nvarchar" MaxLength="20" />
+    <Property Name="CreateDate" Type="datetime" Nullable="false" />
+    <Property Name="CreateBy" Type="nvarchar" MaxLength="20" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TNotice">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Title" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="Content" Type="nvarchar" MaxLength="4000" />
+    <Property Name="LastUpdateDate" Type="datetime" />
+    <Property Name="LastUpdateBy" Type="nvarchar" MaxLength="20" />
+    <Property Name="CreateDate" Type="datetime" Nullable="false" />
+    <Property Name="CreateBy" Type="nvarchar" MaxLength="20" Nullable="false" />
+  </EntityType>
+  <EntityContainer Name="SiteoModelStoreContainer">
+    <EntitySet Name="TBanner" EntityType="Self.TBanner" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TNotice" EntityType="Self.TNotice" Schema="dbo" store:Type="Tables" />
+  </EntityContainer>
+</Schema>
