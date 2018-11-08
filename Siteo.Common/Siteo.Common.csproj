@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{5E53A490-9468-411D-B9C5-FF3CD19F8CDD}</ProjectGuid>
+    <ProjectGuid>{9B25BAB8-39A9-455C-AA8A-9D3454C0C288}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Siteo.DAL</RootNamespace>
-    <AssemblyName>Siteo.DAL</AssemblyName>
+    <RootNamespace>Siteo.Common</RootNamespace>
+    <AssemblyName>Siteo.Common</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,17 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Security" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -49,31 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="TAdminUserRoleDAL.cs" />
-    <Compile Include="TRoleDAL.cs" />
-    <Compile Include="TAdminUserDAL.cs" />
-    <Compile Include="TNoticeDAL.cs" />
-    <Compile Include="TBannerDAL.cs" />
-    <Compile Include="BaseDAL.cs" />
-    <Compile Include="BaseDBContext.cs" />
+    <Compile Include="Helpers\CacheHelper.cs" />
+    <Compile Include="Helpers\EncryptHelper.cs" />
+    <Compile Include="Helpers\LambdaHelper.cs" />
+    <Compile Include="Helpers\UtilHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Siteo.Common\Siteo.Common.csproj">
-      <Project>{9b25bab8-39a9-455c-aa8a-9d3454c0c288}</Project>
-      <Name>Siteo.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Siteo.EFModel\Siteo.EFModel.csproj">
-      <Project>{f97fa225-cad2-49a0-be60-0f6e5d45e505}</Project>
-      <Name>Siteo.EFModel</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

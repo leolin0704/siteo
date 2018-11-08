@@ -23,18 +23,7 @@
             </el-card>
         </el-col>
         <el-col :span="16">
-            <el-card shadow="hover" class="card">
-                <div slot="header">
-                    <span>系统公告</span>
-                </div>
-                <ul>
-                    <li>网站不错</li>
-                    <li>网站不错</li>
-                    <li>网站不错</li>
-                    <li>网站不错</li>
-                    <li>网站不错</li>
-                </ul>
-            </el-card>
+           <notice></notice>
         </el-col>
     </el-row>
     <el-row :gutter="10">
@@ -57,7 +46,10 @@
 </template>
 
 <script>
-import avatar from "../../assets/images/avatar.jpg";
+import avatar from "../assets/images/avatar.jpg";
+import notice from "../components/notice.vue";
+
+
 export default {
     name: "home",
     data() {
@@ -65,7 +57,9 @@ export default {
             avatar
         }
     },
-    components: {}
+    components: {
+        notice
+    }
 };
 </script>
 

@@ -4,12 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 namespace Siteo.BLL
 {
-    public class TNoticeBLL : BaseBLL<TNotice>
+    public partial class TAdminUserRoleBLL : BaseBLL<TAdminUserRole>
     {
-
-
+      
     }
 }

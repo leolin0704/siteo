@@ -12,18 +12,13 @@ namespace Siteo.EFModel
     using System;
     using System.Collections.Generic;
     
-    public partial class TBanner
+    public partial class TNewsPicture
     {
         public int ID { get; set; }
+        public int NewsID { get; set; }
         public string Title { get; set; }
-        public string LinkUrl { get; set; }
         public string ImgSrc { get; set; }
-        public int Order { get; set; }
-        public string PositionKey { get; set; }
-        public int IsDeleted { get; set; }
-        public Nullable<System.DateTime> LastUpdateDate { get; set; }
-        public string LastUpdateBy { get; set; }
-        public System.DateTime CreateDate { get; set; }
-        public string CreateBy { get; set; }
+        public string LinkUrl { get; set; }
+        public Nullable<int> Order { get; set; }
     }
 }

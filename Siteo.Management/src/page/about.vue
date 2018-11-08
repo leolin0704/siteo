@@ -5,12 +5,11 @@
 </template>
 
 <script>
-import tableLayout from '../common/tableLayout';
+import tableLayout from '../components/common/tableLayout';
 export default {
     name: "banner",
     data() {
         return {
-            avatar
         }
     },
     components: {

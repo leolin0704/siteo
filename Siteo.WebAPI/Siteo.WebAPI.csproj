@@ -189,11 +189,18 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\Api\System\NoticeApiController.cs" />
+    <Compile Include="Framework\Attributes\PermissionAttribute.cs" />
+    <Compile Include="Controllers\Api\AdminUser\LoginApiController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="Framework\BaseController.cs" />
+    <Compile Include="Framework\Filters\CheckPermissionFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AdminUser\LoginModel.cs" />
+    <Compile Include="Models\AdminUser\AdminUserModel.cs" />
+    <Compile Include="Models\ResponseResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -252,7 +259,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
+    <Folder Include="Views\NoticeApi\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -282,6 +289,20 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Siteo.BLL\Siteo.BLL.csproj">
+      <Project>{811c9916-7c78-43b3-a50c-1e3c1d8825a9}</Project>
+      <Name>Siteo.BLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Siteo.Common\Siteo.Common.csproj">
+      <Project>{9b25bab8-39a9-455c-aa8a-9d3454c0c288}</Project>
+      <Name>Siteo.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Siteo.EFModel\Siteo.EFModel.csproj">
+      <Project>{f97fa225-cad2-49a0-be60-0f6e5d45e505}</Project>
+      <Name>Siteo.EFModel</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

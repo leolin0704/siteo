@@ -7,7 +7,7 @@ export default new Router({
         },
         {
             path: '/login',
-            component: resolve => require(['../components/page/login.vue'], resolve)
+            component: resolve => require(['../page/login.vue'], resolve)
         },
         {
             path: '/',
@@ -16,22 +16,22 @@ export default new Router({
             children:[
                 {
                     path: '/home',
-                    component: resolve => require(['../components/page/home.vue'], resolve),
+                    component: resolve => require(['../page/home.vue'], resolve),
                     meta: { title: '系统首页' }
                 },
                 {
                     path: '/about',
-                    component: resolve => require(['../components/test.vue'], resolve),
+                    component: resolve => require(['../page/about.vue'], resolve),
                     meta: { title: '关于我们' }
                 },
                 {
                     path: '/contact',
-                    component: resolve => require(['../components/test2.vue'], resolve),
+                    component: resolve => require(['../page/contact.vue'], resolve),
                     meta: { title: '联系我们' }
                 },
                 {
                     path: '/banner',
-                    component: resolve => require(['../components/page/banner.vue'], resolve),
+                    component: resolve => require(['../page/banner.vue'], resolve),
                     meta: { title: 'banner图' }
                 }
             ]

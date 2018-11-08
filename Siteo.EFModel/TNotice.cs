@@ -17,10 +17,10 @@ namespace Siteo.EFModel
         public int ID { get; set; }
         public string Title { get; set; }
         public string Content { get; set; }
+        public int IsDeleted { get; set; }
         public Nullable<System.DateTime> LastUpdateDate { get; set; }
         public string LastUpdateBy { get; set; }
         public System.DateTime CreateDate { get; set; }
         public string CreateBy { get; set; }
-        public int IsDeleted { get; set; }
     }
 }

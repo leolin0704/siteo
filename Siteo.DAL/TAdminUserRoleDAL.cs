@@ -5,11 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Siteo.BLL
+namespace Siteo.DAL
 {
-    public class TNoticeBLL : BaseBLL<TNotice>
+    public class TAdminUserRoleDAL : BaseDAL<TAdminUserRole>
     {
-
-
     }
 }

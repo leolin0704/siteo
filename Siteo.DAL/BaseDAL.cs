@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Siteo.Common.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
@@ -25,27 +26,80 @@ namespace Siteo.DAL
         #region 查询
         public List<TEntity> Query(Expression<Func<TEntity, bool>> where)
         {
-            return _dbset.Where(where).ToList();
+            return _dbset.Where(LambdaHelper.CreateEqual<TEntity>("IsDeleted", 0)).Where(where).ToList();
         }
 
-        public List<TEntity> QueryJoin(Expression<Func<TEntity, bool>> where, string[] tableNames)
+
+        /// <summary>
+        /// 分页查询 + 条件查询 + 排序
+        /// </summary>
+        /// <typeparam name="Tkey">泛型</typeparam>
+        /// <param name="pageSize">每页大小</param>
+        /// <param name="pageIndex">当前页码</param>
+        /// <param name="total">总数量</param>
+        /// <param name="whereLambda">查询条件</param>
+        /// <param name="orderbyLambda">排序条件</param>
+        /// <param name="isAsc">是否升序</param>
+        /// <returns>IQueryable 泛型集合</returns>
+        public IQueryable<TEntity> PagerQuery<Tkey>(int pageSize, int pageIndex, out int total, Expression<Func<TEntity, bool>> whereLambda, Func<TEntity, Tkey> orderbyLambda, bool isAsc)
         {
-            //将子类_dbset 赋值给父类的query
-            DbQuery<TEntity> query = _dbset;
-
-            foreach (var item in tableNames)
+            total = db.Set<TEntity>().Where(whereLambda).Count();
+            if (isAsc)
             {
-                //遍历要连表的表名称，最终得到所有连表以后的DbQuery对象
-                query = query.Include(item);
+                var temp = db.Set<TEntity>().Where(whereLambda)
+                             .OrderBy<TEntity, Tkey>(orderbyLambda)
+                             .Skip(pageSize * (pageIndex - 1))
+                             .Take(pageSize);
+                return temp.AsQueryable();
             }
-            return query.Where(where).ToList();
+            else
+            {
+                var temp = db.Set<TEntity>().Where(whereLambda)
+                           .OrderByDescending<TEntity, Tkey>(orderbyLambda)
+                           .Skip(pageSize * (pageIndex - 1))
+                           .Take(pageSize);
+                return temp.AsQueryable();
+            }
         }
+
+        public TEntity Find(Expression<Func<TEntity, bool>> where)
+        {
+            return _dbset.AsQueryable().Where(LambdaHelper.CreateEqual<TEntity>( "IsDeleted", 0 )).FirstOrDefault(where);
+        }
+
+
+        //public List<TEntity> QueryJoin(Expression<Func<TEntity, bool>> where, string[] tableNames)
+        //{
+        //    //将子类_dbset 赋值给父类的query
+        //    DbQuery<TEntity> query = _dbset;
+
+        //    foreach (var item in tableNames)
+        //    {
+        //        //遍历要连表的表名称，最终得到所有连表以后的DbQuery对象
+        //        query = query.Include(item);
+        //    }
+        //    return query.Where(where).ToList();
+        //}
 
         #endregion
 
         #region 新增
         public void Add(TEntity model)
         {
+            var type = model.GetType();
+            var createByProperty = type.GetProperty("CreateBy");
+            var createDateProperty = type.GetProperty("CreateDate");
+            var isDeletedProperty = type.GetProperty("IsDeleted");
+
+            var createBy = createByProperty.GetValue(model);
+            if (createBy == null || string.IsNullOrWhiteSpace(createBy.ToString()))
+            {
+                createByProperty.SetValue(model, "System", null);
+            }
+
+            createDateProperty.SetValue(model, DateTime.Now, null);
+            isDeletedProperty.SetValue(model, 0, null);
+
             _dbset.Add(model);
         }
         #endregion
@@ -55,12 +109,24 @@ namespace Siteo.DAL
         {
             if (model == null)
             {
-                throw new Exception("model必须为实体的对象");
+                throw new Exception("model could not be null");
             }
             if (propertyName == null || propertyName.Any() == false)
             {
-                throw new Exception("必须至少指定一个要修改的属性");
+                throw new Exception("No property has been changed.");
             }
+
+            var type = model.GetType();
+            var lastUpdateByProperty = type.GetProperty("LastUpdateBy");
+            var lastUpdateDateProperty = type.GetProperty("LastUpdateDate");
+
+            var lastUpdateBy = lastUpdateByProperty.GetValue(model);
+            if (lastUpdateBy == null || string.IsNullOrWhiteSpace(lastUpdateBy.ToString()))
+            {
+                lastUpdateByProperty.SetValue(model, "System", null);
+            }
+
+            lastUpdateDateProperty.SetValue(model, DateTime.Now, null);
 
             //将model追加到EF容器
             DbEntityEntry entry = db.Entry(model);
@@ -74,17 +140,48 @@ namespace Siteo.DAL
         }
         #endregion
 
-        #region 物理删除
-        //EntityState.Unchanged
-        public void Delete(TEntity model, bool isAddedEFContext)
+
+        #region Delete
+        public void Delete(int id)
         {
-            if (isAddedEFContext == false)
+            if (id == 0)
             {
-                _dbset.Attach(model);
+                throw new Exception("id could not be 0");
             }
-            //修改状态为deleted
-            _dbset.Remove(model);
+
+            var model = _dbset.AsQueryable().Where(LambdaHelper.CreateEqual<TEntity>("ID", id)).FirstOrDefault();
+
+            Delete(model);
         }
+
+        public void Delete(TEntity model)
+        {
+            if (model == null)
+            {
+                throw new Exception("model could not be null");
+            }
+
+            //将model追加到EF容器
+            DbEntityEntry entry = db.Entry(model);
+
+            entry.State = EntityState.Unchanged;
+
+            entry.Property("IsDeleted").IsModified = true;
+            entry.Property("IsDeleted").CurrentValue = 1;
+        }
+        #endregion
+
+        #region delete
+        ////EntityState.Unchanged
+        //public void Delete(TEntity model, bool isAddedEFContext)
+        //{
+        //    if (isAddedEFContext == false)
+        //    {
+        //        _dbset.Attach(model);
+        //    }
+        //    //修改状态为deleted
+        //    _dbset.Remove(model);
+        //}
         #endregion
 
         #region 统一执行保存

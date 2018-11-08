@@ -6,6 +6,7 @@ import Element from 'element-ui';
 import './element-variables.scss';
 Vue.use(Element);
 import App from './App.vue';
+import "./assets/css/common.scss";
 
 Vue.config.productionTip = false;
 

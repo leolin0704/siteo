@@ -19,10 +19,21 @@ namespace Siteo.BLL
             return bdal.Query(where);
         }
 
-        public List<TEntity> QueryJoin(Expression<Func<TEntity, bool>> where, string[] tableNames)
+
+        public List<TEntity> PagerQuery<Tkey>(int pageSize, int pageIndex, out int total, Expression<Func<TEntity, bool>> whereLambda, Func<TEntity, Tkey> orderbyLambda, bool isAsc)
         {
-            return bdal.QueryJoin(where, tableNames);
+            return bdal.PagerQuery(pageSize, pageIndex,out total, whereLambda, orderbyLambda, isAsc).ToList();
         }
+
+        public TEntity Find(Expression<Func<TEntity, bool>> where)
+        {
+            return bdal.Find(where);
+        }
+
+        //public List<TEntity> QueryJoin(Expression<Func<TEntity, bool>> where, string[] tableNames)
+        //{
+        //    return bdal.QueryJoin(where, tableNames);
+        //}
         #endregion
 
         #region  新增
@@ -47,16 +58,22 @@ namespace Siteo.BLL
 
         #endregion
 
-        #region  物理删除
+        #region  删除
 
         /// <summary>
         /// model必须是自己定义的，一般是按照主键来删除
         /// </summary>
         /// <param name="model">要删除的实体对象</param>
         /// <param name="isAddedEFContext">true:表示model以及追加到了ef容器，false：未追加</param>
-        public void Delete(TEntity model, bool isAddedEFContext)
+        public void Delete(int id)
         {
-            bdal.Delete(model, isAddedEFContext);
+            bdal.Delete(id);
+        }
+
+
+        public void Delete(TEntity model)
+        {
+            bdal.Delete(model);
         }
 
         #endregion

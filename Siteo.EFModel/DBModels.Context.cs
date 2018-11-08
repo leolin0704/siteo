@@ -25,11 +25,14 @@ namespace Siteo.EFModel
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<TBanner> TBanners { get; set; }
-        public virtual DbSet<TNotice> TNotices { get; set; }
         public virtual DbSet<TAdminUser> TAdminUsers { get; set; }
         public virtual DbSet<TAdminUserRole> TAdminUserRoles { get; set; }
+        public virtual DbSet<TBanner> TBanners { get; set; }
         public virtual DbSet<TModule> TModules { get; set; }
+        public virtual DbSet<TNew> TNews { get; set; }
+        public virtual DbSet<TNewsPicture> TNewsPictures { get; set; }
+        public virtual DbSet<TNewsType> TNewsTypes { get; set; }
+        public virtual DbSet<TNotice> TNotices { get; set; }
         public virtual DbSet<TPermission> TPermissions { get; set; }
         public virtual DbSet<TPermissionnModule> TPermissionnModules { get; set; }
         public virtual DbSet<TRole> TRoles { get; set; }

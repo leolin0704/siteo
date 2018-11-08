@@ -4,14 +4,14 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="SiteoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="SiteoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="TAdminUser">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Account" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Password" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Password" Type="varbinary" MaxLength="100" Nullable="false" />
           <Property Name="Status" Type="char" MaxLength="1" Nullable="false" />
           <Property Name="IsDeleted" Type="int" Nullable="false" />
           <Property Name="LastUpdateDate" Type="datetime" />
@@ -62,6 +62,37 @@
           <Property Name="LastUpdateBy" Type="nvarchar" MaxLength="20" />
           <Property Name="CreateDate" Type="datetime" Nullable="false" />
           <Property Name="CreateBy" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TNews">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="50" />
+          <Property Name="Content" Type="nvarchar" MaxLength="4000" />
+          <Property Name="ReleaseDate" Type="datetime" />
+          <Property Name="Status" Type="int" />
+          <Property Name="SetToTop" Type="int" />
+          <Property Name="TypeID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TNewsPictures">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NewsID" Type="int" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="50" />
+          <Property Name="ImgSrc" Type="varchar" MaxLength="300" />
+          <Property Name="LinkUrl" Type="varchar" MaxLength="300" />
+          <Property Name="Order" Type="int" />
+        </EntityType>
+        <EntityType Name="TNewsType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="ParentID" Type="int" />
         </EntityType>
         <EntityType Name="TNotice">
           <Key>
@@ -215,6 +246,9 @@
           <EntitySet Name="TAdminUserRole" EntityType="Self.TAdminUserRole" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TBanner" EntityType="Self.TBanner" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TModule" EntityType="Self.TModule" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TNews" EntityType="Self.TNews" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TNewsPictures" EntityType="Self.TNewsPictures" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TNewsType" EntityType="Self.TNewsType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TNotice" EntityType="Self.TNotice" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TPermission" EntityType="Self.TPermission" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TPermissionnModule" EntityType="Self.TPermissionnModule" Schema="dbo" store:Type="Tables" />
@@ -249,92 +283,25 @@
             <End Role="TRolePermission" EntitySet="TRolePermission" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="SiteoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="TBanner">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Title" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="LinkUrl" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="ImgSrc" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Order" Type="Int32" Nullable="false" />
-          <Property Name="PositionKey" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="LastUpdateDate" Type="DateTime" Precision="3" />
-          <Property Name="LastUpdateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="CreateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="IsDeleted" Type="Int32" Nullable="false" />
-        </EntityType>
-        <EntityType Name="TNotice">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Title" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Content" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
-          <Property Name="LastUpdateDate" Type="DateTime" Precision="3" />
-          <Property Name="LastUpdateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="CreateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="IsDeleted" Type="Int32" Nullable="false" />
-        </EntityType>
-        <EntityContainer Name="SiteoEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="TBanners" EntityType="Self.TBanner" />
-          <EntitySet Name="TNotices" EntityType="Self.TNotice" />
-          <EntitySet Name="TAdminUsers" EntityType="SiteoModel.TAdminUser" />
-          <EntitySet Name="TAdminUserRoles" EntityType="SiteoModel.TAdminUserRole" />
-          <EntitySet Name="TModules" EntityType="SiteoModel.TModule" />
-          <EntitySet Name="TPermissions" EntityType="SiteoModel.TPermission" />
-          <EntitySet Name="TPermissionnModules" EntityType="SiteoModel.TPermissionnModule" />
-          <EntitySet Name="TRoles" EntityType="SiteoModel.TRole" />
-          <EntitySet Name="TRolePermissions" EntityType="SiteoModel.TRolePermission" />
-          <AssociationSet Name="FK_TAdminUserRole_AdminUserID" Association="SiteoModel.FK_TAdminUserRole_AdminUserID">
-            <End Role="TAdminUser" EntitySet="TAdminUsers" />
-            <End Role="TAdminUserRole" EntitySet="TAdminUserRoles" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TAdminUserRole_RoleID" Association="SiteoModel.FK_TAdminUserRole_RoleID">
-            <End Role="TRole" EntitySet="TRoles" />
-            <End Role="TAdminUserRole" EntitySet="TAdminUserRoles" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TModule_ParentModuleID" Association="SiteoModel.FK_TModule_ParentModuleID">
-            <End Role="TModule" EntitySet="TModules" />
-            <End Role="TModule1" EntitySet="TModules" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TPermissionnModule_ModuleID" Association="SiteoModel.FK_TPermissionnModule_ModuleID">
-            <End Role="TModule" EntitySet="TModules" />
-            <End Role="TPermissionnModule" EntitySet="TPermissionnModules" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TPermissionnModule_PermissionID" Association="SiteoModel.FK_TPermissionnModule_PermissionID">
-            <End Role="TPermission" EntitySet="TPermissions" />
-            <End Role="TPermissionnModule" EntitySet="TPermissionnModules" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TRolePermission_PermissionID" Association="SiteoModel.FK_TRolePermission_PermissionID">
-            <End Role="TPermission" EntitySet="TPermissions" />
-            <End Role="TRolePermission" EntitySet="TRolePermissions" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TRolePermission_RoleID" Association="SiteoModel.FK_TRolePermission_RoleID">
-            <End Role="TRole" EntitySet="TRoles" />
-            <End Role="TRolePermission" EntitySet="TRolePermissions" />
-          </AssociationSet>
-        </EntityContainer>
         <EntityType Name="TAdminUser">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Account" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Password" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Status" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="Account" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="Binary" MaxLength="100" FixedLength="false" Nullable="false" />
+          <Property Name="Status" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="IsDeleted" Type="Int32" Nullable="false" />
           <Property Name="LastUpdateDate" Type="DateTime" Precision="3" />
           <Property Name="LastUpdateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="CreateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="TAdminUserRoles" Relationship="SiteoModel.FK_TAdminUserRole_AdminUserID" FromRole="TAdminUser" ToRole="TAdminUserRole" />
+          <Property Name="CreateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="TAdminUserRoles" Relationship="Self.FK_TAdminUserRole_AdminUserID" FromRole="TAdminUser" ToRole="TAdminUserRole" />
         </EntityType>
         <EntityType Name="TAdminUserRole">
           <Key>
@@ -347,41 +314,101 @@
           <Property Name="LastUpdateDate" Type="DateTime" Precision="3" />
           <Property Name="LastUpdateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="CreateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="TAdminUser" Relationship="SiteoModel.FK_TAdminUserRole_AdminUserID" FromRole="TAdminUserRole" ToRole="TAdminUser" />
-          <NavigationProperty Name="TRole" Relationship="SiteoModel.FK_TAdminUserRole_RoleID" FromRole="TAdminUserRole" ToRole="TRole" />
+          <Property Name="CreateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="TAdminUser" Relationship="Self.FK_TAdminUserRole_AdminUserID" FromRole="TAdminUserRole" ToRole="TAdminUser" />
+          <NavigationProperty Name="TRole" Relationship="Self.FK_TAdminUserRole_RoleID" FromRole="TAdminUserRole" ToRole="TRole" />
+        </EntityType>
+        <EntityType Name="TBanner">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LinkUrl" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ImgSrc" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Order" Type="Int32" Nullable="false" />
+          <Property Name="PositionKey" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IsDeleted" Type="Int32" Nullable="false" />
+          <Property Name="LastUpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="LastUpdateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
         </EntityType>
         <EntityType Name="TModule">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ParentModuleID" Type="Int32" />
-          <Property Name="Key" Type="String" Nullable="false" MaxLength="50" FixedLength="true" Unicode="false" />
+          <Property Name="Key" Type="String" MaxLength="50" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="Order" Type="Int32" Nullable="false" />
           <Property Name="IsDeleted" Type="Int32" Nullable="false" />
           <Property Name="LastUpdateDate" Type="DateTime" Precision="3" />
           <Property Name="LastUpdateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="CreateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="TModule1" Relationship="SiteoModel.FK_TModule_ParentModuleID" FromRole="TModule" ToRole="TModule1" />
-          <NavigationProperty Name="TModule2" Relationship="SiteoModel.FK_TModule_ParentModuleID" FromRole="TModule1" ToRole="TModule" />
-          <NavigationProperty Name="TPermissionnModules" Relationship="SiteoModel.FK_TPermissionnModule_ModuleID" FromRole="TModule" ToRole="TPermissionnModule" />
+          <Property Name="CreateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="TModule1" Relationship="Self.FK_TModule_ParentModuleID" FromRole="TModule" ToRole="TModule1" />
+          <NavigationProperty Name="TModule2" Relationship="Self.FK_TModule_ParentModuleID" FromRole="TModule1" ToRole="TModule" />
+          <NavigationProperty Name="TPermissionnModules" Relationship="Self.FK_TPermissionnModule_ModuleID" FromRole="TModule" ToRole="TPermissionnModule" />
+        </EntityType>
+        <EntityType Name="TNew">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Content" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="ReleaseDate" Type="DateTime" Precision="3" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="SetToTop" Type="Int32" />
+          <Property Name="TypeID" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TNewsPicture">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NewsID" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ImgSrc" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="LinkUrl" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="Order" Type="Int32" />
+        </EntityType>
+        <EntityType Name="TNewsType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ParentID" Type="Int32" />
+        </EntityType>
+        <EntityType Name="TNotice">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Content" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="IsDeleted" Type="Int32" Nullable="false" />
+          <Property Name="LastUpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="LastUpdateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
         </EntityType>
         <EntityType Name="TPermission">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="IsDeleted" Type="Int32" Nullable="false" />
           <Property Name="LastUpdateDate" Type="DateTime" Precision="3" />
           <Property Name="LastUpdateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="CreateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="TPermissionnModules" Relationship="SiteoModel.FK_TPermissionnModule_PermissionID" FromRole="TPermission" ToRole="TPermissionnModule" />
-          <NavigationProperty Name="TRolePermissions" Relationship="SiteoModel.FK_TRolePermission_PermissionID" FromRole="TPermission" ToRole="TRolePermission" />
+          <Property Name="CreateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="TPermissionnModules" Relationship="Self.FK_TPermissionnModule_PermissionID" FromRole="TPermission" ToRole="TPermissionnModule" />
+          <NavigationProperty Name="TRolePermissions" Relationship="Self.FK_TRolePermission_PermissionID" FromRole="TPermission" ToRole="TRolePermission" />
         </EntityType>
         <EntityType Name="TPermissionnModule">
           <Key>
@@ -394,23 +421,23 @@
           <Property Name="LastUpdateDate" Type="DateTime" Precision="3" />
           <Property Name="LastUpdateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="CreateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="TModule" Relationship="SiteoModel.FK_TPermissionnModule_ModuleID" FromRole="TPermissionnModule" ToRole="TModule" />
-          <NavigationProperty Name="TPermission" Relationship="SiteoModel.FK_TPermissionnModule_PermissionID" FromRole="TPermissionnModule" ToRole="TPermission" />
+          <Property Name="CreateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="TModule" Relationship="Self.FK_TPermissionnModule_ModuleID" FromRole="TPermissionnModule" ToRole="TModule" />
+          <NavigationProperty Name="TPermission" Relationship="Self.FK_TPermissionnModule_PermissionID" FromRole="TPermissionnModule" ToRole="TPermission" />
         </EntityType>
         <EntityType Name="TRole">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="IsDeleted" Type="Int32" Nullable="false" />
           <Property Name="LastUpdateDate" Type="DateTime" Precision="3" />
           <Property Name="LastUpdateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="CreateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="TAdminUserRoles" Relationship="SiteoModel.FK_TAdminUserRole_RoleID" FromRole="TRole" ToRole="TAdminUserRole" />
-          <NavigationProperty Name="TRolePermissions" Relationship="SiteoModel.FK_TRolePermission_RoleID" FromRole="TRole" ToRole="TRolePermission" />
+          <Property Name="CreateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="TAdminUserRoles" Relationship="Self.FK_TAdminUserRole_RoleID" FromRole="TRole" ToRole="TAdminUserRole" />
+          <NavigationProperty Name="TRolePermissions" Relationship="Self.FK_TRolePermission_RoleID" FromRole="TRole" ToRole="TRolePermission" />
         </EntityType>
         <EntityType Name="TRolePermission">
           <Key>
@@ -423,13 +450,13 @@
           <Property Name="LastUpdateDate" Type="DateTime" Precision="3" />
           <Property Name="LastUpdateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="CreateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="TPermission" Relationship="SiteoModel.FK_TRolePermission_PermissionID" FromRole="TRolePermission" ToRole="TPermission" />
-          <NavigationProperty Name="TRole" Relationship="SiteoModel.FK_TRolePermission_RoleID" FromRole="TRolePermission" ToRole="TRole" />
+          <Property Name="CreateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="TPermission" Relationship="Self.FK_TRolePermission_PermissionID" FromRole="TRolePermission" ToRole="TPermission" />
+          <NavigationProperty Name="TRole" Relationship="Self.FK_TRolePermission_RoleID" FromRole="TRolePermission" ToRole="TRole" />
         </EntityType>
         <Association Name="FK_TAdminUserRole_AdminUserID">
-          <End Type="SiteoModel.TAdminUser" Role="TAdminUser" Multiplicity="1" />
-          <End Type="SiteoModel.TAdminUserRole" Role="TAdminUserRole" Multiplicity="*" />
+          <End Role="TAdminUser" Type="Self.TAdminUser" Multiplicity="1" />
+          <End Role="TAdminUserRole" Type="Self.TAdminUserRole" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="TAdminUser">
               <PropertyRef Name="ID" />
@@ -440,8 +467,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_TAdminUserRole_RoleID">
-          <End Type="SiteoModel.TRole" Role="TRole" Multiplicity="1" />
-          <End Type="SiteoModel.TAdminUserRole" Role="TAdminUserRole" Multiplicity="*" />
+          <End Role="TRole" Type="Self.TRole" Multiplicity="1" />
+          <End Role="TAdminUserRole" Type="Self.TAdminUserRole" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="TRole">
               <PropertyRef Name="ID" />
@@ -452,8 +479,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_TModule_ParentModuleID">
-          <End Type="SiteoModel.TModule" Role="TModule" Multiplicity="0..1" />
-          <End Type="SiteoModel.TModule" Role="TModule1" Multiplicity="*" />
+          <End Role="TModule" Type="Self.TModule" Multiplicity="0..1" />
+          <End Role="TModule1" Type="Self.TModule" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="TModule">
               <PropertyRef Name="ID" />
@@ -464,8 +491,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_TPermissionnModule_ModuleID">
-          <End Type="SiteoModel.TModule" Role="TModule" Multiplicity="1" />
-          <End Type="SiteoModel.TPermissionnModule" Role="TPermissionnModule" Multiplicity="*" />
+          <End Role="TModule" Type="Self.TModule" Multiplicity="1" />
+          <End Role="TPermissionnModule" Type="Self.TPermissionnModule" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="TModule">
               <PropertyRef Name="ID" />
@@ -476,8 +503,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_TPermissionnModule_PermissionID">
-          <End Type="SiteoModel.TPermission" Role="TPermission" Multiplicity="1" />
-          <End Type="SiteoModel.TPermissionnModule" Role="TPermissionnModule" Multiplicity="*" />
+          <End Role="TPermission" Type="Self.TPermission" Multiplicity="1" />
+          <End Role="TPermissionnModule" Type="Self.TPermissionnModule" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="TPermission">
               <PropertyRef Name="ID" />
@@ -488,8 +515,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_TRolePermission_PermissionID">
-          <End Type="SiteoModel.TPermission" Role="TPermission" Multiplicity="1" />
-          <End Type="SiteoModel.TRolePermission" Role="TRolePermission" Multiplicity="*" />
+          <End Role="TPermission" Type="Self.TPermission" Multiplicity="1" />
+          <End Role="TRolePermission" Type="Self.TRolePermission" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="TPermission">
               <PropertyRef Name="ID" />
@@ -500,8 +527,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_TRolePermission_RoleID">
-          <End Type="SiteoModel.TRole" Role="TRole" Multiplicity="1" />
-          <End Type="SiteoModel.TRolePermission" Role="TRolePermission" Multiplicity="*" />
+          <End Role="TRole" Type="Self.TRole" Multiplicity="1" />
+          <End Role="TRolePermission" Type="Self.TRolePermission" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="TRole">
               <PropertyRef Name="ID" />
@@ -511,139 +538,215 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityContainer Name="SiteoEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="TAdminUsers" EntityType="Self.TAdminUser" />
+          <EntitySet Name="TAdminUserRoles" EntityType="Self.TAdminUserRole" />
+          <EntitySet Name="TBanners" EntityType="Self.TBanner" />
+          <EntitySet Name="TModules" EntityType="Self.TModule" />
+          <EntitySet Name="TNews" EntityType="Self.TNew" />
+          <EntitySet Name="TNewsPictures" EntityType="Self.TNewsPicture" />
+          <EntitySet Name="TNewsTypes" EntityType="Self.TNewsType" />
+          <EntitySet Name="TNotices" EntityType="Self.TNotice" />
+          <EntitySet Name="TPermissions" EntityType="Self.TPermission" />
+          <EntitySet Name="TPermissionnModules" EntityType="Self.TPermissionnModule" />
+          <EntitySet Name="TRoles" EntityType="Self.TRole" />
+          <EntitySet Name="TRolePermissions" EntityType="Self.TRolePermission" />
+          <AssociationSet Name="FK_TAdminUserRole_AdminUserID" Association="Self.FK_TAdminUserRole_AdminUserID">
+            <End Role="TAdminUser" EntitySet="TAdminUsers" />
+            <End Role="TAdminUserRole" EntitySet="TAdminUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TAdminUserRole_RoleID" Association="Self.FK_TAdminUserRole_RoleID">
+            <End Role="TRole" EntitySet="TRoles" />
+            <End Role="TAdminUserRole" EntitySet="TAdminUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TModule_ParentModuleID" Association="Self.FK_TModule_ParentModuleID">
+            <End Role="TModule" EntitySet="TModules" />
+            <End Role="TModule1" EntitySet="TModules" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TPermissionnModule_ModuleID" Association="Self.FK_TPermissionnModule_ModuleID">
+            <End Role="TModule" EntitySet="TModules" />
+            <End Role="TPermissionnModule" EntitySet="TPermissionnModules" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TPermissionnModule_PermissionID" Association="Self.FK_TPermissionnModule_PermissionID">
+            <End Role="TPermission" EntitySet="TPermissions" />
+            <End Role="TPermissionnModule" EntitySet="TPermissionnModules" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TRolePermission_PermissionID" Association="Self.FK_TRolePermission_PermissionID">
+            <End Role="TPermission" EntitySet="TPermissions" />
+            <End Role="TRolePermission" EntitySet="TRolePermissions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TRolePermission_RoleID" Association="Self.FK_TRolePermission_RoleID">
+            <End Role="TRole" EntitySet="TRoles" />
+            <End Role="TRolePermission" EntitySet="TRolePermissions" />
+          </AssociationSet>
+        </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="SiteoModelStoreContainer" CdmEntityContainer="SiteoEntities">
-          <EntitySetMapping Name="TBanners">
-            <EntityTypeMapping TypeName="SiteoModel.TBanner">
-              <MappingFragment StoreEntitySet="TBanner">
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="LinkUrl" ColumnName="LinkUrl" />
-                <ScalarProperty Name="ImgSrc" ColumnName="ImgSrc" />
-                <ScalarProperty Name="Order" ColumnName="Order" />
-                <ScalarProperty Name="PositionKey" ColumnName="PositionKey" />
-                <ScalarProperty Name="LastUpdateDate" ColumnName="LastUpdateDate" />
-                <ScalarProperty Name="LastUpdateBy" ColumnName="LastUpdateBy" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TNotices">
-            <EntityTypeMapping TypeName="SiteoModel.TNotice">
-              <MappingFragment StoreEntitySet="TNotice">
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="Content" ColumnName="Content" />
-                <ScalarProperty Name="LastUpdateDate" ColumnName="LastUpdateDate" />
-                <ScalarProperty Name="LastUpdateBy" ColumnName="LastUpdateBy" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="TAdminUsers">
             <EntityTypeMapping TypeName="SiteoModel.TAdminUser">
               <MappingFragment StoreEntitySet="TAdminUser">
-                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="LastUpdateBy" ColumnName="LastUpdateBy" />
-                <ScalarProperty Name="LastUpdateDate" ColumnName="LastUpdateDate" />
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="Account" ColumnName="Account" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Account" ColumnName="Account" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="LastUpdateDate" ColumnName="LastUpdateDate" />
+                <ScalarProperty Name="LastUpdateBy" ColumnName="LastUpdateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TAdminUserRoles">
             <EntityTypeMapping TypeName="SiteoModel.TAdminUserRole">
               <MappingFragment StoreEntitySet="TAdminUserRole">
-                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="LastUpdateBy" ColumnName="LastUpdateBy" />
-                <ScalarProperty Name="LastUpdateDate" ColumnName="LastUpdateDate" />
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
-                <ScalarProperty Name="AdminUserID" ColumnName="AdminUserID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="AdminUserID" ColumnName="AdminUserID" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="LastUpdateDate" ColumnName="LastUpdateDate" />
+                <ScalarProperty Name="LastUpdateBy" ColumnName="LastUpdateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBanners">
+            <EntityTypeMapping TypeName="SiteoModel.TBanner">
+              <MappingFragment StoreEntitySet="TBanner">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="LinkUrl" ColumnName="LinkUrl" />
+                <ScalarProperty Name="ImgSrc" ColumnName="ImgSrc" />
+                <ScalarProperty Name="Order" ColumnName="Order" />
+                <ScalarProperty Name="PositionKey" ColumnName="PositionKey" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="LastUpdateDate" ColumnName="LastUpdateDate" />
+                <ScalarProperty Name="LastUpdateBy" ColumnName="LastUpdateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TModules">
             <EntityTypeMapping TypeName="SiteoModel.TModule">
               <MappingFragment StoreEntitySet="TModule">
-                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="LastUpdateBy" ColumnName="LastUpdateBy" />
-                <ScalarProperty Name="LastUpdateDate" ColumnName="LastUpdateDate" />
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="Order" ColumnName="Order" />
-                <ScalarProperty Name="Key" ColumnName="Key" />
-                <ScalarProperty Name="ParentModuleID" ColumnName="ParentModuleID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ParentModuleID" ColumnName="ParentModuleID" />
+                <ScalarProperty Name="Key" ColumnName="Key" />
+                <ScalarProperty Name="Order" ColumnName="Order" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="LastUpdateDate" ColumnName="LastUpdateDate" />
+                <ScalarProperty Name="LastUpdateBy" ColumnName="LastUpdateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TNews">
+            <EntityTypeMapping TypeName="SiteoModel.TNew">
+              <MappingFragment StoreEntitySet="TNews">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="ReleaseDate" ColumnName="ReleaseDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="SetToTop" ColumnName="SetToTop" />
+                <ScalarProperty Name="TypeID" ColumnName="TypeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TNewsPictures">
+            <EntityTypeMapping TypeName="SiteoModel.TNewsPicture">
+              <MappingFragment StoreEntitySet="TNewsPictures">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="NewsID" ColumnName="NewsID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ImgSrc" ColumnName="ImgSrc" />
+                <ScalarProperty Name="LinkUrl" ColumnName="LinkUrl" />
+                <ScalarProperty Name="Order" ColumnName="Order" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TNewsTypes">
+            <EntityTypeMapping TypeName="SiteoModel.TNewsType">
+              <MappingFragment StoreEntitySet="TNewsType">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ParentID" ColumnName="ParentID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TNotices">
+            <EntityTypeMapping TypeName="SiteoModel.TNotice">
+              <MappingFragment StoreEntitySet="TNotice">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="LastUpdateDate" ColumnName="LastUpdateDate" />
+                <ScalarProperty Name="LastUpdateBy" ColumnName="LastUpdateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TPermissions">
             <EntityTypeMapping TypeName="SiteoModel.TPermission">
               <MappingFragment StoreEntitySet="TPermission">
-                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="LastUpdateBy" ColumnName="LastUpdateBy" />
-                <ScalarProperty Name="LastUpdateDate" ColumnName="LastUpdateDate" />
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="LastUpdateDate" ColumnName="LastUpdateDate" />
+                <ScalarProperty Name="LastUpdateBy" ColumnName="LastUpdateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TPermissionnModules">
             <EntityTypeMapping TypeName="SiteoModel.TPermissionnModule">
               <MappingFragment StoreEntitySet="TPermissionnModule">
-                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="LastUpdateBy" ColumnName="LastUpdateBy" />
-                <ScalarProperty Name="LastUpdateDate" ColumnName="LastUpdateDate" />
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="ModuleID" ColumnName="ModuleID" />
-                <ScalarProperty Name="PermissionID" ColumnName="PermissionID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="PermissionID" ColumnName="PermissionID" />
+                <ScalarProperty Name="ModuleID" ColumnName="ModuleID" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="LastUpdateDate" ColumnName="LastUpdateDate" />
+                <ScalarProperty Name="LastUpdateBy" ColumnName="LastUpdateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TRoles">
             <EntityTypeMapping TypeName="SiteoModel.TRole">
               <MappingFragment StoreEntitySet="TRole">
-                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="LastUpdateBy" ColumnName="LastUpdateBy" />
-                <ScalarProperty Name="LastUpdateDate" ColumnName="LastUpdateDate" />
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="LastUpdateDate" ColumnName="LastUpdateDate" />
+                <ScalarProperty Name="LastUpdateBy" ColumnName="LastUpdateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TRolePermissions">
             <EntityTypeMapping TypeName="SiteoModel.TRolePermission">
               <MappingFragment StoreEntitySet="TRolePermission">
-                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="LastUpdateBy" ColumnName="LastUpdateBy" />
-                <ScalarProperty Name="LastUpdateDate" ColumnName="LastUpdateDate" />
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
-                <ScalarProperty Name="PermissionID" ColumnName="PermissionID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="PermissionID" ColumnName="PermissionID" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="LastUpdateDate" ColumnName="LastUpdateDate" />
+                <ScalarProperty Name="LastUpdateBy" ColumnName="LastUpdateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
