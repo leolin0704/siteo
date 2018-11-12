@@ -7,32 +7,53 @@ export default new Router({
         },
         {
             path: '/login',
-            component: resolve => require(['../page/login.vue'], resolve)
+            component: resolve => require(['../page/login.vue'], resolve),
+            meta: { title: 'Login' },
         },
         {
             path: '/',
             component: resolve => require(['../components/common/layout.vue'], resolve),
-            meta: { title: '自述文件' },
+            meta: { title: '' },
             children:[
                 {
                     path: '/home',
                     component: resolve => require(['../page/home.vue'], resolve),
-                    meta: { title: '系统首页' }
+                    meta: { title: 'Home Page' }
                 },
                 {
                     path: '/about',
                     component: resolve => require(['../page/about.vue'], resolve),
-                    meta: { title: '关于我们' }
+                    meta: { title: 'About Us' }
                 },
                 {
                     path: '/contact',
                     component: resolve => require(['../page/contact.vue'], resolve),
-                    meta: { title: '联系我们' }
+                    meta: { title: 'Contact Us' }
                 },
                 {
                     path: '/banner',
                     component: resolve => require(['../page/banner.vue'], resolve),
-                    meta: { title: 'banner图' }
+                    meta: { title: 'Banner Manage' }
+                },
+                {
+                    path: '/news',
+                    component: resolve => require(['../page/news.vue'], resolve),
+                    meta: { title: 'Banner Manage' }
+                },
+                {
+                    path: '/notice',
+                    component: resolve => require(['../page/notice.vue'], resolve),
+                    meta: { title: 'Banner Manage' }
+                },
+                {
+                    path: '/user',
+                    component: resolve => require(['../page/user.vue'], resolve),
+                    meta: { title: 'Banner Manage' }
+                },
+                {
+                    path: '/role',
+                    component: resolve => require(['../page/role.vue'], resolve),
+                    meta: { title: 'Banner Manage' }
                 }
             ]
         }

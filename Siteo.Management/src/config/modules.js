@@ -19,4 +19,26 @@ export default [
         name:"Contact Us",
         url:"/contact"
     },
+    {
+        key:"System",
+        name:"System Manage",
+        url:"/notice",
+        subModules:[
+            {
+                key:"Notice",
+                name:"Notice Manage",
+                url:"/notice"
+            },
+            {
+                key:"user",
+                name:"User Manage",
+                url:"/user"
+            },
+            {
+                key:"role",
+                name:"Role Manage",
+                url:"/role"
+            }
+        ]
+    },
 ]

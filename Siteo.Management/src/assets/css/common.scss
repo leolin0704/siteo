@@ -1,3 +1,96 @@
+html,body{
+  height: 100%;
+  margin:0;
+  padding:0;
+  font-family: "Helvetica Neue",Helvetica,"Microsoft YaHei","微软雅黑",Arial,sans-serif;
+  background-color: #ddd;
+}
+
+#app {
+  height:100%;
+  position: relative;
+}
+
+    .el-container{
+        height:100%;
+        position: relative;
+
+        .el-header{
+          background-color: #fff; 
+        }
+    }
+
+@keyframes shaking{
+        0%{
+            transform: rotate(5deg);
+            opacity: 1;
+        }
+
+        50%{
+            transform: rotate(55deg);
+             opacity: 0.2;
+        }
+
+        100%{
+            transform: rotate(5deg);
+            opacity: 1;
+        }
+    }
+
+    @keyframes blur{
+        0%{
+            opacity: 1;
+        }
+
+        50%{
+            opacity: 0.2;
+        }
+
+        100%{
+            opacity: 1;
+        }
+    }
+
+    .main-bg{
+        background-color: rgba(3, 191, 197,0.7);
+        position: fixed;
+        top:0;
+        left:0;
+        bottom:0;
+        right:0;
+
+        .box-1{
+            position: fixed;
+            background-color: rgba(255,255,255,0.3);
+            width:300px;
+            height:300px;
+            top:50%;
+            left:20%;
+            animation: shaking 10s ease-in-out infinite;
+        }
+
+        .box-2{
+            position: fixed;
+            transform: rotate(60deg);
+            background-color: rgba(255,255,255,0.3);
+            width:100px;
+            height:100px;
+            top:17%;
+            left:70%;
+            animation: shaking 7s ease-in-out infinite;
+        }
+
+        .box-3{
+            position: fixed;
+            transform: rotate(-50deg);
+            background-color: rgba(255,255,255,0.3);
+            width:500px;
+            height:500px;
+            top:75%;
+            left:75%;
+             animation: blur 6s ease-in-out infinite;
+        }
+    }
 a{
   color:#333;
   text-decoration: none;
@@ -5,4 +98,21 @@ a{
 
 a:hover{
   text-decoration: underline;
+}
+
+
+.query-with-type {
+    .el-input__inner{
+        min-width: 400px;
+    }
+
+    .el-select {
+        .el-input__inner{
+            min-width:200px;
+        }
+    }
+
+    .el-input-group__prepend {
+        background-color: #fff;
+    }
 }

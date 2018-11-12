@@ -2,10 +2,8 @@
 <el-container>
     <el-header>
         <el-row>
-            <el-col :span="6">
-                <h1 class="title">SMS</h1>
-            </el-col>
-            <el-col :span="18">
+            <el-col :span="24" class="header-line">
+                <h1 class="title">Siteo Management</h1>
                 <main-header></main-header>
             </el-col>
         </el-row>
@@ -26,11 +24,20 @@ export default {
     }
 };
 </script>
-<style scoped>
+<style scoped lang="scss">
+ .header-line {
+     position: relative;
     .title{
         height: 60px;
         line-height: 60px;
+        position: absolute;
         margin: 0;
         padding: 0;
     }
+    
+    &>ul{
+        margin-left: 250px;
+    }
+ }
+    
 </style>

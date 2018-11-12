@@ -1,30 +1,29 @@
 <template>
-
-<el-card class="login-box"  v-loading="loading">
-    <div slot="header">
-        <h1>Siteo Management System</h1>
-    </div>
-    <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="0px">
-        <el-form-item prop="Account">
-            <el-input id="txtAccount" v-model="ruleForm.Account" placeholder="Please input account...">
-                <template slot="prepend">
-                    <i class="el-icon-message"></i>
-                </template>
-            </el-input>
-        </el-form-item>
-        <el-form-item prop="Password">
-            <el-input type="Password" id="txtPassword" placeholder="Please input password..." v-model="ruleForm.Password" @keyup.enter.native="submitForm('ruleForm')">
-                <template slot="prepend">
-                    <i class="el-icon-view"></i>
-                </template>
-            </el-input>
-        </el-form-item>
-        <div class="button-box">
-            <el-button id="btnLogin" type="primary" @click="submitForm('ruleForm')">Login</el-button>
-            <el-button id="btnReset" @click="resetForm('ruleForm')">Reset</el-button>
+    <el-card class="login-box"  v-loading="loading">
+        <div slot="header">
+            <h1>Siteo Management System</h1>
         </div>
-    </el-form>
-</el-card>
+        <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="0px">
+            <el-form-item prop="Account">
+                <el-input id="txtAccount" v-model="ruleForm.Account" placeholder="Please input account...">
+                    <template slot="prepend">
+                        <i class="el-icon-message"></i>
+                    </template>
+                </el-input>
+            </el-form-item>
+            <el-form-item prop="Password">
+                <el-input type="Password" id="txtPassword" placeholder="Please input password..." v-model="ruleForm.Password" @keyup.enter.native="submitForm('ruleForm')">
+                    <template slot="prepend">
+                        <i class="el-icon-view"></i>
+                    </template>
+                </el-input>
+            </el-form-item>
+            <div class="button-box">
+                <el-button id="btnLogin" type="primary" @click="submitForm('ruleForm')">Login</el-button>
+                <el-button id="btnReset" @click="resetForm('ruleForm')">Reset</el-button>
+            </div>
+        </el-form>
+    </el-card>
 </template>
 
 <script>
@@ -88,7 +87,7 @@ export default {
 <style scoped lang="scss">
     .login-box{
         width:600px;
-        height:350px;
+        height:300px;
         position: absolute;
         top:50%;
         left:50%;
