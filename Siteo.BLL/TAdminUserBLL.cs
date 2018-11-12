@@ -32,7 +32,7 @@ namespace Siteo.BLL
                 return false;
             }
 
-            var adminUserRoles = adminUser.TAdminUserRoles;
+            var adminUserRoles = adminUser.TAdminUserRole;
             if (adminUserRoles == null || adminUserRoles.Count == 0)
             {
                 return false;
@@ -41,9 +41,9 @@ namespace Siteo.BLL
             var result = new List<TPermission>();
             foreach (var adminUserRole in adminUserRoles)
             {
-                if (adminUserRole.TRole != null && adminUserRole.TRole.TRolePermissions != null)
+                if (adminUserRole.TRole != null && adminUserRole.TRole.TRolePermission != null)
                 {
-                    foreach (var rolePermission in adminUserRole.TRole.TRolePermissions)
+                    foreach (var rolePermission in adminUserRole.TRole.TRolePermission)
                     {
                         if (rolePermission.TPermission != null)
                         {

@@ -30,5 +30,32 @@ namespace Siteo.Common.Helpers
 
             return passwordMatch;
         }
+
+
+        public static void CopyProperties(object source, object target, params string[] propertyNames)
+        {
+            if (source == null || target == null || propertyNames == null || propertyNames.Length == 0) {
+                return;
+            }
+
+            var sType = source.GetType();
+            var tType = target.GetType();
+
+            foreach(string name in propertyNames)
+            {
+                try
+                {
+                    var sp = sType.GetProperty(name);
+                    var tp = tType.GetProperty(name);
+
+                    tp.SetValue(target, sp.GetValue(source), null);
+                }
+                catch
+                {
+                    
+                }
+            }
+
+        }
     }
 }

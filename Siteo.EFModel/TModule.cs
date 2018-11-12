@@ -18,7 +18,7 @@ namespace Siteo.EFModel
         public TModule()
         {
             this.TModule1 = new HashSet<TModule>();
-            this.TPermissionnModules = new HashSet<TPermissionnModule>();
+            this.TPermissionModule = new HashSet<TPermissionModule>();
         }
     
         public int ID { get; set; }
@@ -36,6 +36,6 @@ namespace Siteo.EFModel
         public virtual ICollection<TModule> TModule1 { get; set; }
         public virtual TModule TModule2 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TPermissionnModule> TPermissionnModules { get; set; }
+        public virtual ICollection<TPermissionModule> TPermissionModule { get; set; }
     }
 }

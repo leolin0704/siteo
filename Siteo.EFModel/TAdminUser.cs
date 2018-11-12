@@ -17,7 +17,7 @@ namespace Siteo.EFModel
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public TAdminUser()
         {
-            this.TAdminUserRoles = new HashSet<TAdminUserRole>();
+            this.TAdminUserRole = new HashSet<TAdminUserRole>();
         }
     
         public int ID { get; set; }
@@ -29,8 +29,11 @@ namespace Siteo.EFModel
         public string LastUpdateBy { get; set; }
         public System.DateTime CreateDate { get; set; }
         public string CreateBy { get; set; }
+        public string Avatar { get; set; }
+        public string LastLoginIP { get; set; }
+        public Nullable<System.DateTime> LastLoginDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TAdminUserRole> TAdminUserRoles { get; set; }
+        public virtual ICollection<TAdminUserRole> TAdminUserRole { get; set; }
     }
 }

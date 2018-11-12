@@ -1,27 +1,27 @@
 <template>
 
-<el-card class="login-box">
+<el-card class="login-box"  v-loading="loading">
     <div slot="header">
-        <h1>CMS管理系统</h1>
+        <h1>Siteo Management System</h1>
     </div>
     <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="0px">
         <el-form-item prop="Account">
-            <el-input v-model="ruleForm.Account" placeholder="请输入用户名...">
+            <el-input id="txtAccount" v-model="ruleForm.Account" placeholder="Please input account...">
                 <template slot="prepend">
                     <i class="el-icon-message"></i>
                 </template>
             </el-input>
         </el-form-item>
         <el-form-item prop="Password">
-            <el-input type="Password" placeholder="请输入密码..." v-model="ruleForm.Password" @keyup.enter.native="submitForm('ruleForm')">
+            <el-input type="Password" id="txtPassword" placeholder="Please input password..." v-model="ruleForm.Password" @keyup.enter.native="submitForm('ruleForm')">
                 <template slot="prepend">
                     <i class="el-icon-view"></i>
                 </template>
             </el-input>
         </el-form-item>
         <div class="button-box">
-            <el-button type="primary" @click="submitForm('ruleForm')">Login</el-button>
-            <el-button native-type="reset">Reset</el-button>
+            <el-button id="btnLogin" type="primary" @click="submitForm('ruleForm')">Login</el-button>
+            <el-button id="btnReset" @click="resetForm('ruleForm')">Reset</el-button>
         </div>
     </el-form>
 </el-card>
@@ -33,19 +33,20 @@ import { post } from "../util/apiUtil.js";
 export default {
     data: function () {
         return {
+            loading:false,
             ruleForm: {
-                Account: '123',
-                Password: '123123'
+                Account: '',
+                Password: ''
             },
             rules: {
                 Account: [{
                     required: true,
-                    message: '请输入用户名',
+                    message: 'Account is required.',
                     trigger: 'blur'
                 }],
                 Password: [{
                     required: true,
-                    message: '请输入密码',
+                    message: 'Password is required.',
                     trigger: 'blur'
                 }]
             }
@@ -55,6 +56,7 @@ export default {
         submitForm(formName) {
             this.$refs[formName].validate((valid) => {
                 if (valid) {
+                    this.loading = true;
                     post("/LoginApi/Login", {
                         Account:this.ruleForm.Account,
                         Password:this.ruleForm.Password
@@ -67,6 +69,8 @@ export default {
                                 type: 'warning'
                             });
                         }
+                        
+                        this.loading = false;
                     });
                     
                 } else {
@@ -74,6 +78,9 @@ export default {
                     return false;
                 }
             });
+        },
+        resetForm(formName) {
+            this.$refs[formName].resetFields();
         }
     }
 }

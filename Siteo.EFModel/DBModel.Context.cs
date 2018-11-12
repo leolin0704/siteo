@@ -25,17 +25,17 @@ namespace Siteo.EFModel
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<TAdminUser> TAdminUsers { get; set; }
-        public virtual DbSet<TAdminUserRole> TAdminUserRoles { get; set; }
-        public virtual DbSet<TBanner> TBanners { get; set; }
-        public virtual DbSet<TModule> TModules { get; set; }
-        public virtual DbSet<TNew> TNews { get; set; }
-        public virtual DbSet<TNewsPicture> TNewsPictures { get; set; }
-        public virtual DbSet<TNewsType> TNewsTypes { get; set; }
-        public virtual DbSet<TNotice> TNotices { get; set; }
-        public virtual DbSet<TPermission> TPermissions { get; set; }
-        public virtual DbSet<TPermissionnModule> TPermissionnModules { get; set; }
-        public virtual DbSet<TRole> TRoles { get; set; }
-        public virtual DbSet<TRolePermission> TRolePermissions { get; set; }
+        public virtual DbSet<TAdminUser> TAdminUser { get; set; }
+        public virtual DbSet<TAdminUserRole> TAdminUserRole { get; set; }
+        public virtual DbSet<TBanner> TBanner { get; set; }
+        public virtual DbSet<TModule> TModule { get; set; }
+        public virtual DbSet<TNews> TNews { get; set; }
+        public virtual DbSet<TNewsPictures> TNewsPictures { get; set; }
+        public virtual DbSet<TNewsType> TNewsType { get; set; }
+        public virtual DbSet<TNotice> TNotice { get; set; }
+        public virtual DbSet<TPermission> TPermission { get; set; }
+        public virtual DbSet<TPermissionModule> TPermissionModule { get; set; }
+        public virtual DbSet<TRole> TRole { get; set; }
+        public virtual DbSet<TRolePermission> TRolePermission { get; set; }
     }
 }

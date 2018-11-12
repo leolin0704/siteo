@@ -8,7 +8,7 @@ namespace Siteo.WebAPI.Models.AdminUser
 {
     public class AdminUserModel
     {
-        [Required(ErrorMessage = "User Name is required.")]
+        [Required(ErrorMessage = "Account is required.")]
         public string Account
         {
             get;
@@ -24,6 +24,24 @@ namespace Siteo.WebAPI.Models.AdminUser
 
         [Required(ErrorMessage = "Role ID is required.")]
         public int RoleID
+        {
+            get;
+            set;
+        }
+        
+        public DateTime LastLoginDate
+        {
+            get;
+            set;
+        }
+
+        public string LastLoginIP
+        {
+            get;
+            set;
+        }
+
+        public string Avatar
         {
             get;
             set;

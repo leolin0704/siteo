@@ -14,8 +14,21 @@ namespace Siteo.EFModel
     
     public partial class TNewsType
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public TNewsType()
+        {
+            this.TNews = new HashSet<TNews>();
+            this.TNewsType1 = new HashSet<TNewsType>();
+        }
+    
         public int ID { get; set; }
         public string Name { get; set; }
         public Nullable<int> ParentID { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TNews> TNews { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TNewsType> TNewsType1 { get; set; }
+        public virtual TNewsType TNewsType2 { get; set; }
     }
 }

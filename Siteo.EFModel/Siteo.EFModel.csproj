@@ -49,67 +49,67 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DBModels.Context.cs">
+    <Compile Include="DBModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>DBModels.Context.tt</DependentUpon>
+      <DependentUpon>DBModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="DBModels.cs">
+    <Compile Include="DBModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>DBModels.tt</DependentUpon>
+      <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DBModels.Designer.cs">
+    <Compile Include="DBModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>DBModels.edmx</DependentUpon>
+      <DependentUpon>DBModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TAdminUser.cs">
-      <DependentUpon>DBModels.tt</DependentUpon>
+      <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="TAdminUserRole.cs">
-      <DependentUpon>DBModels.tt</DependentUpon>
+      <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="TBanner.cs">
-      <DependentUpon>DBModels.tt</DependentUpon>
+      <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="TModule.cs">
-      <DependentUpon>DBModels.tt</DependentUpon>
+      <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="TNew.cs">
-      <DependentUpon>DBModels.tt</DependentUpon>
+    <Compile Include="TNews.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="TNewsPicture.cs">
-      <DependentUpon>DBModels.tt</DependentUpon>
+    <Compile Include="TNewsPictures.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="TNewsType.cs">
-      <DependentUpon>DBModels.tt</DependentUpon>
+      <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="TNotice.cs">
-      <DependentUpon>DBModels.tt</DependentUpon>
+      <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="TPermission.cs">
-      <DependentUpon>DBModels.tt</DependentUpon>
+      <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="TPermissionnModule.cs">
-      <DependentUpon>DBModels.tt</DependentUpon>
+    <Compile Include="TPermissionModule.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="TRole.cs">
-      <DependentUpon>DBModels.tt</DependentUpon>
+      <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="TRolePermission.cs">
-      <DependentUpon>DBModels.tt</DependentUpon>
+      <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />
-    <EntityDeploy Include="DBModels.edmx">
+    <EntityDeploy Include="DBModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>DBModels.Designer.cs</LastGenOutput>
+      <LastGenOutput>DBModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="DBModels.edmx.diagram">
-      <DependentUpon>DBModels.edmx</DependentUpon>
+    <None Include="DBModel.edmx.diagram">
+      <DependentUpon>DBModel.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
@@ -117,15 +117,15 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="DBModels.Context.tt">
+    <Content Include="DBModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>DBModels.edmx</DependentUpon>
-      <LastGenOutput>DBModels.Context.cs</LastGenOutput>
+      <DependentUpon>DBModel.edmx</DependentUpon>
+      <LastGenOutput>DBModel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="DBModels.tt">
+    <Content Include="DBModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>DBModels.edmx</DependentUpon>
-      <LastGenOutput>DBModels.cs</LastGenOutput>
+      <DependentUpon>DBModel.edmx</DependentUpon>
+      <LastGenOutput>DBModel.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

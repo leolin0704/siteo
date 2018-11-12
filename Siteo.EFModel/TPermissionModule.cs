@@ -12,13 +12,18 @@ namespace Siteo.EFModel
     using System;
     using System.Collections.Generic;
     
-    public partial class TNewsPicture
+    public partial class TPermissionModule
     {
         public int ID { get; set; }
-        public int NewsID { get; set; }
-        public string Title { get; set; }
-        public string ImgSrc { get; set; }
-        public string LinkUrl { get; set; }
-        public Nullable<int> Order { get; set; }
+        public int PermissionID { get; set; }
+        public int ModuleID { get; set; }
+        public int IsDeleted { get; set; }
+        public Nullable<System.DateTime> LastUpdateDate { get; set; }
+        public string LastUpdateBy { get; set; }
+        public System.DateTime CreateDate { get; set; }
+        public string CreateBy { get; set; }
+    
+        public virtual TModule TModule { get; set; }
+        public virtual TPermission TPermission { get; set; }
     }
 }

@@ -1,22 +1,22 @@
 export default [
     {
         key:"Home",
-        name:"系统首页",
+        name:"Home",
         url:"/home"
     },
     {
         key:"Banner",
-        name:"Banner图",
+        name:"Banner",
         url:"/banner"
     },
     {
         key:"About",
-        name:"关于我们",
+        name:"About Us",
         url:"/about"
     },
     {
         key:"Contact",
-        name:"联系我们",
+        name:"Contact Us",
         url:"/contact"
     },
 ]

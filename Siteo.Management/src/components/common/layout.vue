@@ -3,7 +3,7 @@
     <el-header>
         <el-row>
             <el-col :span="6">
-                <h1 class="title">CMS管理系统</h1>
+                <h1 class="title">SMS</h1>
             </el-col>
             <el-col :span="18">
                 <main-header></main-header>

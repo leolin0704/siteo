@@ -2,25 +2,7 @@
 <div>
     <el-row :gutter="10">
         <el-col :span="8">
-            <el-card shadow="hover" class="card">
-                <div slot="header">
-                    <span>登录信息</span>
-                </div>
-                <div class="avatar-box">
-                    <img :src="avatar" alt="avatar" class="avatar">
-                    <h3>admin</h3>
-                </div>
-                <div class="login-info">
-                    <el-row>
-                        <el-col :span="10">上次登录时间:</el-col>
-                        <el-col :span="14">2018-08-08 20:00:00</el-col>
-                    </el-row>
-                    <el-row>
-                        <el-col :span="10">上次登录IP:</el-col>
-                        <el-col :span="14">127.0.0.1</el-col>
-                    </el-row>
-                </div>
-            </el-card>
+            <loginInfo></loginInfo>
         </el-col>
         <el-col :span="16">
            <notice></notice>
@@ -46,19 +28,19 @@
 </template>
 
 <script>
-import avatar from "../assets/images/avatar.jpg";
 import notice from "../components/notice.vue";
+import loginInfo from "../components/loginInfo.vue";
 
 
 export default {
     name: "home",
     data() {
         return {
-            avatar
         }
     },
     components: {
-        notice
+        notice,
+        loginInfo
     }
 };
 </script>
