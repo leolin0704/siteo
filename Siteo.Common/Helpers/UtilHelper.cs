@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Web;
 
 namespace Siteo.Common.Helpers
@@ -29,6 +30,31 @@ namespace Siteo.Common.Helpers
             }
 
             return passwordMatch;
+        }
+
+        public static List<TTaget> ConvertObjList<TTaget, TSource>(ICollection<TSource> source) where TTaget : new(){
+            if (source == null) {
+                return null;
+            }
+
+            var result = new List<TTaget>();
+            List<string> properties = new List<string>();
+
+            PropertyInfo[] props = typeof(TTaget).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+            foreach (PropertyInfo p in props)
+            {
+                properties.Add(p.Name);
+            }
+            foreach (var item in source)
+            {
+                var target = new TTaget();
+                CopyProperties(item, target, properties.ToArray());
+                result.Add(target);
+            }
+
+
+            return result;
+
         }
 
 

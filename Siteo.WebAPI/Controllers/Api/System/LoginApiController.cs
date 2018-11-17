@@ -6,26 +6,19 @@ using System;
 using System.Web.Mvc;
 using Siteo.WebAPI.Models.AdminUser;
 using Siteo.EFModel;
+using Siteo.WebAPI.Models;
 
-namespace Siteo.WebAPI.Controllers.Api.AdminUser
+namespace Siteo.WebAPI.Controllers.Api.System
 {
     public class LoginApiController : BaseController
     {
         private TAdminUserBLL adminUserBLL = new TAdminUserBLL();
 
-        [Permission("banner管理")]
         [HttpGet]
         // GET api/values/5
-        public JsonResult Get(int id)
+        public APIJsonResult GetLoginUser()
         {
-            return Json(1, JsonRequestBehavior.AllowGet);
-        }
-
-        [HttpGet]
-        // GET api/values/5
-        public JsonResult GetLoginUser()
-        {
-            var adminUser = Session["adminUser"] as TAdminUser;
+            var adminUser = TokenManager.GetLoginUser();
             var sessionUserModel = new AdminUserModel();
             UtilHelper.CopyProperties(adminUser, sessionUserModel, new string[] {
                 "Account" ,
@@ -34,12 +27,13 @@ namespace Siteo.WebAPI.Controllers.Api.AdminUser
                 "LastLoginIP"
             });
             return Success(new {
-                AdminUser = adminUser
+                AdminUser = sessionUserModel
             });
         }
 
         [HttpPost]
-        public JsonResult Login(LoginModel adminUserModel)
+        [AllowAnonymous]
+        public APIJsonResult Login(LoginModel adminUserModel)
         {
             var adminUser  = adminUserBLL.Find(user =>  user.Account == adminUserModel.Account);
 
@@ -49,15 +43,15 @@ namespace Siteo.WebAPI.Controllers.Api.AdminUser
 
             adminUser.LastLoginDate = DateTime.Now;
             adminUser.LastLoginIP = Request.ServerVariables.Get("Remote_Addr").ToString();
+            
+            var token = TokenManager.SaveToken(adminUser, false);
             adminUserBLL.Edit(adminUser, new string[] {
-                "LastLoginDate", "LastLoginIP"
+                "LastLoginDate", "LastLoginIP","Token","TokenExpired"
             });
+            
             adminUserBLL.SaveChanges();
 
-            var token = Guid.NewGuid().ToString();
-            Session["token"] = token;
-            
-            Session["adminUser"] = adminUser;
+
             return Success(new {
                 Token = token
             });
@@ -65,7 +59,7 @@ namespace Siteo.WebAPI.Controllers.Api.AdminUser
 
 
         [HttpPost]
-        public JsonResult Add(AdminUserModel adminUserModel)
+        public APIJsonResult Add(AdminUserRegModel adminUserModel)
         {
             var adminUser = new TAdminUser()
             {

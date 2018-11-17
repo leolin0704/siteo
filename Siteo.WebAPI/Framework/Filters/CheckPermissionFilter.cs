@@ -27,8 +27,6 @@ namespace Siteo.WebAPI.Framework.Filters
                 throw new ArgumentNullException("filterContext");
             }
             string pageUrl = filterContext.HttpContext.Request.Url.AbsolutePath; //OperateContext.GetThisPageUrl(false);
-            // 是否是Ajax请求
-            var bAjax = filterContext.HttpContext.Request.IsAjaxRequest();
 
             // 允许匿名访问 用于标记在授权期间要跳过 AuthorizeAttribute 的控制器和操作的特性 
             var actionAnonymous = filterContext.ActionDescriptor.GetCustomAttributes(typeof(AllowAnonymousAttribute), true) as IEnumerable<AllowAnonymousAttribute>;
@@ -40,16 +38,18 @@ namespace Siteo.WebAPI.Framework.Filters
 
             //url获取token
             var content = filterContext.HttpContext;
-            var token = content.Request.Headers["Token"];
+            var adminUser = TokenManager.GetLoginUser();
 
+            if (adminUser == null) { // not logined
+                ProcessNotLogin(filterContext);
+                return;
+            }
 
             var permissionAttr = filterContext.ActionDescriptor.GetCustomAttributes(typeof(PermissionAttribute), true) as IEnumerable<PermissionAttribute>;
 
             if (permissionAttr == null || permissionAttr.Count() == 0) {
                 return;
             }
-
-            var adminUser = CacheHelper.GetCache(token) as TAdminUser;
 
             var hasPermission = new TAdminUserBLL().CheckAdminUserPermissions(adminUser, permissionAttr.ToList()[0].PermissionList);
             if (!hasPermission) {
@@ -60,7 +60,15 @@ namespace Siteo.WebAPI.Framework.Filters
         private static void ProcessNoPermission(AuthorizationContext filterContext)
         {
             var jsonResult = new JsonResult();
-            jsonResult.Data = new ResponseResult(3, "No permission");
+            jsonResult.Data = new ResponseResult(ResponseResultStatus.NO_PERMISSION, "No permission");
+            jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            filterContext.Result = jsonResult;
+        }
+
+        private static void ProcessNotLogin(AuthorizationContext filterContext)
+        {
+            var jsonResult = new JsonResult();
+            jsonResult.Data = new ResponseResult(ResponseResultStatus.NOT_LOGIN, "Not login");
             jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
             filterContext.Result = jsonResult;
         }

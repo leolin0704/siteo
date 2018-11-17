@@ -14,19 +14,17 @@
         <EntityTypeShape EntityType="SiteoModel.TNewsType" Width="1.5" PointX="0.75" PointY="1.25" IsExpanded="true" />
         <EntityTypeShape EntityType="SiteoModel.TNotice" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="SiteoModel.TPermission" Width="1.5" PointX="0.75" PointY="9.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="SiteoModel.TPermissionModule" Width="1.5" PointX="3" PointY="5.25" IsExpanded="true" />
         <EntityTypeShape EntityType="SiteoModel.TRole" Width="1.5" PointX="0.75" PointY="13.375" IsExpanded="true" />
         <EntityTypeShape EntityType="SiteoModel.TRolePermission" Width="1.5" PointX="3" PointY="9.25" IsExpanded="true" />
         <AssociationConnector Association="SiteoModel.FK_TAdminUserRole_AdminUserID" ManuallyRouted="false" />
         <AssociationConnector Association="SiteoModel.FK_TAdminUserRole_RoleID" ManuallyRouted="false" />
         <AssociationConnector Association="SiteoModel.FK_TModule_ParentModuleID" ManuallyRouted="false" />
-        <AssociationConnector Association="SiteoModel.FK_TPermissionModule_ModuleID" ManuallyRouted="false" />
         <AssociationConnector Association="SiteoModel.FK_TNews_TypeID" ManuallyRouted="false" />
         <AssociationConnector Association="SiteoModel.FK_TNewsPictures_NewsID" ManuallyRouted="false" />
         <AssociationConnector Association="SiteoModel.FK_TNewsType_ParentID" ManuallyRouted="false" />
-        <AssociationConnector Association="SiteoModel.FK_TPermissionModule_PermissionID" ManuallyRouted="false" />
         <AssociationConnector Association="SiteoModel.FK_TRolePermission_PermissionID" ManuallyRouted="false" />
         <AssociationConnector Association="SiteoModel.FK_TRolePermission_RoleID" ManuallyRouted="false" />
+        <AssociationConnector Association="SiteoModel.FK_TModule_TPermission" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

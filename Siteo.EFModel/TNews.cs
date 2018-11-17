@@ -27,6 +27,11 @@ namespace Siteo.EFModel
         public int Status { get; set; }
         public Nullable<int> SetToTop { get; set; }
         public int TypeID { get; set; }
+        public int IsDeleted { get; set; }
+        public Nullable<System.DateTime> LastUpdateDate { get; set; }
+        public string LastUpdateBy { get; set; }
+        public System.DateTime CreateDate { get; set; }
+        public string CreateBy { get; set; }
     
         public virtual TNewsType TNewsType { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

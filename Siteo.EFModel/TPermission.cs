@@ -17,8 +17,8 @@ namespace Siteo.EFModel
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public TPermission()
         {
-            this.TPermissionModule = new HashSet<TPermissionModule>();
             this.TRolePermission = new HashSet<TRolePermission>();
+            this.TModule = new HashSet<TModule>();
         }
     
         public int ID { get; set; }
@@ -30,8 +30,8 @@ namespace Siteo.EFModel
         public string CreateBy { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TPermissionModule> TPermissionModule { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TRolePermission> TRolePermission { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TModule> TModule { get; set; }
     }
 }

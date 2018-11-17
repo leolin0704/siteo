@@ -34,7 +34,6 @@ namespace Siteo.EFModel
         public virtual DbSet<TNewsType> TNewsType { get; set; }
         public virtual DbSet<TNotice> TNotice { get; set; }
         public virtual DbSet<TPermission> TPermission { get; set; }
-        public virtual DbSet<TPermissionModule> TPermissionModule { get; set; }
         public virtual DbSet<TRole> TRole { get; set; }
         public virtual DbSet<TRolePermission> TRolePermission { get; set; }
     }

@@ -1,6 +1,6 @@
 <template>
 <el-container>
-    <el-header>
+    <el-header style="height:61px;">
         <el-row>
             <el-col :span="24" class="header-line">
                 <h1 class="title">Siteo Management</h1>

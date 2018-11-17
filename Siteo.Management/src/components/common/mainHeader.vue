@@ -1,12 +1,15 @@
 <template>
-<el-menu :default-active="$route.path" mode="horizontal" @select="handleSelect"  :router="true" >
+<el-menu :default-active="$route.path" mode="horizontal" :router="true" >
+    <el-menu-item index="/home">
+        Home
+    </el-menu-item>
     <template v-for="(menu,index) in modules">
-        <el-submenu v-if="menu.subModules" :key="index" :index="menu.url">
-            <template slot="title">{{menu.name}}</template>
-            <el-menu-item :key="index*1000 + index2" v-for="(subMenu, index2) in menu.subModules" :index="subMenu.url">{{subMenu.name}}</el-menu-item>
+        <el-submenu v-if="menu.ChildModules" :key="index" :index="menu.Key">
+            <template slot="title">{{menu.Name}}</template>
+            <el-menu-item :key="index*1000 + index2" v-for="(subMenu, index2) in menu.ChildModules" :index="subMenu.Key">{{subMenu.Name}}</el-menu-item>
         </el-submenu>
-        <el-menu-item v-else :key="index" :index="menu.url">
-            {{menu.name}}
+        <el-menu-item v-else :key="index" :index="menu.Key">
+            {{menu.Name}}
         </el-menu-item>
     </template>
 
@@ -15,20 +18,22 @@
 </template>
 
 <script>
-import modules from '../../config/modules.js';
+import { get } from "../../util/apiUtil.js";
 export default {
     name: "mainHeader",
     data() {
         return {
-            modules
+            modules:[]
         };
     },
     mounted(){
+        get("/AdminUserApi/GetModuleList").then(response => {
+            if(response.Status === 1){
+                this.modules = response.Data.Modules;
+            }
+        })
     },
     methods: {
-        handleSelect(key, keyPath) {
-            console.log(key, keyPath);
-        }
     }
 }
 </script>

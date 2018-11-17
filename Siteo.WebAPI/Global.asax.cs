@@ -13,11 +13,25 @@ namespace Siteo.WebAPI
     {
         protected void Application_Start()
         {
+
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+        }
+
+        protected void Application_OnBeginRequest()
+        {
+            var res = HttpContext.Current.Response;
+            var req = HttpContext.Current.Request;
+
+            // ==== Respond to the OPTIONS verb =====
+            if (req.HttpMethod == "OPTIONS")
+            {
+                res.StatusCode = 200;
+                res.End();
+            }
         }
     }
 }

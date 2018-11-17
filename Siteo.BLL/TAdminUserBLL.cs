@@ -23,7 +23,8 @@ namespace Siteo.BLL
 
         public bool CheckAdminUserPermissions(TAdminUser adminUser, string[] requriedPermissionList)
         {
-            if (requriedPermissionList == null || requriedPermissionList.Length == 0) {
+            if (requriedPermissionList == null || requriedPermissionList.Length == 0)
+            {
                 return true;
             }
 
@@ -38,6 +39,29 @@ namespace Siteo.BLL
                 return false;
             }
 
+            List<TPermission> result = GetPermissions(adminUserRoles);
+
+            if (result.Count == 0)
+            {
+                return false;
+            }
+
+            foreach (var permission in result)
+            {
+                foreach (var reqPermissionStr in requriedPermissionList)
+                {
+                    if (string.Compare(permission.Name, reqPermissionStr) == 0)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        public List<TPermission> GetPermissions(ICollection<TAdminUserRole> adminUserRoles)
+        {
             var result = new List<TPermission>();
             foreach (var adminUserRole in adminUserRoles)
             {
@@ -53,20 +77,7 @@ namespace Siteo.BLL
                 }
             }
 
-            if (result.Count == 0) {
-                return false;
-            }
-
-            foreach (var permission in result) {
-                foreach (var reqPermissionStr in requriedPermissionList)
-                {
-                    if (string.Compare(permission.Name, reqPermissionStr) == 0) {
-                        return true;
-                    }
-                }
-            }
-
-             return false;
+            return result;
         }
     }
 }

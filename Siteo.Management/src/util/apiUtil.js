@@ -1,6 +1,18 @@
 import web from "../config/web.js";
 import axios from "axios";
 import qs from "qs";
+import router from '../route/index.js';
+
+// 添加一个请求拦截器
+axios.interceptors.request.use(function (config) {
+    
+    config.headers.token = localStorage.getItem("token");
+    // Do something before request is sent
+    return config;
+  }, function (error) {
+    // Do something with request error
+    return Promise.reject(error);
+  });
 
 var getUrl = (url) => {
 
@@ -9,11 +21,23 @@ var getUrl = (url) => {
 
     if(url.indexOf("http") === 0){
         return url;
-    }else if(url.lastIndexOf("/") === (url.length - 1)){
+    }
+    
+    if(url.indexOf("/") === 0){
         return  web.apiBase + url;
     }
 
     return web.apiBase + "/" + url;
+}
+
+var processCommonResponse = (response) => {
+    if(response.Status === 3){
+        router.push("/");
+    }else if(response.Status === 4){
+        router.push("/login");
+    }
+
+    return response;
 }
 
 var get = (url, params) => {
@@ -23,7 +47,7 @@ var get = (url, params) => {
         if(result && result.status === 200){
             return result.data;
         }
-      });
+      }).then(processCommonResponse);
 }
 
 var post = (url, params) => {
@@ -35,7 +59,7 @@ var post = (url, params) => {
         if(result && result.status === 200){
             return result.data;
         }
-      });
+      }).then(processCommonResponse);
 }
 
 

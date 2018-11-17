@@ -41,6 +41,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -49,7 +50,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DBContextFactory.cs" />
     <Compile Include="TAdminUserRoleDAL.cs" />
+    <Compile Include="TModuleDAL.cs" />
     <Compile Include="TRoleDAL.cs" />
     <Compile Include="TAdminUserDAL.cs" />
     <Compile Include="TNoticeDAL.cs" />

@@ -131,7 +131,7 @@ namespace Siteo.DAL
             //将model追加到EF容器
             DbEntityEntry entry = db.Entry(model);
 
-            entry.State = EntityState.Unchanged;
+            entry.State = EntityState.Modified;
 
             foreach (var item in propertyName)
             {

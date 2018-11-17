@@ -44,11 +44,16 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TAdminUserRoleBLL.cs" />
     <Compile Include="TAdminUserBLL.cs" />
+    <Compile Include="TModuleBLL.cs" />
     <Compile Include="TRoleBLL.cs" />
     <Compile Include="TNoticeBLL.cs" />
     <Compile Include="TBannerBLL.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Siteo.Common\Siteo.Common.csproj">
+      <Project>{9B25BAB8-39A9-455C-AA8A-9D3454C0C288}</Project>
+      <Name>Siteo.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Siteo.DAL\Siteo.DAL.csproj">
       <Project>{5e53a490-9468-411d-b9c5-ff3cd19f8cdd}</Project>
       <Name>Siteo.DAL</Name>

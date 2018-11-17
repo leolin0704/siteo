@@ -22,7 +22,7 @@ namespace Siteo.Common.Helpers
             }
 
             System.Web.Caching.Cache objCache = HttpRuntime.Cache;
-            return objCache[CacheKey];
+            return objCache.Get(CacheKey);
         }
 
         /// <summary>

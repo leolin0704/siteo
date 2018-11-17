@@ -24,6 +24,11 @@ namespace Siteo.EFModel
         public int ID { get; set; }
         public string Name { get; set; }
         public Nullable<int> ParentID { get; set; }
+        public int IsDeleted { get; set; }
+        public Nullable<System.DateTime> LastUpdateDate { get; set; }
+        public string LastUpdateBy { get; set; }
+        public System.DateTime CreateDate { get; set; }
+        public string CreateBy { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TNews> TNews { get; set; }

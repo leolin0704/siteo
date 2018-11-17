@@ -1,19 +1,21 @@
-<template>
-    <tableLayout>
-
-    </tableLayout>
-</template>
-
 <script>
-import tableLayout from '../components/common/tableLayout';
-export default {
-    name: "banner",
+import baseListPage from "./baseListPage";
+import EditDialog from "../components/role/edit";
+import pageTable from "../components/user/pageTable";
+
+export default{
+    extends:baseListPage,
+    name: "notice",
+    components:{
+        pageDialog:EditDialog,
+        pageTable
+    },
     data() {
         return {
-        }
-    },
-    components: {
-        tableLayout
+            query:{
+                api:"/NoticeApi/GetList"
+            }
+        };
     }
 };
 </script>

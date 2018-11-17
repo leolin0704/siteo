@@ -92,9 +92,6 @@
     <Compile Include="TPermission.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="TPermissionModule.cs">
-      <DependentUpon>DBModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="TRole.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>

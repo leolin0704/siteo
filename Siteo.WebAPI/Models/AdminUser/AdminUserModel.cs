@@ -6,23 +6,20 @@ using System.Web;
 
 namespace Siteo.WebAPI.Models.AdminUser
 {
-    public class AdminUserModel
+    public class AdminUserModel : BaseModel
     {
-        [Required(ErrorMessage = "Account is required.")]
         public string Account
         {
             get;
             set;
         }
-
-        [Required(ErrorMessage = "Password is required.")]
-        public string Password
+        
+        public string Status
         {
             get;
             set;
         }
-
-        [Required(ErrorMessage = "Role ID is required.")]
+        
         public int RoleID
         {
             get;

@@ -26,7 +26,7 @@ export default {
             pageSize:5,
             pageIndex:1
         }).then(response => {
-            if(response.Status){
+            if(response.Status === 1){
                 this.noticeList = response.Data.NoticeList;
             }
         })

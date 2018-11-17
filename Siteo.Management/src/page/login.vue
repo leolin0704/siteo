@@ -61,6 +61,7 @@ export default {
                         Password:this.ruleForm.Password
                     }).then((response) => {
                          if(response.Status === 1){
+                            localStorage.setItem("token",response.Data.Token);
                             this.$router.push('/');
                         }else{
                             this.$message({

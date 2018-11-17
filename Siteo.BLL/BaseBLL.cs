@@ -11,7 +11,7 @@ namespace Siteo.BLL
     public class BaseBLL<TEntity> where TEntity : class
    {
        //初始化BaseDal泛型类的对象
-       BaseDAL<TEntity> bdal = new BaseDAL<TEntity>();
+       internal BaseDAL<TEntity> bdal = new BaseDAL<TEntity>();
 
         #region  查询
         public List<TEntity> Query(Expression<Func<TEntity, bool>> where)
@@ -30,8 +30,8 @@ namespace Siteo.BLL
             return bdal.Find(where);
         }
 
-        //public List<TEntity> QueryJoin(Expression<Func<TEntity, bool>> where, string[] tableNames)
-        //{
+        //public List<TEntity> QueryJoin(Expression<F
+
         //    return bdal.QueryJoin(where, tableNames);
         //}
         #endregion
@@ -48,7 +48,7 @@ namespace Siteo.BLL
         #region  编辑
 
         /// <summary>
-        /// 要求：model必须是自己定义的实体,此时没有追加到EF容器中
+        /// 
         /// </summary>
         /// <param name="model"></param>
         public void Edit(TEntity model, string[] propertyName)

@@ -32,6 +32,8 @@ namespace Siteo.EFModel
         public string Avatar { get; set; }
         public string LastLoginIP { get; set; }
         public Nullable<System.DateTime> LastLoginDate { get; set; }
+        public string Token { get; set; }
+        public Nullable<System.DateTime> TokenExpired { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TAdminUserRole> TAdminUserRole { get; set; }

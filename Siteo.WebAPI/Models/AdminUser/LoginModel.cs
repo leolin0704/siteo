@@ -8,7 +8,7 @@ namespace Siteo.WebAPI.Models.AdminUser
 {
     public class LoginModel
     {
-        [Required(ErrorMessage = "User Name is required.")]
+        [Required(ErrorMessage = "Account is required.")]
         public string Account
         {
             get;

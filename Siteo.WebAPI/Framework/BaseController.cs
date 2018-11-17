@@ -11,24 +11,24 @@ namespace Siteo.WebAPI.Framework
     [CheckPermissionFilter]
     public class BaseController: Controller
     {
-        public JsonResult Success()
+        public APIJsonResult Success()
         {
             return Success(null);
         }
 
-        public JsonResult Success(Object data)
+        public APIJsonResult Success(object data)
         {
-            var jsonResult = new JsonResult();
-            jsonResult.Data = new ResponseResult(1, "Sucess", data);
+            var jsonResult = new APIJsonResult();
+            jsonResult.Data = new ResponseResult(ResponseResultStatus.SUCCESS, "Sucess", data);
             jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
             return jsonResult;
         }
 
 
-        public JsonResult Failed(string message)
+        public APIJsonResult Failed(string message)
         {
-            var jsonResult = new JsonResult();
-            jsonResult.Data = new ResponseResult(2, message);
+            var jsonResult = new APIJsonResult();
+            jsonResult.Data = new ResponseResult(ResponseResultStatus.FAILED, message);
             jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
             return jsonResult;
         }

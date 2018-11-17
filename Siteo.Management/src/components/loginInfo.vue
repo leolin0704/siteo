@@ -10,7 +10,7 @@
         <div class="login-info">
             <el-row>
                 <el-col :span="10">Login Date:</el-col>
-                <el-col :span="14">{{adminUser.LastLoginDate}}</el-col>
+                <el-col :span="14">{{adminUser.LastLoginDate | date}}</el-col>
             </el-row>
             <el-row>
                 <el-col :span="10">Login IP:</el-col>
@@ -36,7 +36,7 @@ export default {
     mounted(){
         this.loading = true;
         get("/LoginApi/GetLoginUser").then(response => {
-            if(response.Status){
+            if(response.Status === 1){
                 this.adminUser = response.Data.AdminUser || {};
             }
 

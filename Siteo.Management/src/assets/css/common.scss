@@ -99,20 +99,3 @@ a{
 a:hover{
   text-decoration: underline;
 }
-
-
-.query-with-type {
-    .el-input__inner{
-        min-width: 400px;
-    }
-
-    .el-select {
-        .el-input__inner{
-            min-width:200px;
-        }
-    }
-
-    .el-input-group__prepend {
-        background-color: #fff;
-    }
-}

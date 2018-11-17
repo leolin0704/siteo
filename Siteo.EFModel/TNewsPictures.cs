@@ -20,6 +20,11 @@ namespace Siteo.EFModel
         public string ImgSrc { get; set; }
         public string LinkUrl { get; set; }
         public int Order { get; set; }
+        public int IsDeleted { get; set; }
+        public Nullable<System.DateTime> LastUpdateDate { get; set; }
+        public string LastUpdateBy { get; set; }
+        public System.DateTime CreateDate { get; set; }
+        public string CreateBy { get; set; }
     
         public virtual TNews TNews { get; set; }
     }

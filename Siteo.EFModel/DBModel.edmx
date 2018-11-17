@@ -21,6 +21,8 @@
           <Property Name="Avatar" Type="nvarchar" MaxLength="200" />
           <Property Name="LastLoginIP" Type="varchar" MaxLength="64" />
           <Property Name="LastLoginDate" Type="datetime" />
+          <Property Name="Token" Type="varchar" MaxLength="50" />
+          <Property Name="TokenExpired" Type="datetime" />
         </EntityType>
         <EntityType Name="TAdminUserRole">
           <Key>
@@ -65,6 +67,7 @@
           <Property Name="LastUpdateBy" Type="nvarchar" MaxLength="20" />
           <Property Name="CreateDate" Type="datetime" Nullable="false" />
           <Property Name="CreateBy" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="PermissionID" Type="int" />
         </EntityType>
         <EntityType Name="TNews">
           <Key>
@@ -77,6 +80,11 @@
           <Property Name="Status" Type="int" Nullable="false" />
           <Property Name="SetToTop" Type="int" />
           <Property Name="TypeID" Type="int" Nullable="false" />
+          <Property Name="IsDeleted" Type="int" Nullable="false" />
+          <Property Name="LastUpdateDate" Type="datetime" />
+          <Property Name="LastUpdateBy" Type="nvarchar" MaxLength="20" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="CreateBy" Type="nvarchar" MaxLength="20" Nullable="false" />
         </EntityType>
         <EntityType Name="TNewsPictures">
           <Key>
@@ -88,6 +96,11 @@
           <Property Name="ImgSrc" Type="varchar" MaxLength="300" />
           <Property Name="LinkUrl" Type="varchar" MaxLength="300" />
           <Property Name="Order" Type="int" Nullable="false" />
+          <Property Name="IsDeleted" Type="int" Nullable="false" />
+          <Property Name="LastUpdateDate" Type="datetime" />
+          <Property Name="LastUpdateBy" Type="nvarchar" MaxLength="20" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="CreateBy" Type="nvarchar" MaxLength="20" Nullable="false" />
         </EntityType>
         <EntityType Name="TNewsType">
           <Key>
@@ -96,6 +109,11 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" />
           <Property Name="ParentID" Type="int" />
+          <Property Name="IsDeleted" Type="int" Nullable="false" />
+          <Property Name="LastUpdateDate" Type="datetime" />
+          <Property Name="LastUpdateBy" Type="nvarchar" MaxLength="20" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="CreateBy" Type="nvarchar" MaxLength="20" Nullable="false" />
         </EntityType>
         <EntityType Name="TNotice">
           <Key>
@@ -116,19 +134,6 @@
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="IsDeleted" Type="int" Nullable="false" />
-          <Property Name="LastUpdateDate" Type="datetime" />
-          <Property Name="LastUpdateBy" Type="nvarchar" MaxLength="20" />
-          <Property Name="CreateDate" Type="datetime" Nullable="false" />
-          <Property Name="CreateBy" Type="nvarchar" MaxLength="20" Nullable="false" />
-        </EntityType>
-        <EntityType Name="TPermissionModule">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="PermissionID" Type="int" Nullable="false" />
-          <Property Name="ModuleID" Type="int" Nullable="false" />
           <Property Name="IsDeleted" Type="int" Nullable="false" />
           <Property Name="LastUpdateDate" Type="datetime" />
           <Property Name="LastUpdateBy" Type="nvarchar" MaxLength="20" />
@@ -196,6 +201,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_TModule_TPermission">
+          <End Role="TPermission" Type="Self.TPermission" Multiplicity="0..1" />
+          <End Role="TModule" Type="Self.TModule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TPermission">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TModule">
+              <PropertyRef Name="PermissionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_TNews_TypeID">
           <End Role="TNewsType" Type="Self.TNewsType" Multiplicity="1" />
           <End Role="TNews" Type="Self.TNews" Multiplicity="*" />
@@ -229,30 +246,6 @@
             </Principal>
             <Dependent Role="TNewsType1">
               <PropertyRef Name="ParentID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_TPermissionModule_ModuleID">
-          <End Role="TModule" Type="Self.TModule" Multiplicity="1" />
-          <End Role="TPermissionModule" Type="Self.TPermissionModule" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TModule">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="TPermissionModule">
-              <PropertyRef Name="ModuleID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_TPermissionModule_PermissionID">
-          <End Role="TPermission" Type="Self.TPermission" Multiplicity="1" />
-          <End Role="TPermissionModule" Type="Self.TPermissionModule" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TPermission">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="TPermissionModule">
-              <PropertyRef Name="PermissionID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -290,7 +283,6 @@
           <EntitySet Name="TNewsType" EntityType="Self.TNewsType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TNotice" EntityType="Self.TNotice" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TPermission" EntityType="Self.TPermission" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="TPermissionModule" EntityType="Self.TPermissionModule" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TRole" EntityType="Self.TRole" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TRolePermission" EntityType="Self.TRolePermission" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_TAdminUserRole_AdminUserID" Association="Self.FK_TAdminUserRole_AdminUserID">
@@ -305,6 +297,10 @@
             <End Role="TModule" EntitySet="TModule" />
             <End Role="TModule1" EntitySet="TModule" />
           </AssociationSet>
+          <AssociationSet Name="FK_TModule_TPermission" Association="Self.FK_TModule_TPermission">
+            <End Role="TPermission" EntitySet="TPermission" />
+            <End Role="TModule" EntitySet="TModule" />
+          </AssociationSet>
           <AssociationSet Name="FK_TNews_TypeID" Association="Self.FK_TNews_TypeID">
             <End Role="TNewsType" EntitySet="TNewsType" />
             <End Role="TNews" EntitySet="TNews" />
@@ -316,14 +312,6 @@
           <AssociationSet Name="FK_TNewsType_ParentID" Association="Self.FK_TNewsType_ParentID">
             <End Role="TNewsType" EntitySet="TNewsType" />
             <End Role="TNewsType1" EntitySet="TNewsType" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TPermissionModule_ModuleID" Association="Self.FK_TPermissionModule_ModuleID">
-            <End Role="TModule" EntitySet="TModule" />
-            <End Role="TPermissionModule" EntitySet="TPermissionModule" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TPermissionModule_PermissionID" Association="Self.FK_TPermissionModule_PermissionID">
-            <End Role="TPermission" EntitySet="TPermission" />
-            <End Role="TPermissionModule" EntitySet="TPermissionModule" />
           </AssociationSet>
           <AssociationSet Name="FK_TRolePermission_PermissionID" Association="Self.FK_TRolePermission_PermissionID">
             <End Role="TPermission" EntitySet="TPermission" />
@@ -355,6 +343,8 @@
           <Property Name="Avatar" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="LastLoginIP" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
           <Property Name="LastLoginDate" Type="DateTime" Precision="3" />
+          <Property Name="Token" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TokenExpired" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="TAdminUserRole">
           <Key>
@@ -403,7 +393,8 @@
           <Property Name="CreateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="TModule1" Relationship="Self.FK_TModule_ParentModuleID" FromRole="TModule" ToRole="TModule1" />
           <NavigationProperty Name="TModule2" Relationship="Self.FK_TModule_ParentModuleID" FromRole="TModule1" ToRole="TModule" />
-          <NavigationProperty Name="TPermissionModule" Relationship="Self.FK_TPermissionModule_ModuleID" FromRole="TModule" ToRole="TPermissionModule" />
+          <Property Name="PermissionID" Type="Int32" />
+          <NavigationProperty Name="TPermission" Relationship="SiteoModel.FK_TModule_TPermission" FromRole="TModule" ToRole="TPermission" />
         </EntityType>
         <EntityType Name="TNews">
           <Key>
@@ -418,6 +409,11 @@
           <Property Name="TypeID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="TNewsType" Relationship="Self.FK_TNews_TypeID" FromRole="TNews" ToRole="TNewsType" />
           <NavigationProperty Name="TNewsPictures" Relationship="Self.FK_TNewsPictures_NewsID" FromRole="TNews" ToRole="TNewsPictures" />
+          <Property Name="IsDeleted" Type="Int32" Nullable="false" />
+          <Property Name="LastUpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="LastUpdateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="TNewsPictures">
           <Key>
@@ -430,6 +426,11 @@
           <Property Name="LinkUrl" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
           <Property Name="Order" Type="Int32" Nullable="false" />
           <NavigationProperty Name="TNews" Relationship="Self.FK_TNewsPictures_NewsID" FromRole="TNewsPictures" ToRole="TNews" />
+          <Property Name="IsDeleted" Type="Int32" Nullable="false" />
+          <Property Name="LastUpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="LastUpdateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="TNewsType">
           <Key>
@@ -441,6 +442,11 @@
           <NavigationProperty Name="TNews" Relationship="Self.FK_TNews_TypeID" FromRole="TNewsType" ToRole="TNews" />
           <NavigationProperty Name="TNewsType1" Relationship="Self.FK_TNewsType_ParentID" FromRole="TNewsType" ToRole="TNewsType1" />
           <NavigationProperty Name="TNewsType2" Relationship="Self.FK_TNewsType_ParentID" FromRole="TNewsType1" ToRole="TNewsType" />
+          <Property Name="IsDeleted" Type="Int32" Nullable="false" />
+          <Property Name="LastUpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="LastUpdateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreateBy" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="TNotice">
           <Key>
@@ -466,23 +472,8 @@
           <Property Name="LastUpdateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="CreateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="TPermissionModule" Relationship="Self.FK_TPermissionModule_PermissionID" FromRole="TPermission" ToRole="TPermissionModule" />
           <NavigationProperty Name="TRolePermission" Relationship="Self.FK_TRolePermission_PermissionID" FromRole="TPermission" ToRole="TRolePermission" />
-        </EntityType>
-        <EntityType Name="TPermissionModule">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="PermissionID" Type="Int32" Nullable="false" />
-          <Property Name="ModuleID" Type="Int32" Nullable="false" />
-          <Property Name="IsDeleted" Type="Int32" Nullable="false" />
-          <Property Name="LastUpdateDate" Type="DateTime" Precision="3" />
-          <Property Name="LastUpdateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="CreateBy" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="TModule" Relationship="Self.FK_TPermissionModule_ModuleID" FromRole="TPermissionModule" ToRole="TModule" />
-          <NavigationProperty Name="TPermission" Relationship="Self.FK_TPermissionModule_PermissionID" FromRole="TPermissionModule" ToRole="TPermission" />
+          <NavigationProperty Name="TModule" Relationship="SiteoModel.FK_TModule_TPermission" FromRole="TPermission" ToRole="TModule" />
         </EntityType>
         <EntityType Name="TRole">
           <Key>
@@ -549,18 +540,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_TPermissionModule_ModuleID">
-          <End Role="TModule" Type="Self.TModule" Multiplicity="1" />
-          <End Role="TPermissionModule" Type="Self.TPermissionModule" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TModule">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="TPermissionModule">
-              <PropertyRef Name="ModuleID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_TNews_TypeID">
           <End Role="TNewsType" Type="Self.TNewsType" Multiplicity="1" />
           <End Role="TNews" Type="Self.TNews" Multiplicity="*" />
@@ -594,18 +573,6 @@
             </Principal>
             <Dependent Role="TNewsType1">
               <PropertyRef Name="ParentID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_TPermissionModule_PermissionID">
-          <End Role="TPermission" Type="Self.TPermission" Multiplicity="1" />
-          <End Role="TPermissionModule" Type="Self.TPermissionModule" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TPermission">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="TPermissionModule">
-              <PropertyRef Name="PermissionID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -643,7 +610,6 @@
           <EntitySet Name="TNewsType" EntityType="Self.TNewsType" />
           <EntitySet Name="TNotice" EntityType="Self.TNotice" />
           <EntitySet Name="TPermission" EntityType="Self.TPermission" />
-          <EntitySet Name="TPermissionModule" EntityType="Self.TPermissionModule" />
           <EntitySet Name="TRole" EntityType="Self.TRole" />
           <EntitySet Name="TRolePermission" EntityType="Self.TRolePermission" />
           <AssociationSet Name="FK_TAdminUserRole_AdminUserID" Association="Self.FK_TAdminUserRole_AdminUserID">
@@ -658,10 +624,6 @@
             <End Role="TModule" EntitySet="TModule" />
             <End Role="TModule1" EntitySet="TModule" />
           </AssociationSet>
-          <AssociationSet Name="FK_TPermissionModule_ModuleID" Association="Self.FK_TPermissionModule_ModuleID">
-            <End Role="TModule" EntitySet="TModule" />
-            <End Role="TPermissionModule" EntitySet="TPermissionModule" />
-          </AssociationSet>
           <AssociationSet Name="FK_TNews_TypeID" Association="Self.FK_TNews_TypeID">
             <End Role="TNewsType" EntitySet="TNewsType" />
             <End Role="TNews" EntitySet="TNews" />
@@ -674,10 +636,6 @@
             <End Role="TNewsType" EntitySet="TNewsType" />
             <End Role="TNewsType1" EntitySet="TNewsType" />
           </AssociationSet>
-          <AssociationSet Name="FK_TPermissionModule_PermissionID" Association="Self.FK_TPermissionModule_PermissionID">
-            <End Role="TPermission" EntitySet="TPermission" />
-            <End Role="TPermissionModule" EntitySet="TPermissionModule" />
-          </AssociationSet>
           <AssociationSet Name="FK_TRolePermission_PermissionID" Association="Self.FK_TRolePermission_PermissionID">
             <End Role="TPermission" EntitySet="TPermission" />
             <End Role="TRolePermission" EntitySet="TRolePermission" />
@@ -686,7 +644,23 @@
             <End Role="TRole" EntitySet="TRole" />
             <End Role="TRolePermission" EntitySet="TRolePermission" />
           </AssociationSet>
+          <AssociationSet Name="FK_TModule_TPermission" Association="SiteoModel.FK_TModule_TPermission">
+            <End Role="TPermission" EntitySet="TPermission" />
+            <End Role="TModule" EntitySet="TModule" />
+          </AssociationSet>
         </EntityContainer>
+        <Association Name="FK_TModule_TPermission">
+          <End Type="SiteoModel.TPermission" Role="TPermission" Multiplicity="0..1" />
+          <End Type="SiteoModel.TModule" Role="TModule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TPermission">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TModule">
+              <PropertyRef Name="PermissionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -696,6 +670,8 @@
           <EntitySetMapping Name="TAdminUser">
             <EntityTypeMapping TypeName="SiteoModel.TAdminUser">
               <MappingFragment StoreEntitySet="TAdminUser">
+                <ScalarProperty Name="TokenExpired" ColumnName="TokenExpired" />
+                <ScalarProperty Name="Token" ColumnName="Token" />
                 <ScalarProperty Name="LastLoginDate" ColumnName="LastLoginDate" />
                 <ScalarProperty Name="LastLoginIP" ColumnName="LastLoginIP" />
                 <ScalarProperty Name="Avatar" ColumnName="Avatar" />
@@ -745,6 +721,7 @@
           <EntitySetMapping Name="TModule">
             <EntityTypeMapping TypeName="SiteoModel.TModule">
               <MappingFragment StoreEntitySet="TModule">
+                <ScalarProperty Name="PermissionID" ColumnName="PermissionID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ParentModuleID" ColumnName="ParentModuleID" />
@@ -761,6 +738,11 @@
           <EntitySetMapping Name="TNews">
             <EntityTypeMapping TypeName="SiteoModel.TNews">
               <MappingFragment StoreEntitySet="TNews">
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="LastUpdateBy" ColumnName="LastUpdateBy" />
+                <ScalarProperty Name="LastUpdateDate" ColumnName="LastUpdateDate" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="Content" ColumnName="Content" />
@@ -774,6 +756,11 @@
           <EntitySetMapping Name="TNewsPictures">
             <EntityTypeMapping TypeName="SiteoModel.TNewsPictures">
               <MappingFragment StoreEntitySet="TNewsPictures">
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="LastUpdateBy" ColumnName="LastUpdateBy" />
+                <ScalarProperty Name="LastUpdateDate" ColumnName="LastUpdateDate" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="NewsID" ColumnName="NewsID" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
@@ -786,6 +773,11 @@
           <EntitySetMapping Name="TNewsType">
             <EntityTypeMapping TypeName="SiteoModel.TNewsType">
               <MappingFragment StoreEntitySet="TNewsType">
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="LastUpdateBy" ColumnName="LastUpdateBy" />
+                <ScalarProperty Name="LastUpdateDate" ColumnName="LastUpdateDate" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ParentID" ColumnName="ParentID" />
@@ -811,20 +803,6 @@
               <MappingFragment StoreEntitySet="TPermission">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="LastUpdateDate" ColumnName="LastUpdateDate" />
-                <ScalarProperty Name="LastUpdateBy" ColumnName="LastUpdateBy" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TPermissionModule">
-            <EntityTypeMapping TypeName="SiteoModel.TPermissionModule">
-              <MappingFragment StoreEntitySet="TPermissionModule">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="PermissionID" ColumnName="PermissionID" />
-                <ScalarProperty Name="ModuleID" ColumnName="ModuleID" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="LastUpdateDate" ColumnName="LastUpdateDate" />
                 <ScalarProperty Name="LastUpdateBy" ColumnName="LastUpdateBy" />
