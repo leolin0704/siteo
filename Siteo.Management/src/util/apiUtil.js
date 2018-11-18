@@ -62,6 +62,9 @@ var post = (url, params) => {
       }).then(processCommonResponse);
 }
 
+window.axiosGet = get;
+window.axiosPost = post;
+
 
 export {
     get,

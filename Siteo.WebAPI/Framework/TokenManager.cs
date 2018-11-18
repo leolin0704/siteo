@@ -61,7 +61,7 @@ namespace Siteo.WebAPI.Framework
                 var refreshAdminUser = adminUserBLL.Find(u => (u.Token == adminUser.Token && u.TokenExpired > DateTime.Now));
                 if (refreshAdminUser != null) {
                     refreshAdminUser.TokenExpired = DateTime.Now.AddHours(2);
-                    adminUserBLL.Edit(refreshAdminUser, new string[] { "TokenExpired" });
+                    adminUserBLL.Edit(refreshAdminUser, new string[] { "TokenExpired" }, false);
                     adminUserBLL.SaveChanges();
 
                     CacheHelper.SetCache(refreshAdminUser.Token, refreshAdminUser, new TimeSpan(0, 30, 0));

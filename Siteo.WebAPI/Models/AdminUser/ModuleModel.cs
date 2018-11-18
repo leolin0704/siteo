@@ -9,6 +9,6 @@ namespace Siteo.WebAPI.Models.AdminUser
     {
         public string Name { get; set; }
         public string Key { get; set; }
-        public ICollection<ModuleModel> ChildModules { get; set; }
+        public List<ModuleModel> ChildModules { get; set; }
     }
 }

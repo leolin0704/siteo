@@ -45,7 +45,9 @@
     <Compile Include="Helpers\EncryptHelper.cs" />
     <Compile Include="Helpers\LambdaHelper.cs" />
     <Compile Include="Helpers\UtilHelper.cs" />
+    <Compile Include="Helpers\ValidateHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ValidationException.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

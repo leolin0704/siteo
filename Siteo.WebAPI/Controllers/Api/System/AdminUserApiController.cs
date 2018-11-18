@@ -22,7 +22,7 @@ namespace Siteo.WebAPI.Controllers.Api.System
             var adminUserList = new TAdminUserBLL().PagerQuery(pageSize, pageIndex, out totalCount, c => c.Account.Contains(keywords), c => c.CreateDate, false);
             return Success(new
             {
-                List = UtilHelper.ConvertObjList<AdminUserModel, TAdminUser>(adminUserList),
+                List = UtilHelper.ConvertObjList<TAdminUser, AdminUserModel>(adminUserList),
                 TotalCount = totalCount
             });
         }
@@ -41,16 +41,9 @@ namespace Siteo.WebAPI.Controllers.Api.System
             var moduleBLL = new TModuleBLL();
             var modules = moduleBLL.GetUserModules(permissions);
 
-            var moduleModels = UtilHelper.ConvertObjList<ModuleModel, TModule>(modules);
+            var moduleModels = UtilHelper.ConvertObjList<TModule, ModuleModel>(modules);
 
-            for (int i = 0; i < moduleModels.Count; i++)
-            {
-                var currentModuleModel = moduleModels[i];
-                var currentModule = modules[i];
-
-                currentModuleModel.ChildModules = UtilHelper.ConvertObjList<ModuleModel, TModule>(currentModule.TModule1);
-
-            }
+            UtilHelper.ConvertChildObjList<TModule, ModuleModel, TModule, ModuleModel>(modules, moduleModels, "TModule1", "ChildModules");
 
             return Success(new
             {

@@ -15,7 +15,8 @@ namespace Siteo.Common.Helpers
                 return true;
             }
 
-            if (userPassword.Length != inputPassword.Length) {
+            if (userPassword.Length != inputPassword.Length)
+            {
                 return false;
             }
 
@@ -32,23 +33,30 @@ namespace Siteo.Common.Helpers
             return passwordMatch;
         }
 
-        public static List<TTaget> ConvertObjList<TTaget, TSource>(ICollection<TSource> source) where TTaget : new(){
-            if (source == null) {
+        public static List<TTaget> ConvertObjList<TSource, TTaget>(ICollection<TSource> source) where TTaget : new()
+        {
+            var newSource = new List<object>();
+            foreach (var item in source)
+            {
+                newSource.Add(item);
+            }
+            
+            return ConvertObjList<TTaget>(newSource);
+        }
+        
+        public static List<TTaget> ConvertObjList<TTaget>(ICollection<object> source) where TTaget : new()
+        {
+            if (source == null)
+            {
                 return null;
             }
 
             var result = new List<TTaget>();
-            List<string> properties = new List<string>();
 
-            PropertyInfo[] props = typeof(TTaget).GetProperties(BindingFlags.Public | BindingFlags.Instance);
-            foreach (PropertyInfo p in props)
-            {
-                properties.Add(p.Name);
-            }
             foreach (var item in source)
             {
                 var target = new TTaget();
-                CopyProperties(item, target, properties.ToArray());
+                CopyProperties(item, target);
                 result.Add(target);
             }
 
@@ -57,17 +65,66 @@ namespace Siteo.Common.Helpers
 
         }
 
+        public static void ConvertChildObjList<TSource, TTaget, TChildSource, TChildTarget>(List<TSource> source, List<TTaget> target, string property) where TChildTarget : new()
+        {
+            ConvertChildObjList<TSource, TTaget, TChildSource, TChildTarget>(source, target, property, property);
+        }
+
+        public static void ConvertChildObjList<TSource, TTaget, TChildSource, TChildTarget>(List<TSource> source, List<TTaget> target, string sourceChildProperty, string targetChildProperty) where TChildTarget : new()
+        {
+            for (int i = 0; i < source.Count; i++)
+            {
+                var currentModule = source[i];
+                var currentModuleModel = target[i];
+
+                var sp = currentModule.GetType().GetProperty(sourceChildProperty);
+                var tp = currentModuleModel.GetType().GetProperty(targetChildProperty);
+
+                var childSource = sp.GetValue(currentModule) as ICollection<TChildSource>;
+
+                tp.SetValue(currentModuleModel, ConvertObjList<TChildSource, TChildTarget>(childSource));
+            }
+
+        }
+
+        public static void CopyProperties(object source, object target)
+        {
+            PropertyInfo[] props = target.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
+            List<string> properties = new List<string>();
+            foreach (PropertyInfo p in props)
+            {
+                properties.Add(p.Name);
+            }
+
+            CopyProperties(source, target, properties.ToArray());
+        }
+
+        public static TTarget CopyProperties<TTarget>(object source) where TTarget : new()
+        {
+            var target = new TTarget();
+            PropertyInfo[] props = target.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
+            List<string> properties = new List<string>();
+            foreach (PropertyInfo p in props)
+            {
+                properties.Add(p.Name);
+            }
+
+            CopyProperties(source, target, properties.ToArray());
+
+            return target;
+        }
 
         public static void CopyProperties(object source, object target, params string[] propertyNames)
         {
-            if (source == null || target == null || propertyNames == null || propertyNames.Length == 0) {
+            if (source == null || target == null || propertyNames == null || propertyNames.Length == 0)
+            {
                 return;
             }
 
             var sType = source.GetType();
             var tType = target.GetType();
 
-            foreach(string name in propertyNames)
+            foreach (string name in propertyNames)
             {
                 try
                 {
@@ -78,7 +135,7 @@ namespace Siteo.Common.Helpers
                 }
                 catch
                 {
-                    
+
                 }
             }
 

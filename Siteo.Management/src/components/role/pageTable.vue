@@ -10,6 +10,11 @@
         >
         </el-table-column>
         <el-table-column
+        label="User Count"
+        prop="UserCount"
+        >
+        </el-table-column>
+        <el-table-column
         label="Create By"
         prop="CreateBy"
         >
@@ -48,11 +53,11 @@ export default {
 
   },
   methods:{
-      handleSelectionChange(){
-          this.$emit("selection-change",arguments);
+      handleSelectionChange(rows){
+          this.$emit("selection-change",rows);
       },
-      handleAction(){
-          this.$emit("row-action",arguments);
+      handleAction(p){
+          this.$emit("row-action",p);
       }
   }
 };

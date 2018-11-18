@@ -1,4 +1,5 @@
 ﻿using Siteo.BLL;
+using Siteo.Common;
 using Siteo.Common.Helpers;
 using Siteo.EFModel;
 using Siteo.WebAPI.Framework;
@@ -19,12 +20,152 @@ namespace Siteo.WebAPI.Controllers.Api.System
         public APIJsonResult GetList(int pageSize, int pageIndex, string keywords)
         {
             int totalCount = 0;
-            var roleList = new TRoleBLL().PagerQuery(pageSize, pageIndex, out totalCount, c => c.Name.Contains(keywords), c => c.CreateDate, false);
-            return Success(new
+            var roleList = new TRoleBLL().PagerQuery(pageSize, pageIndex, out totalCount, c => c.Name.Contains(keywords), c => c.CreateDate, true);
+            var roleModelList = UtilHelper.ConvertObjList<TRole, RoleModel>(roleList);
+
+            for(var i =0; i < roleModelList.Count; i++)
             {
-                List = UtilHelper.ConvertObjList<RoleModel,TRole>(roleList),
-                TotalCount = totalCount
-            });
+                var roleModel = roleModelList[i];
+                var role = roleList[i];
+                roleModel.UserCount = role.TAdminUserRole.Count;
+            }
+
+            return SuccessList(roleModelList, totalCount);
+        }
+
+        [HttpGet]
+        // GET api/values/5
+        public APIJsonResult Get(int id)
+        {
+            var role = new TRoleBLL().Find(c => c.ID == id);
+            var roleModel = UtilHelper.CopyProperties<RoleModel>(role);
+            if (role.TRolePermission != null && role.TRolePermission.Count > 0)
+            {
+                roleModel.PermissionIDList = role.TRolePermission.Select(c => c.PermissionID).ToList();
+            }
+
+            return Success(
+                new
+                {
+                    Data = roleModel
+                }
+                );
+        }
+
+        [HttpGet]
+        public APIJsonResult GetPermissionList()
+        {
+            var permissionList = new TPermissionBLL().Query(c => true);
+            return SuccessList<PermissionModel, TPermission>(permissionList, null);
+        }
+
+        [HttpPost]
+        public APIJsonResult Delete(int roleID)
+        {
+            var roleBLL = new TRoleBLL();
+            roleBLL.Delete(roleID);
+            roleBLL.SaveChanges();
+
+            return Success();
+        }
+
+        [HttpPost]
+        public APIJsonResult MultiDelete(int[] roleID)
+        {
+           
+            var roleBLL = new TRoleBLL();
+            roleBLL.Delete(c => roleID.Contains(c.ID));
+            roleBLL.SaveChanges();
+
+            return Success();
+        }
+
+        [HttpPost]
+        public APIJsonResult Edit(RoleModel roleModel)
+        {
+            var roleBLL = new TRoleBLL();
+            var role = new TRole();
+            UtilHelper.CopyProperties(roleModel, role);
+            AddUpdateInfo(role);
+
+            try { 
+                roleBLL.Edit(role, new string[] { "Name" });
+            }
+            catch (ValidationException ex)
+            {
+                return Failed(ex.Message);
+            }
+
+            roleBLL.SaveChanges();
+
+            var rolePermissionBLL = new TRolePermissionBLL();
+            rolePermissionBLL.Delete(c => c.RoleID == role.ID);
+
+            if (roleModel.PermissionIDList != null && roleModel.PermissionIDList.Count > 0)
+            {
+                foreach (var permissionID in roleModel.PermissionIDList)
+                {
+                    var rolePermission = new TRolePermission()
+                    {
+                        PermissionID = permissionID,
+                        RoleID = role.ID
+                    };
+
+                    AddCreateInfo(rolePermission);
+
+                    rolePermissionBLL.Add(rolePermission);
+                }
+            }
+
+            rolePermissionBLL.SaveChanges();
+
+
+            return Success();
+        }
+
+        [HttpPost]
+        // GET api/values/5
+        public APIJsonResult Add(RoleModel roleModel)
+        {
+            var roleBLL = new TRoleBLL();
+            var role = new TRole();
+            UtilHelper.CopyProperties(roleModel, role);
+
+            AddCreateInfo(role);
+
+            try
+            {
+                roleBLL.Add(role);
+            }
+            catch (ValidationException ex)
+            {
+                return Failed(ex.Message);
+            }
+
+            roleBLL.SaveChanges();
+
+            if (roleModel.PermissionIDList !=null && roleModel.PermissionIDList.Count > 0)
+            {
+                var rolePermissionBLL = new TRolePermissionBLL();
+
+                foreach (var permissionID in roleModel.PermissionIDList)
+                {
+                    var rolePermission = new TRolePermission()
+                    {
+                        PermissionID = permissionID,
+                        RoleID = role.ID
+                    };
+
+                    AddCreateInfo(rolePermission);
+
+                    rolePermissionBLL.Add(rolePermission);
+                }
+
+                rolePermissionBLL.SaveChanges();
+            }
+
+          
+            return Success();
         }
     }
 }

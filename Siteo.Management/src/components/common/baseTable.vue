@@ -59,8 +59,8 @@ export default {
     handleSelectionChange(vals) {
       this.$emit("selection-change", vals);
     },
-    handleAction(actionName, index, row) {
-      this.$emit("row-action", actionName, index, row);
+    handleAction(name, index, row) {
+      this.$emit("row-action", {name, index, row});
     }
   }
 };

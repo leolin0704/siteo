@@ -51,12 +51,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DBContextFactory.cs" />
-    <Compile Include="TAdminUserRoleDAL.cs" />
-    <Compile Include="TModuleDAL.cs" />
-    <Compile Include="TRoleDAL.cs" />
-    <Compile Include="TAdminUserDAL.cs" />
-    <Compile Include="TNoticeDAL.cs" />
-    <Compile Include="TBannerDAL.cs" />
     <Compile Include="BaseDAL.cs" />
     <Compile Include="BaseDBContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

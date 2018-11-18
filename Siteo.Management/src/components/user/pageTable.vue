@@ -48,13 +48,11 @@ export default {
 
   },
   methods:{
-      handleSelectionChange(){
+      handleSelectionChange(vals){
         this.$emit("selection-change", vals);
       },
-      handleAction(actionName,index,row){
-        this.$emit("row-action", {
-            name, index, row
-            });
+      handleAction(p){
+        this.$emit("row-action", p);
       }
   }
 };

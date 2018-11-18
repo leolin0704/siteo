@@ -45,6 +45,8 @@
     <Compile Include="TAdminUserRoleBLL.cs" />
     <Compile Include="TAdminUserBLL.cs" />
     <Compile Include="TModuleBLL.cs" />
+    <Compile Include="TRolePermissionBLL.cs" />
+    <Compile Include="TPermissionBLL.cs" />
     <Compile Include="TRoleBLL.cs" />
     <Compile Include="TNoticeBLL.cs" />
     <Compile Include="TBannerBLL.cs" />

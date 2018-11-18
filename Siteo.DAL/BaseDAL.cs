@@ -26,7 +26,9 @@ namespace Siteo.DAL
         #region 查询
         public List<TEntity> Query(Expression<Func<TEntity, bool>> where)
         {
-            return _dbset.Where(LambdaHelper.CreateEqual<TEntity>("IsDeleted", 0)).Where(where).ToList();
+            return _dbset
+                //.Where(LambdaHelper.CreateEqual<TEntity>("IsDeleted", 0))
+                .Where(where).ToList();
         }
 
 
@@ -64,7 +66,9 @@ namespace Siteo.DAL
 
         public TEntity Find(Expression<Func<TEntity, bool>> where)
         {
-            return _dbset.AsQueryable().Where(LambdaHelper.CreateEqual<TEntity>( "IsDeleted", 0 )).FirstOrDefault(where);
+            return _dbset.AsQueryable()
+                //.Where(LambdaHelper.CreateEqual<TEntity>( "IsDeleted", 0 ))
+                .FirstOrDefault(where);
         }
 
 
@@ -87,17 +91,8 @@ namespace Siteo.DAL
         public void Add(TEntity model)
         {
             var type = model.GetType();
-            var createByProperty = type.GetProperty("CreateBy");
-            var createDateProperty = type.GetProperty("CreateDate");
             var isDeletedProperty = type.GetProperty("IsDeleted");
-
-            var createBy = createByProperty.GetValue(model);
-            if (createBy == null || string.IsNullOrWhiteSpace(createBy.ToString()))
-            {
-                createByProperty.SetValue(model, "System", null);
-            }
-
-            createDateProperty.SetValue(model, DateTime.Now, null);
+            
             isDeletedProperty.SetValue(model, 0, null);
 
             _dbset.Add(model);
@@ -106,6 +101,10 @@ namespace Siteo.DAL
 
         #region 编辑
         public void Edit(TEntity model, string[] propertyName)
+        {
+            Edit(model, propertyName, true);
+        }
+        public void Edit(TEntity model, string[] propertyName, bool updateUpdateInfo)
         {
             if (model == null)
             {
@@ -117,21 +116,17 @@ namespace Siteo.DAL
             }
 
             var type = model.GetType();
-            var lastUpdateByProperty = type.GetProperty("LastUpdateBy");
-            var lastUpdateDateProperty = type.GetProperty("LastUpdateDate");
-
-            var lastUpdateBy = lastUpdateByProperty.GetValue(model);
-            if (lastUpdateBy == null || string.IsNullOrWhiteSpace(lastUpdateBy.ToString()))
-            {
-                lastUpdateByProperty.SetValue(model, "System", null);
-            }
-
-            lastUpdateDateProperty.SetValue(model, DateTime.Now, null);
 
             //将model追加到EF容器
             DbEntityEntry entry = db.Entry(model);
 
-            entry.State = EntityState.Modified;
+            entry.State = EntityState.Unchanged;
+
+            if (updateUpdateInfo)
+            {
+                entry.Property("LastUpdateBy").IsModified = true;
+                entry.Property("LastUpdateDate").IsModified = true;
+            }
 
             foreach (var item in propertyName)
             {
@@ -142,6 +137,21 @@ namespace Siteo.DAL
 
 
         #region Delete
+        public void Delete(Expression<Func<TEntity, bool>> where)
+        {
+            if (where == null)
+            {
+                throw new Exception("Delete need conditions");
+            }
+
+            var modelList = _dbset.AsQueryable().Where(where);
+
+            foreach (var model in modelList)
+            {
+                Delete(model);
+            }
+        }
+
         public void Delete(int id)
         {
             if (id == 0)

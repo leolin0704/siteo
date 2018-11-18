@@ -64,7 +64,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DBModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="MyEFConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SoftDeleteIntercepter.cs" />
     <Compile Include="TAdminUser.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>

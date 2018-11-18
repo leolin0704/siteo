@@ -6,19 +6,9 @@ using System.Web;
 
 namespace Siteo.WebAPI.Models.AdminUser
 {
-    public class RoleModel: BaseModel
+    public class PermissionModel : BaseModel
     {
         public string Name
-        {
-            get;
-            set;
-        }
-
-        public List<int> PermissionIDList {
-            get;set;
-        }
-
-        public int UserCount
         {
             get;
             set;

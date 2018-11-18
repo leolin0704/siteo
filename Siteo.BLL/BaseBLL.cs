@@ -56,6 +56,11 @@ namespace Siteo.BLL
             bdal.Edit(model, propertyName);
         }
 
+        public void Edit(TEntity model, string[] propertyName, bool updateUpdateInfo)
+        {
+            bdal.Edit(model, propertyName, updateUpdateInfo);
+        }
+
         #endregion
 
         #region  删除
@@ -68,6 +73,11 @@ namespace Siteo.BLL
         public void Delete(int id)
         {
             bdal.Delete(id);
+        }
+        
+        public void Delete(Expression<Func<TEntity, bool>> where)
+        {
+            bdal.Delete(where);
         }
 
 

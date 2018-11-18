@@ -41,16 +41,12 @@ namespace Siteo.WebAPI.Controllers.Api.System
                 return Failed("Account and password do not match.");
             }
 
+            var token = TokenManager.SaveToken(adminUser, false);
+
             adminUser.LastLoginDate = DateTime.Now;
             adminUser.LastLoginIP = Request.ServerVariables.Get("Remote_Addr").ToString();
-            
-            var token = TokenManager.SaveToken(adminUser, false);
-            adminUserBLL.Edit(adminUser, new string[] {
-                "LastLoginDate", "LastLoginIP","Token","TokenExpired"
-            });
-            
-            adminUserBLL.SaveChanges();
 
+            adminUserBLL.SaveChanges();
 
             return Success(new {
                 Token = token

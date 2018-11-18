@@ -65,7 +65,7 @@ export default {
                             this.$router.push('/');
                         }else{
                             this.$message({
-                                message: 'Account or password is not correct.',
+                                message: response.Message,
                                 type: 'warning'
                             });
                         }

@@ -5,7 +5,7 @@
     </template>
     <template slot="button">
         <el-button type="primary" @click="handleAdd">ADD</el-button>
-        <multiDeleteButton :selectedRows="selectedRows" @delete="handleMultiDelete" ></multiDeleteButton>
+        <multiDeleteButton :selectedRows="selectedRows" @delete="handleMultiDeleteConfirm" ></multiDeleteButton>
         <test v-if="false"></test>
     </template>
     <template slot="table">
@@ -133,8 +133,8 @@ export default {
       console.log(index, row,"Row deleted");
       //need implements.
     },
-    handleMultiDelete(selectedRows){
-      console.log(selectedRows,"Row deleted");
+    handleMultiDeleteConfirm(selectedRows){
+      console.log(selectedRows, "Row deleted");
       //need implements.
     },
     handleAction({name, index, row}){

@@ -1,5 +1,5 @@
 <script>
-import pageDialog from "../components/role/edit";
+import pageDialog from "../components/role/formDialog";
 import pageTable from "../components/role/pageTable";
 import baseListPage from "./baseListPage";
 
@@ -17,6 +17,44 @@ export default {
         api:"/RoleApi/GetList"
       }
     };
+  },
+  methods:{
+      handleDeleteConfirm(index, row){
+           axiosPost("/RoleApi/Delete", {roleID:row.ID}).then(response => {
+              if (response.Status == 1) {
+                  this.$message({
+                      message: response.Message,
+                      type: 'success'
+                  });
+
+                  this.loadData();
+              } else {
+                  this.$message({
+                      message: response.Message,
+                      type: 'warning'
+                  });
+              }
+          });
+      },
+      handleMultiDeleteConfirm(rows = []){
+          var ids = [];
+          rows.forEach( row => ids.push(row.ID));
+          axiosPost("/RoleApi/MultiDelete", {roleID:ids}).then(response => {
+              if (response.Status == 1) {
+                  this.$message({
+                      message: response.Message,
+                      type: 'success'
+                  });
+
+                  this.loadData();
+              } else {
+                  this.$message({
+                      message: response.Message,
+                      type: 'warning'
+                  });
+              }
+          });
+      }
   }
 };
 </script>
