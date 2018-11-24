@@ -84,12 +84,13 @@ export default {
                         });
                         
                         this.handleClose(true);
-                    } else {
-                        this.$message({
-                            message: response.Message,
-                            type: 'warning'
-                        });
                     }
+                    // else {
+                    //     this.$message({
+                    //         message: response.Message,
+                    //         type: 'warning'
+                    //     });
+                    // }
                 });
             } else if (this.mode === "edit") {
                     axiosPost("/RoleApi/edit", this.roleModel).then(response => {
@@ -100,12 +101,13 @@ export default {
                         });
 
                         this.handleClose(true);
-                    } else {
-                        this.$message({
-                            message: response.Message,
-                            type: 'warning'
-                        });
                     }
+                    // else {
+                    //     this.$message({
+                    //         message: response.Message,
+                    //         type: 'warning'
+                    //     });
+                    // }
                 });
             }
 

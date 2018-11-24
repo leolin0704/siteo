@@ -1,10 +1,19 @@
 ﻿using Siteo.EFModel;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
+
 namespace Siteo.BLL
 {
     public partial class TAdminUserBLL : BaseBLL<TAdminUser>
     {
+
+        //public new List<TAdminUser> PagerQuery<Tkey>(int pageSize, int pageIndex, out int total, Expression<Func<TAdminUser, bool>> whereLambda, Func<TAdminUser, Tkey> orderbyLambda, bool isAsc)
+        //{
+        //    var adminUserList bdal.PagerQuery(pageSize, pageIndex, out total, whereLambda, orderbyLambda, isAsc);
+        //}
+
+
         public void Register(TAdminUser userModel, TAdminUserRole roleModel)
         {
             userModel.Status = "A";

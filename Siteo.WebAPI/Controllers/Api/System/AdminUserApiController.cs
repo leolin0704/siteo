@@ -20,11 +20,39 @@ namespace Siteo.WebAPI.Controllers.Api.System
         {
             int totalCount = 0;
             var adminUserList = new TAdminUserBLL().PagerQuery(pageSize, pageIndex, out totalCount, c => c.Account.Contains(keywords), c => c.CreateDate, false);
-            return Success(new
+
+            var adminUserModelList = UtilHelper.ConvertObjList<TAdminUser, AdminUserModel>(adminUserList);
+
+            for (int i = 0; i < adminUserModelList.Count; i++)
             {
-                List = UtilHelper.ConvertObjList<TAdminUser, AdminUserModel>(adminUserList),
+                var adminUserModel = adminUserModelList[i];
+                var adminUser = adminUserList[i];
+                adminUserModel.Role = UtilHelper.CopyProperties<RoleModel>(adminUser.TAdminUserRole.First().TRole);
+            }
+
+
+            return Success("",new
+            {
+                List = adminUserModelList,
                 TotalCount = totalCount
             });
+        }
+
+
+        [HttpGet]
+        // GET api/values/5
+        public APIJsonResult Get(int id)
+        {
+            var adminUser = new TAdminUserBLL().Find(c => c.ID == id);
+            var adminUserModel = UtilHelper.CopyProperties<AdminUserModel>(adminUser);
+            adminUserModel.RoleID = adminUser.TAdminUserRole.FirstOrDefault().RoleID;
+
+            return Success("",
+                    new
+                    {
+                        Data = adminUserModel
+                    }
+                );
         }
 
         [HttpGet]
@@ -45,10 +73,34 @@ namespace Siteo.WebAPI.Controllers.Api.System
 
             UtilHelper.ConvertChildObjList<TModule, ModuleModel, TModule, ModuleModel>(modules, moduleModels, "TModule1", "ChildModules");
 
-            return Success(new
+            return Success("",new
             {
                 Modules = moduleModels
             });
+        }
+
+
+        [HttpPost]
+        public APIJsonResult Add(AdminUserRegModel adminUserModel)
+        {
+            var adminUser = new TAdminUser()
+            {
+                Account = adminUserModel.Account,
+                Password = EncryptHelper.Encrypt(adminUserModel.Password),
+            };
+
+            AddCreateInfo(adminUser);
+
+            var role = new TAdminUserRole()
+            {
+                RoleID = adminUserModel.RoleID
+            };
+
+            AddCreateInfo(role);
+
+            new TAdminUserBLL().Register(adminUser, role);
+
+            return Success();
         }
     }
 }

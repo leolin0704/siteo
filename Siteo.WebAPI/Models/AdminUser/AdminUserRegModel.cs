@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Siteo.WebAPI.Framework;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -8,33 +9,32 @@ namespace Siteo.WebAPI.Models.AdminUser
 {
     public class AdminUserRegModel : BaseModel
     {
-        [Required(ErrorMessage = "Account is required.")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Account is required.")]
         public string Account
         {
             get;
             set;
         }
 
-        [Required(ErrorMessage = "Password is required.")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Password is required.")]
+        [MinLength(5, ErrorMessage = "Password must be more than 5 charactors.")]
+        [MaxLength(30, ErrorMessage = "Password must be less than 30 charactors.")]
         public string Password
         {
             get;
             set;
         }
-        
-        public int RoleID
-        {
-            get;
-            set;
-        }
-        
-        public DateTime LastLoginDate
+
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Status is required.")]
+        [EnumDataType(typeof(AdminUserStatusList), ErrorMessage = "Status is invalid.")]
+        public string Status
         {
             get;
             set;
         }
 
-        public string LastLoginIP
+        [Range(1,int.MaxValue,ErrorMessage = "Role is required.")]
+        public int RoleID
         {
             get;
             set;

@@ -25,8 +25,15 @@ namespace Siteo.WebAPI.Models.AdminUser
             get;
             set;
         }
+
+
+        public RoleModel Role
+        {
+            get;
+            set;
+        }
         
-        public DateTime LastLoginDate
+        public DateTime? LastLoginDate
         {
             get;
             set;

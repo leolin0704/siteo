@@ -206,7 +206,8 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Framework\BaseController.cs" />
     <Compile Include="Framework\Filters\CheckPermissionFilter.cs" />
-    <Compile Include="Framework\Filters\AllowCrossSiteJsonFilter.cs" />
+    <Compile Include="Framework\Filters\ValidRequestsFilter.cs" />
+    <Compile Include="Framework\AdminUserStatusList.cs" />
     <Compile Include="Framework\Permissions.cs" />
     <Compile Include="Framework\TokenManager.cs" />
     <Compile Include="Global.asax.cs">

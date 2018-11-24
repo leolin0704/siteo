@@ -64,10 +64,10 @@ export default {
                             localStorage.setItem("token",response.Data.Token);
                             this.$router.push('/');
                         }else{
-                            this.$message({
-                                message: response.Message,
-                                type: 'warning'
-                            });
+                            // this.$message({
+                            //     message: response.Message,
+                            //     type: 'warning'
+                            // });
                         }
                         
                         this.loading = false;

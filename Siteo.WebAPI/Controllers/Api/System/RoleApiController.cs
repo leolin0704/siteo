@@ -30,7 +30,7 @@ namespace Siteo.WebAPI.Controllers.Api.System
                 roleModel.UserCount = role.TAdminUserRole.Count;
             }
 
-            return SuccessList(roleModelList, totalCount);
+            return SuccessList("", roleModelList, totalCount);
         }
 
         [HttpGet]
@@ -44,7 +44,7 @@ namespace Siteo.WebAPI.Controllers.Api.System
                 roleModel.PermissionIDList = role.TRolePermission.Select(c => c.PermissionID).ToList();
             }
 
-            return Success(
+            return Success("",
                 new
                 {
                     Data = roleModel
@@ -56,25 +56,41 @@ namespace Siteo.WebAPI.Controllers.Api.System
         public APIJsonResult GetPermissionList()
         {
             var permissionList = new TPermissionBLL().Query(c => true);
-            return SuccessList<PermissionModel, TPermission>(permissionList, null);
+            return SuccessList<PermissionModel, TPermission>("", permissionList, null);
         }
 
         [HttpPost]
         public APIJsonResult Delete(int roleID)
         {
             var roleBLL = new TRoleBLL();
-            roleBLL.Delete(roleID);
+
+            try { 
+                roleBLL.Delete(roleID);
+            }catch(ValidationException ex)
+            {
+                return Failed(ex.Message);
+            }
+
             roleBLL.SaveChanges();
 
             return Success();
         }
 
         [HttpPost]
-        public APIJsonResult MultiDelete(int[] roleID)
+        public APIJsonResult MultiDelete(int[] roleIDs)
         {
            
             var roleBLL = new TRoleBLL();
-            roleBLL.Delete(c => roleID.Contains(c.ID));
+
+            try
+            {
+                roleBLL.Delete(roleIDs);
+            }
+            catch (ValidationException ex)
+            {
+                return Failed(ex.Message);
+            }
+
             roleBLL.SaveChanges();
 
             return Success();

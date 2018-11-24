@@ -1,6 +1,6 @@
 <script>
 import baseListPage from "./baseListPage";
-import EditDialog from "../components/role/formDialog";
+import EditDialog from "../components/user/formDialog";
 import pageTable from "../components/user/pageTable";
 
 export default{

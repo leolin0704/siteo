@@ -9,7 +9,8 @@ namespace Siteo.WebAPI.Models
         SUCCESS = 1,
         FAILED = 2,
         NO_PERMISSION = 3,
-        NOT_LOGIN = 4
+        NOT_LOGIN = 4,
+        VALIDATION_FAILED = 5
     }
 
     public class ResponseResult
@@ -24,6 +25,12 @@ namespace Siteo.WebAPI.Models
         {
             this.Status = (int)status;
             this.Message = message;
+        }
+
+        public ResponseResult(ResponseResultStatus status, List<string> messageList)
+        {
+            this.Status = (int)status;
+            this.MessageList = messageList;
         }
 
         public ResponseResult(ResponseResultStatus status, string message, object data)
@@ -42,6 +49,13 @@ namespace Siteo.WebAPI.Models
             get;
             set;
         }
+
+        public List<string> MessageList
+        {
+            get;
+            set;
+        }
+
 
         public object Data {
             get;

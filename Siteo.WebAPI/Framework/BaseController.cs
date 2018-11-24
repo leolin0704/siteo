@@ -53,8 +53,13 @@ namespace Siteo.WebAPI.Framework
 
         public APIJsonResult Success(object data)
         {
+            return Success("Operation suceeded.", data);
+        }
+
+        public APIJsonResult Success(string message, object data)
+        {
             var jsonResult = new APIJsonResult();
-            jsonResult.Data = new ResponseResult(ResponseResultStatus.SUCCESS, "Operation suceeded.", data);
+            jsonResult.Data = new ResponseResult(ResponseResultStatus.SUCCESS, message, data);
             jsonResult.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
             return jsonResult;
         }
@@ -68,9 +73,28 @@ namespace Siteo.WebAPI.Framework
             });
         }
 
+        public APIJsonResult SuccessList<TTarget>(string message, List<TTarget> list, int? totalCount)
+        {
+            return Success(message, new
+            {
+                List = list,
+                TotalCount = totalCount
+            });
+        }
+
         public APIJsonResult SuccessList<TTarget, TSource>(List<TSource> data, int? totalCount) where TTarget : new()
         {
             return Success(new
+            {
+                List = UtilHelper.ConvertObjList<TSource, TTarget>(data),
+                TotalCount = totalCount
+            });
+        }
+
+
+        public APIJsonResult SuccessList<TTarget, TSource>(string messsge, List<TSource> data, int? totalCount) where TTarget : new()
+        {
+            return Success(messsge, new
             {
                 List = UtilHelper.ConvertObjList<TSource, TTarget>(data),
                 TotalCount = totalCount

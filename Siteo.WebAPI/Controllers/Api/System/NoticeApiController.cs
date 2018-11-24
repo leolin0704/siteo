@@ -17,7 +17,7 @@ namespace Siteo.WebAPI.Controllers.Api.System
         {
             int totalCount = 0;
             var noticeList = new TNoticeBLL().PagerQuery(pageSize, pageIndex, out totalCount, c => true, c => c.CreateDate, false);
-            return Success(new
+            return Success("", new
             {
                 List = noticeList,
                 TotalCount = totalCount

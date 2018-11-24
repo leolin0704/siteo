@@ -268,52 +268,58 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/10/2018 19:18:28</publishTime>
     </File>
     <File Include="bin/Siteo.BLL.dll">
-      <publishTime>11/14/2018 20:26:18</publishTime>
+      <publishTime>11/21/2018 21:40:25</publishTime>
     </File>
     <File Include="bin/Siteo.BLL.pdb">
-      <publishTime>11/14/2018 20:26:18</publishTime>
+      <publishTime>11/21/2018 21:40:25</publishTime>
     </File>
     <File Include="bin/Siteo.Common.dll">
-      <publishTime>11/14/2018 20:26:17</publishTime>
+      <publishTime>11/21/2018 21:40:23</publishTime>
     </File>
     <File Include="bin/Siteo.Common.pdb">
-      <publishTime>11/14/2018 20:26:17</publishTime>
+      <publishTime>11/21/2018 21:40:23</publishTime>
     </File>
     <File Include="bin/Siteo.DAL.dll">
-      <publishTime>11/14/2018 20:26:18</publishTime>
+      <publishTime>11/21/2018 21:40:24</publishTime>
     </File>
     <File Include="bin/Siteo.DAL.dll.config">
       <publishTime>11/10/2018 19:18:27</publishTime>
     </File>
     <File Include="bin/Siteo.DAL.pdb">
-      <publishTime>11/14/2018 20:26:18</publishTime>
+      <publishTime>11/21/2018 21:40:24</publishTime>
     </File>
     <File Include="bin/Siteo.EFModel.dll">
-      <publishTime>11/14/2018 20:26:17</publishTime>
+      <publishTime>11/21/2018 21:40:24</publishTime>
     </File>
     <File Include="bin/Siteo.EFModel.dll.config">
       <publishTime>11/10/2018 19:38:19</publishTime>
     </File>
     <File Include="bin/Siteo.EFModel.pdb">
-      <publishTime>11/14/2018 20:26:17</publishTime>
+      <publishTime>11/21/2018 21:40:24</publishTime>
     </File>
     <File Include="bin/Siteo.WebAPI.dll">
-      <publishTime>11/14/2018 20:26:25</publishTime>
+      <publishTime>11/21/2018 22:22:10</publishTime>
     </File>
     <File Include="bin/Siteo.WebAPI.pdb">
-      <publishTime>11/14/2018 20:26:25</publishTime>
+      <publishTime>11/21/2018 22:22:10</publishTime>
     </File>
     <File Include="bin/System.Diagnostics.DiagnosticSource.dll">
       <publishTime>11/10/2018 19:18:28</publishTime>
     </File>
     <File Include="bin/System.Net.Http.Formatting.dll">
-      <publishTime>11/10/2018 19:18:28</publishTime>
+      <publishTime>05/10/2018 22:38:56</publishTime>
+    </File>
+    <File Include="bin/System.Web.Cors.dll">
+      <publishTime>05/10/2018 22:37:02</publishTime>
     </File>
     <File Include="bin/System.Web.Helpers.dll">
       <publishTime>11/10/2018 19:18:28</publishTime>
     </File>
+    <File Include="bin/System.Web.Http.Cors.dll">
+      <publishTime>05/10/2018 22:39:40</publishTime>
+    </File>
     <File Include="bin/System.Web.Http.dll">
-      <publishTime>11/10/2018 19:18:28</publishTime>
+      <publishTime>05/10/2018 22:39:16</publishTime>
     </File>
     <File Include="bin/System.Web.Http.WebHost.dll">
       <publishTime>11/10/2018 19:18:28</publishTime>
@@ -430,7 +436,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/10/2018 19:18:27</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>11/14/2018 20:26:26</publishTime>
+      <publishTime>11/21/2018 22:22:12</publishTime>
     </File>
   </ItemGroup>
 </Project>

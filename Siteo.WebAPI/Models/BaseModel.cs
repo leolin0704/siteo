@@ -10,7 +10,7 @@ namespace Siteo.WebAPI.Models
         public int ID { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime? LastUpdateDate { get; set; }
-        public String CreateBy { get; set; }
+        public string CreateBy { get; set; }
         public DateTime LastUpdateBy { get; set; }
     }
 }

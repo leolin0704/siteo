@@ -2,11 +2,23 @@ import web from "../config/web.js";
 import axios from "axios";
 import qs from "qs";
 import router from '../route/index.js';
+import { Message, Notification } from 'element-ui';
+import { responseStatusList } from '../config/consts.js';
+
+
 
 // 添加一个请求拦截器
 axios.interceptors.request.use(function (config) {
     
     config.headers.token = localStorage.getItem("token");
+
+
+    config.headers.common = { ...config.headers.common, ...{
+        'Access-Control-Allow-Origin' : '*',
+        'Access-Control-Allow-Methods' : '*',
+        'Access-Control-Allow-Headers' : '*'
+      } 
+    };
     // Do something before request is sent
     return config;
   }, function (error) {
@@ -31,10 +43,33 @@ var getUrl = (url) => {
 }
 
 var processCommonResponse = (response) => {
-    if(response.Status === 3){
+    if(response.Status === responseStatusList.NO_PERMISSION){
         router.push("/");
-    }else if(response.Status === 4){
+    }else if(response.Status === responseStatusList.NOT_LOGIN){
         router.push("/login");
+    }else{
+        var message = "";
+        if(response.MessageList){
+            message = response.MessageList.join("<br />");
+        }else if(response.Message){
+            message = response.Message;
+        }
+
+        if(message){
+            if(response.Status === responseStatusList.SUCCESS){
+                Message({
+                    message,
+                    type:"success"
+                })
+            }else{
+                Notification({
+                    title: 'Operation Failed',
+                    dangerouslyUseHTMLString: true,
+                    message,
+                    type: 'warning'
+                })
+            }
+        }
     }
 
     return response;

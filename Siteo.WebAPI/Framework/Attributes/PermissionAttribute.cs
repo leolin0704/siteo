@@ -8,7 +8,7 @@ namespace Siteo.WebAPI.Attributes.Permissions
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = false)]
     public sealed class PermissionAttribute : Attribute
     {
-        private readonly string[] _permissionList;
+        private string[] _permissionList;
 
         public PermissionAttribute(params string[] permissionList)
         {

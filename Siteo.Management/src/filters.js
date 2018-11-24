@@ -1,6 +1,4 @@
-let date = (date, fmt) => {
-    if(!fmt) fmt = "yyyy-MM-dd hh:mm:ss";
-
+let date = (date, fmt = "yyyy-MM-dd hh:mm:ss") => {
     if(!date){
         return "";
     }

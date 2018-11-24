@@ -28,18 +28,19 @@ export default {
                   });
 
                   this.loadData();
-              } else {
-                  this.$message({
-                      message: response.Message,
-                      type: 'warning'
-                  });
               }
+            //   else {
+            //       this.$message({
+            //           message: response.Message,
+            //           type: 'warning'
+            //       });
+            //   }
           });
       },
       handleMultiDeleteConfirm(rows = []){
           var ids = [];
           rows.forEach( row => ids.push(row.ID));
-          axiosPost("/RoleApi/MultiDelete", {roleID:ids}).then(response => {
+          axiosPost("/RoleApi/MultiDelete", {roleIDs:ids}).then(response => {
               if (response.Status == 1) {
                   this.$message({
                       message: response.Message,
@@ -47,12 +48,13 @@ export default {
                   });
 
                   this.loadData();
-              } else {
-                  this.$message({
-                      message: response.Message,
-                      type: 'warning'
-                  });
               }
+            //   else {
+            //       this.$message({
+            //           message: response.Message,
+            //           type: 'warning'
+            //       });
+            //   }
           });
       }
   }

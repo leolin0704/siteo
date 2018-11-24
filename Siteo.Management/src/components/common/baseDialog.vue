@@ -65,7 +65,6 @@ export default {
         handleSave() {
             //TODO
             this.$emit("save");
-            this.handleClose();
         },
         handleOpened() {
             this.$emit("opened");

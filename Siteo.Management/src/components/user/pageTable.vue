@@ -5,11 +5,37 @@
     @row-action="handleAction"
     >
         <el-table-column
-        label="Name"
-        prop="Name"
+        label="Account"
+        prop="Account"
         >
         </el-table-column>
         <el-table-column
+        label="Role Name"
+        >
+        <template slot-scope="scope">
+            {{scope.row.Role.Name}}
+        </template>
+        </el-table-column>
+        <el-table-column
+        label="Status"
+        >
+        <template slot-scope="scope">
+            {{adminUserStatus[scope.row.Status]}}
+        </template>
+        </el-table-column>
+        <el-table-column
+        label="Last Login IP"
+        prop="LastLoginIP"
+        >
+        </el-table-column>
+        <el-table-column
+        label="Last Login Date"
+        >
+        <template slot-scope="scope">
+            {{scope.row.LastLoginDate | date}}
+        </template>
+        </el-table-column>
+        <!-- <el-table-column
         label="Create By"
         prop="CreateBy"
         >
@@ -21,12 +47,13 @@
                 <i class="el-icon-time"></i>
                 <span style="margin-left: 10px">{{ scope.row.CreateDate | date }}</span>
             </template>
-        </el-table-column>
+        </el-table-column> -->
     </baseTable>
 </template>
 
 <script>
 import baseTable from "../common/baseTable";
+import {adminUserStatus} from "../../config/consts.js";
 
 export default {
   name: "userPageTable",
@@ -38,7 +65,7 @@ export default {
   },
   data() {
     return {
-     
+        adminUserStatus
     };
   },
   components: {

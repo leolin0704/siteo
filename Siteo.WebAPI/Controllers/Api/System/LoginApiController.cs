@@ -26,7 +26,7 @@ namespace Siteo.WebAPI.Controllers.Api.System
                 "LastLoginDate",
                 "LastLoginIP"
             });
-            return Success(new {
+            return Success("", new {
                 AdminUser = sessionUserModel
             });
         }
@@ -48,28 +48,9 @@ namespace Siteo.WebAPI.Controllers.Api.System
 
             adminUserBLL.SaveChanges();
 
-            return Success(new {
+            return Success("Login successfully.", new {
                 Token = token
             });
-        }
-
-
-        [HttpPost]
-        public APIJsonResult Add(AdminUserRegModel adminUserModel)
-        {
-            var adminUser = new TAdminUser()
-            {
-                Account = adminUserModel.Account,
-                Password = EncryptHelper.Encrypt(adminUserModel.Password),
-            };
-
-            var role = new TAdminUserRole()
-            {
-                RoleID = adminUserModel.RoleID
-            };
-            new TAdminUserBLL().Register(adminUser, role);
-
-            return Success();
         }
     }
 }
