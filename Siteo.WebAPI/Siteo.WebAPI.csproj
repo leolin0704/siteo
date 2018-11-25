@@ -213,6 +213,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AdminUser\AdminUserEditModel.cs" />
     <Compile Include="Models\AdminUser\AdminUserRegModel.cs" />
     <Compile Include="Models\AdminUser\ModuleModel.cs" />
     <Compile Include="Models\AdminUser\PermissionModel.cs" />

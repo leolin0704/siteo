@@ -22,19 +22,8 @@ export default {
       handleDeleteConfirm(index, row){
            axiosPost("/RoleApi/Delete", {roleID:row.ID}).then(response => {
               if (response.Status == 1) {
-                  this.$message({
-                      message: response.Message,
-                      type: 'success'
-                  });
-
                   this.loadData();
               }
-            //   else {
-            //       this.$message({
-            //           message: response.Message,
-            //           type: 'warning'
-            //       });
-            //   }
           });
       },
       handleMultiDeleteConfirm(rows = []){
@@ -42,19 +31,8 @@ export default {
           rows.forEach( row => ids.push(row.ID));
           axiosPost("/RoleApi/MultiDelete", {roleIDs:ids}).then(response => {
               if (response.Status == 1) {
-                  this.$message({
-                      message: response.Message,
-                      type: 'success'
-                  });
-
                   this.loadData();
               }
-            //   else {
-            //       this.$message({
-            //           message: response.Message,
-            //           type: 'warning'
-            //       });
-            //   }
           });
       }
   }

@@ -1,7 +1,7 @@
-﻿using Siteo.EFModel;
-using System;
+﻿using Siteo.Common;
+using Siteo.EFModel;
 using System.Collections.Generic;
-using System.Linq.Expressions;
+using System.Linq;
 
 namespace Siteo.BLL
 {
@@ -16,7 +16,13 @@ namespace Siteo.BLL
 
         public void Register(TAdminUser userModel, TAdminUserRole roleModel)
         {
-            userModel.Status = "A";
+
+            var existAccount = Find(u => u.Account == userModel.Account);
+
+            if (existAccount != null)
+            {
+                throw new ValidationException("Account name duplicated.");
+            }
      
             Add(userModel);
 
@@ -68,6 +74,34 @@ namespace Siteo.BLL
 
             return false;
         }
+
+
+        private string saAccount = "admin";
+
+        public new void Delete(int adminID)
+        {
+            var adminUser = Find(r => r.ID == adminID);
+
+            if (string.Compare(adminUser.Account, saAccount) == 0)
+            {
+                throw new ValidationException("Admin could not be deleted.");
+            }
+
+            base.Delete(adminID);
+        }
+
+        public void Delete(int[] adminUserIDs)
+        {
+            var sa = Query(r => adminUserIDs.Contains(r.ID)).FirstOrDefault(r => r.Account.Equals(saAccount));
+
+            if (sa != null)
+            {
+                throw new ValidationException("Admin could not be deleted.");
+            }
+
+            base.Delete(c => adminUserIDs.Contains(c.ID));
+        }
+
 
         public List<TPermission> GetPermissions(ICollection<TAdminUserRole> adminUserRoles)
         {

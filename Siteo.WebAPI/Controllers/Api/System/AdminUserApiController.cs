@@ -1,4 +1,5 @@
 ﻿using Siteo.BLL;
+using Siteo.Common;
 using Siteo.Common.Helpers;
 using Siteo.EFModel;
 using Siteo.WebAPI.Framework;
@@ -83,10 +84,14 @@ namespace Siteo.WebAPI.Controllers.Api.System
         [HttpPost]
         public APIJsonResult Add(AdminUserRegModel adminUserModel)
         {
+            var adminUserBLL = new TAdminUserBLL();
+
+
             var adminUser = new TAdminUser()
             {
                 Account = adminUserModel.Account,
                 Password = EncryptHelper.Encrypt(adminUserModel.Password),
+                Status = adminUserModel.Status
             };
 
             AddCreateInfo(adminUser);
@@ -97,8 +102,91 @@ namespace Siteo.WebAPI.Controllers.Api.System
             };
 
             AddCreateInfo(role);
+            try { 
+                adminUserBLL.Register(adminUser, role);
+            }
+            catch (ValidationException ex)
+            {
+                return Failed(ex.Message);
+            }
 
-            new TAdminUserBLL().Register(adminUser, role);
+            return Success();
+        }
+
+        [HttpPost]
+        public APIJsonResult Edit(AdminUserEditModel adminUserModel)
+        {
+            var adminUserBLL = new TAdminUserBLL();
+            var adminUser = adminUserBLL.Find(u => u.ID == adminUserModel.ID);
+
+            AddUpdateInfo(adminUser);
+
+            List<string> updatedField = new List<string>();
+
+            if(!string.IsNullOrEmpty(adminUserModel.Password))
+            {
+                adminUser.Password = EncryptHelper.Encrypt(adminUserModel.Password);
+            }
+
+            adminUser.Status = adminUserModel.Status;
+
+            adminUserBLL.SaveChanges();
+
+            var adminUserRoleBLL = new TAdminUserRoleBLL();
+            var adminUserRole = adminUserRoleBLL.Find(r => r.AdminUserID == adminUser.ID);
+
+            adminUserRole.RoleID = adminUserModel.RoleID;
+
+            AddUpdateInfo(adminUserRole);
+            adminUserRoleBLL.SaveChanges();
+
+            return Success();
+        }
+
+
+        [HttpPost]
+        public APIJsonResult Delete(int adminUserID)
+        {
+            var adminUserBLL = new TAdminUserBLL();
+            try
+            {
+                adminUserBLL.Delete(adminUserID);
+                adminUserBLL.SaveChanges();
+            }
+            catch (ValidationException ex)
+            {
+                return Failed(ex.Message);
+            }
+
+            var adminUserRoleBLL = new TAdminUserRoleBLL();
+            adminUserRoleBLL.Delete(ur => ur.AdminUserID == adminUserID);
+            adminUserRoleBLL.SaveChanges();
+
+            return Success();
+        }
+
+        [HttpPost]
+        public APIJsonResult MultiDelete(int[] adminUserIDs)
+        {
+
+            var adminUserBLL = new TAdminUserBLL();
+            var adminUserRoleIDs = adminUserBLL.Query(u => adminUserIDs.Contains(u.ID)).Select(u => u.TAdminUserRole.First().ID);
+
+            try
+            {
+
+                adminUserBLL.Delete(adminUserIDs);
+                adminUserBLL.SaveChanges();
+            }
+            catch(ValidationException ex)
+            {
+                return Failed(ex.Message);
+            }
+
+            var adminUserRoleBLL = new TAdminUserRoleBLL();
+            adminUserRoleBLL.Delete(ur => adminUserRoleIDs.Contains(ur.ID));
+            adminUserRoleBLL.SaveChanges();
+
 
             return Success();
         }

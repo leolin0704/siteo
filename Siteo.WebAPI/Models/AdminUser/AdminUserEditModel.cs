@@ -7,7 +7,7 @@ using System.Web;
 
 namespace Siteo.WebAPI.Models.AdminUser
 {
-    public class AdminUserRegModel : BaseModel
+    public class AdminUserEditModel : BaseModel
     {
         [Required(AllowEmptyStrings = false, ErrorMessage = "Account is required.")]
         [MinLength(5, ErrorMessage = "Account must be more than 5 charactors.")]
@@ -17,8 +17,7 @@ namespace Siteo.WebAPI.Models.AdminUser
             get;
             set;
         }
-
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Password is required.")]
+        
         [MinLength(5, ErrorMessage = "Password must be more than 5 charactors.")]
         [MaxLength(30, ErrorMessage = "Password must be less than 30 charactors.")]
         public string Password

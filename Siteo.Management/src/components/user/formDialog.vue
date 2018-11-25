@@ -1,8 +1,8 @@
 <template>
 <baseDialog :mode="mode" name="Admin User" :visible="visible" @close="handleClose" @open="handleOpen" @opened="handleOpened" @save="handleSave">    
-    <el-form ref="adminUserForm" :model="adminUserModel"  :rules="rules" >
+    <el-form ref="adminUserForm" :validate-on-rule-change="false" :model="adminUserModel"  :rules="rules" >
         <el-form-item label="Account" prop="Account" :label-width="formLabelWidth">
-            <el-input :disabled="mode === 'view'" v-model="adminUserModel.Account" autocomplete="off"></el-input>
+            <el-input :disabled="mode !== 'add'" v-model="adminUserModel.Account" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="Password" prop="Password" :label-width="formLabelWidth">
             <el-input type="password" :disabled="mode === 'view'" v-model="adminUserModel.Password" autocomplete="off"></el-input>
@@ -11,7 +11,7 @@
             <el-input type="password" :disabled="mode === 'view'" v-model="adminUserModel.ConfirmPassword" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="Status" prop="Status" :label-width="formLabelWidth">
-            <el-select v-model="adminUserModel.Status" placeholder="Please select...">
+            <el-select :disabled="mode === 'view'" v-model="adminUserModel.Status" placeholder="Please select...">
                 <el-option
                 v-for="(value, key) in adminUserStatus"
                 :key="key"
@@ -21,7 +21,7 @@
             </el-select>
         </el-form-item>
         <el-form-item label="Role" prop="RoleID" :label-width="formLabelWidth">
-            <el-select v-model="adminUserModel.RoleID" placeholder="Please select...">
+            <el-select :disabled="mode === 'view'" v-model="adminUserModel.RoleID" placeholder="Please select...">
                 <el-option
                 v-for="item in RoleList"
                 :key="item.ID"
@@ -55,42 +55,11 @@ export default {
         }
     },
     data() {
-        const validatePass2 = (rule, value, callback) => {
-            if (value === '') {
-                callback(new Error('Comfirm password is required.'));
-            } else if (value !== this.adminUserModel.Password) {
-                callback(new Error('Confirm password must be same as password.'));
-            } else {
-                callback();
-            }
-        };
-
-
         return {
             adminUserModel: {},
             RoleList: {},
             formLabelWidth: "200px",
-            adminUserStatus,
-            rules:{
-                Account: [
-                    { required: true, message: 'Account is required.', trigger: 'blur' },
-                    { min: 5, max: 30, message: 'Account length should between 5 to 30.', trigger: 'blur' }
-                ],
-                Password: [
-                    { required: true, message: 'Password is required.', trigger: 'blur' },
-                    { min: 5, max: 30, message: 'Password length should between 5 to 30.', trigger: 'blur' }
-                ],
-                ConfirmPassword: [
-                    { required: true, message: 'Confirm password is required.', trigger: 'blur' },
-                    { validator: validatePass2, trigger: 'blur' }
-                ],
-                Status: [
-                    { required: true, message: 'Status is required.', trigger: 'blur' }
-                ],
-                RoleID: [
-                    { required: true, message: 'Role is required.', trigger: 'blur' }
-                ],
-            }
+            adminUserStatus
         }
     },
     components: {
@@ -98,6 +67,37 @@ export default {
     },
     mounted() {
 
+    },
+    computed:{
+        rules(){
+            const validatePass2 = (rule, value, callback) => {
+                if (value != this.adminUserModel.Password) {
+                    callback(new Error('Confirm password must be same as password.'));
+                } else {
+                    callback();
+                }
+            };
+
+            return {
+                Account: [
+                    { required: true, message: 'Account is required.', trigger: 'blur' },
+                    { min: 5, max: 30, message: 'Account length should between 5 to 30.', trigger: 'blur' }
+                ],
+                Password: [
+                    { required: this.mode === "add", message: 'Password is required.', trigger: 'blur' },
+                    { min: 5, max: 30, message: 'Password length should between 5 to 30.', trigger: 'blur' }
+                ],
+                ConfirmPassword: [
+                    { validator: validatePass2, trigger: 'blur' }
+                ],
+                Status: [
+                    { required: true, message: 'Status is required.', trigger: 'blur' }
+                ],
+                RoleID: [
+                    { required: true, message: 'Role is required.', trigger: 'blur' }
+                ]
+            }
+        }
     },
     methods: {
         loadRoles() {
@@ -170,15 +170,10 @@ export default {
             });
         },
         handleOpen() {
-            this.adminUserModel = {
-                Account: "",
-                Password:"",
-                RoleID:""
-            };
-
-            this.$refs["adminUserForm"].resetFields();
+            
         },
         handleOpened() {
+            
             let loading = this.$loading({
                 lock: true,
                 fullscreen: true
@@ -188,6 +183,13 @@ export default {
             });
         },
         handleClose(saved = false) {
+            this.adminUserModel = {
+                Account: "",
+                Password:"",
+                RoleID:"",
+                Status:""
+            };
+            this.$refs["adminUserForm"].resetFields();
             this.$emit("close", saved);
         }
     }

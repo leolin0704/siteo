@@ -3,7 +3,7 @@ import baseListPage from "./baseListPage";
 import EditDialog from "../components/user/formDialog";
 import pageTable from "../components/user/pageTable";
 
-export default{
+export default {
     extends:baseListPage,
     name: "user",
     components:{
@@ -16,7 +16,25 @@ export default{
                 api:"/AdminUserApi/GetList"
             }
         };
-    }
+    },
+    methods:{
+      handleDeleteConfirm(index, row){
+           axiosPost("/AdminUserApi/Delete", {adminUserID:row.ID}).then(response => {
+              if (response.Status == 1) {
+                  this.loadData();
+              }
+          });
+      },
+      handleMultiDeleteConfirm(rows = []){
+          var ids = [];
+          rows.forEach( row => ids.push(row.ID));
+          axiosPost("/AdminUserApi/MultiDelete", {adminUserIDs:ids}).then(response => {
+              if (response.Status == 1) {
+                  this.loadData();
+              }
+          });
+      }
+  }
 };
 </script>
 
