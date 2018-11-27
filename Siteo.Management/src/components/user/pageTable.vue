@@ -3,51 +3,44 @@
     :data="data"
     @selection-change="handleSelectionChange"
     @row-action="handleAction"
+    tableId="tblUser"
     >
         <el-table-column
         label="Account"
-        prop="Account"
         >
+            <template slot-scope="scope">
+                <span at-key="Account">{{scope.row.Account}}</span>
+            </template>
         </el-table-column>
         <el-table-column
         label="Role Name"
         >
-        <template slot-scope="scope">
-            {{scope.row.Role.Name}}
-        </template>
+            <template slot-scope="scope">
+                <span at-key="RoleName">{{scope.row.Role.Name}}</span>
+            </template>
         </el-table-column>
         <el-table-column
         label="Status"
         >
-        <template slot-scope="scope">
-            {{adminUserStatus[scope.row.Status]}}
-        </template>
+            <template slot-scope="scope">
+                <span at-key="Status">{{adminUserStatus[scope.row.Status]}}</span>
+            </template>
         </el-table-column>
         <el-table-column
         label="Last Login IP"
-        prop="LastLoginIP"
         >
+            <template slot-scope="scope">
+                <span at-key="LastLoginIP">{{scope.row.LastLoginIP}}</span>
+            </template>
         </el-table-column>
         <el-table-column
         label="Last Login Date"
         >
         <template slot-scope="scope">
-            {{scope.row.LastLoginDate | date}}
+            <i class="el-icon-time"></i>
+            <span at-key="LastLoginDate">{{scope.row.LastLoginDate | date}}</span>
         </template>
         </el-table-column>
-        <!-- <el-table-column
-        label="Create By"
-        prop="CreateBy"
-        >
-        </el-table-column>
-        <el-table-column
-        label="Create Date"
-        width="180">
-            <template slot-scope="scope">
-                <i class="el-icon-time"></i>
-                <span style="margin-left: 10px">{{ scope.row.CreateDate | date }}</span>
-            </template>
-        </el-table-column> -->
     </baseTable>
 </template>
 

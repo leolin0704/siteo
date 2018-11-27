@@ -4,9 +4,8 @@
       <baseQuery @query="loadData" @reset="loadData" :conditionTypes="query.conditionTypes"></baseQuery>
     </template>
     <template slot="button">
-        <el-button type="primary" @click="handleAdd">ADD</el-button>
+        <el-button at-key="btnAdd" type="primary" @click="handleAdd">ADD</el-button>
         <multiDeleteButton :selectedRows="selectedRows" @delete="handleMultiDeleteConfirm" ></multiDeleteButton>
-        <test v-if="false"></test>
     </template>
     <template slot="table">
         <pageDialog

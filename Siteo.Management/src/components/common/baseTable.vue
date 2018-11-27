@@ -1,5 +1,6 @@
 <template>
     <el-table
+        :id="tableId"
         :data="data"
         stripe
         @selection-change="handleSelectionChange"
@@ -14,7 +15,7 @@
         width="180"
         >
         <template slot-scope="scope">
-            <el-button v-for="action in actions" :key="action.name"
+            <el-button :at-key="action.name" v-for="action in actions" :key="action.name"
             size="mini"
             :icon="action.icon"
             :type="action.type"
@@ -27,6 +28,10 @@
 export default {
   name: "baseTable",
   props: {
+    tableId:{
+        type:String,
+        default:""
+    },
     data: {
       type: Array,
       default: () => []

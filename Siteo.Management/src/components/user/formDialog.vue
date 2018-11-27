@@ -2,16 +2,16 @@
 <baseDialog :mode="mode" name="Admin User" :visible="visible" @close="handleClose" @open="handleOpen" @opened="handleOpened" @save="handleSave">    
     <el-form ref="adminUserForm" :validate-on-rule-change="false" :model="adminUserModel"  :rules="rules" >
         <el-form-item label="Account" prop="Account" :label-width="formLabelWidth">
-            <el-input :disabled="mode !== 'add'" v-model="adminUserModel.Account" autocomplete="off"></el-input>
+            <el-input id="txtUserAccount" :disabled="mode !== 'add'" v-model="adminUserModel.Account" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="Password" prop="Password" :label-width="formLabelWidth">
-            <el-input type="password" :disabled="mode === 'view'" v-model="adminUserModel.Password" autocomplete="off"></el-input>
+            <el-input id="txtUserPassword" type="password" :disabled="mode === 'view'" v-model="adminUserModel.Password" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="Confirm Password" prop="ConfirmPassword" :label-width="formLabelWidth">
-            <el-input type="password" :disabled="mode === 'view'" v-model="adminUserModel.ConfirmPassword" autocomplete="off"></el-input>
+            <el-input id="txtUserConfirmPassword" type="password" :disabled="mode === 'view'" v-model="adminUserModel.ConfirmPassword" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="Status" prop="Status" :label-width="formLabelWidth">
-            <el-select :disabled="mode === 'view'" v-model="adminUserModel.Status" placeholder="Please select...">
+            <el-select id="selUserStatusList" :disabled="mode === 'view'" v-model="adminUserModel.Status" placeholder="Please select...">
                 <el-option
                 v-for="(value, key) in adminUserStatus"
                 :key="key"
@@ -21,7 +21,7 @@
             </el-select>
         </el-form-item>
         <el-form-item label="Role" prop="RoleID" :label-width="formLabelWidth">
-            <el-select :disabled="mode === 'view'" v-model="adminUserModel.RoleID" placeholder="Please select...">
+            <el-select id="selUserRoles" :disabled="mode === 'view'" v-model="adminUserModel.RoleID" placeholder="Please select...">
                 <el-option
                 v-for="item in RoleList"
                 :key="item.ID"

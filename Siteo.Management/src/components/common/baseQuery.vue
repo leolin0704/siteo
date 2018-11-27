@@ -1,15 +1,15 @@
 <template>
 <el-form :inline="true" :model="queryForm">
     <el-form-item>
-        <el-input placeholder="Please input query condition..." v-model="queryForm.value" class="query-with-type">
+        <el-input at-key="txtBaseQuery" placeholder="Please input query condition..." v-model="queryForm.value" class="query-with-type">
             <el-select v-if="conditionTypes && conditionTypes.length" v-model="queryForm.type" slot="prepend" placeholder="Please choose...">
                 <el-option v-for="type in conditionTypes" :key="type.Value" :label="type.Label" :value="type.Value"></el-option>
             </el-select>
-            <el-button slot="append" type="primary" @click="handleQuery">QUERY</el-button>
+            <el-button at-key="btnBaseQuery" slot="append" type="primary" @click="handleQuery">QUERY</el-button>
         </el-input>
     </el-form-item>
 <el-form-item>
-    <el-button @click="handleReset" >RESET</el-button>
+    <el-button at-key="btnBaseQueryReset" @click="handleReset" >RESET</el-button>
 </el-form-item>
 </el-form>
 </template>

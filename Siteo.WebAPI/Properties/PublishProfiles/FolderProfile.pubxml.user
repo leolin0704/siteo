@@ -268,10 +268,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/10/2018 19:18:28</publishTime>
     </File>
     <File Include="bin/Siteo.BLL.dll">
-      <publishTime>11/21/2018 21:40:25</publishTime>
+      <publishTime>11/26/2018 19:09:49</publishTime>
     </File>
     <File Include="bin/Siteo.BLL.pdb">
-      <publishTime>11/21/2018 21:40:25</publishTime>
+      <publishTime>11/26/2018 19:09:49</publishTime>
     </File>
     <File Include="bin/Siteo.Common.dll">
       <publishTime>11/21/2018 21:40:23</publishTime>
@@ -298,10 +298,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/21/2018 21:40:24</publishTime>
     </File>
     <File Include="bin/Siteo.WebAPI.dll">
-      <publishTime>11/21/2018 22:22:10</publishTime>
+      <publishTime>11/26/2018 19:10:13</publishTime>
     </File>
     <File Include="bin/Siteo.WebAPI.pdb">
-      <publishTime>11/21/2018 22:22:10</publishTime>
+      <publishTime>11/26/2018 19:10:13</publishTime>
     </File>
     <File Include="bin/System.Diagnostics.DiagnosticSource.dll">
       <publishTime>11/10/2018 19:18:28</publishTime>

@@ -1,5 +1,6 @@
 <template>
     <el-pagination
+        at-key="basePager"
         background
         :page-size="pageSize"
         :current-page="currentPage"

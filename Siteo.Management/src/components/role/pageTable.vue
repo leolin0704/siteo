@@ -3,28 +3,36 @@
     :data="data"
     @selection-change="handleSelectionChange"
     @row-action="handleAction"
+    tableId="tblRole"
     >
         <el-table-column
         label="Name"
-        prop="Name"
         >
+            <template slot-scope="scope">
+                <span at-key="Name">{{scope.row.Name}}</span>
+            </template>
         </el-table-column>
         <el-table-column
         label="User Count"
         prop="UserCount"
         >
+            <template slot-scope="scope">
+                <span at-key="UserCount">{{scope.row.UserCount}}</span>
+            </template>
         </el-table-column>
         <el-table-column
         label="Create By"
-        prop="CreateBy"
         >
+            <template slot-scope="scope">
+                <span at-key="CreateBy">{{scope.row.CreateBy}}</span>
+            </template>
         </el-table-column>
         <el-table-column
         label="Create Date"
         width="180">
             <template slot-scope="scope">
                 <i class="el-icon-time"></i>
-                <span style="margin-left: 10px">{{ scope.row.CreateDate | date }}</span>
+                <span style="margin-left: 10px" at-key="CreateDate">{{ scope.row.CreateDate | date }}</span>
             </template>
         </el-table-column>
     </baseTable>

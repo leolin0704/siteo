@@ -2,10 +2,10 @@
 <baseDialog :mode="mode" name="Role" :visible="visible" @close="handleClose" @open="handleOpen" @opened="handleOpened" @save="handleSave">
     <el-form :model="roleModel">
         <el-form-item label="Name" :label-width="formLabelWidth">
-            <el-input :disabled="mode === 'view'" v-model="roleModel.Name" autocomplete="off"></el-input>
+            <el-input id="txtRoleName" :disabled="mode === 'view'" v-model="roleModel.Name" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="Permissions" :label-width="formLabelWidth">
-            <el-checkbox-group v-model="roleModel.PermissionIDList" :disabled="mode === 'view'">
+            <el-checkbox-group id="txtRolePermissions" v-model="roleModel.PermissionIDList" :disabled="mode === 'view'">
                 <el-checkbox v-for="permission in Permissions" :label="permission.ID" :key="permission.ID">{{permission.Name}}</el-checkbox>
             </el-checkbox-group>
         </el-form-item>

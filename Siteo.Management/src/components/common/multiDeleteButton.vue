@@ -1,11 +1,15 @@
 <template>
-    <el-button :disabled="!this.selectedRows || this.selectedRows.length ===0" @click="handleMultiDelete">DELETE</el-button>
+    <el-button at-key="btnMultiDelete" :disabled="!this.selectedRows || this.selectedRows.length ===0" @click="handleMultiDelete">DELETE</el-button>
 </template>
 
 <script>
 export default {
   name: "multiDeleteButton",
   props:{
+      id:{
+          type:String,
+          default:""
+      },
       selectedRows:{
           type:Array,
           default:[]
