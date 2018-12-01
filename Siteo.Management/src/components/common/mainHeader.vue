@@ -1,5 +1,5 @@
 <template>
-<el-menu :default-active="$route.path" mode="horizontal" :router="true" >
+<el-menu :default-active="$route.path" mode="horizontal" :router="true" :loading="loading">
     <el-menu-item index="/home">
         Home
     </el-menu-item>
@@ -23,14 +23,18 @@ export default {
     name: "mainHeader",
     data() {
         return {
+            loading:false,
             modules:[]
         };
     },
     mounted(){
+        this.loading = true;
         get("/AdminUserApi/GetModuleList").then(response => {
             if(response.Status === 1){
                 this.modules = response.Data.Modules;
             }
+
+             this.loading = false;
         })
     },
     methods: {
