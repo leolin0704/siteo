@@ -48,7 +48,7 @@ namespace Siteo.WebAPI.Controllers.Api.System
 
             adminUserBLL.SaveChanges();
 
-            return Success("Login successfully.", new {
+            return Success("", new {
                 Token = token
             });
         }

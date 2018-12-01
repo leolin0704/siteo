@@ -1,10 +1,10 @@
 <template>
-<el-dialog :title="getTitle()" width="70%" append-to-body :visible="visible" @close="handleClose" @opened="handleOpened" @open="handleOpen">
+<el-dialog :title="getTitle()" width="80%" append-to-body :visible="visible" @close="handleClose" @opened="handleOpened" @open="handleOpen">
     <slot></slot>
     <div slot="footer" class="dialog-footer">
         <slot name="button">
-            <el-button v-if="mode !== 'view'" type="primary" @click="handleSave">SAVE</el-button>
             <el-button @click="handleClose">CANCEL</el-button>
+            <el-button v-if="mode !== 'view'" type="primary" @click="handleSave">SAVE</el-button>
         </slot>
     </div>
 </el-dialog>

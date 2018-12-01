@@ -24,10 +24,11 @@ export default {
     mounted(){
         get("/NoticeApi/GetList", {
             pageSize:5,
-            pageIndex:1
+            pageIndex:1,
+            keywords:""
         }).then(response => {
             if(response.Status === 1){
-                this.noticeList = response.Data.NoticeList;
+                this.noticeList = response.Data.List;
             }
         })
     }

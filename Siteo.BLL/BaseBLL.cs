@@ -74,12 +74,14 @@ namespace Siteo.BLL
         {
             bdal.Delete(id);
         }
-        
+
+
         public void Delete(Expression<Func<TEntity, bool>> where)
         {
             bdal.Delete(where);
         }
 
+         
 
         public void Delete(TEntity model)
         {
