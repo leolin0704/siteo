@@ -217,6 +217,7 @@
     <Compile Include="Models\AdminUser\AdminUserRegModel.cs" />
     <Compile Include="Models\AdminUser\ModuleModel.cs" />
     <Compile Include="Models\AdminUser\PermissionModel.cs" />
+    <Compile Include="Models\AdminUser\NoticeModel.cs" />
     <Compile Include="Models\AdminUser\RoleModel.cs" />
     <Compile Include="Models\AdminUser\LoginModel.cs" />
     <Compile Include="Models\AdminUser\AdminUserModel.cs" />

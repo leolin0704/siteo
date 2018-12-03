@@ -1,10 +1,10 @@
 <template>
 <baseDialog :mode="mode" name="Role" :visible="visible" @close="handleClose" @open="handleOpen" @opened="handleOpened" @save="handleSave">
-    <el-form :model="roleModel">
-        <el-form-item label="Name" :label-width="formLabelWidth">
+    <el-form ref="roleForm" :validate-on-rule-change="false" :rules="rules" :model="roleModel">
+        <el-form-item label="Name" prop="Name" :label-width="formLabelWidth">
             <el-input id="txtRoleName" :disabled="mode === 'view'" v-model="roleModel.Name" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="Permissions" :label-width="formLabelWidth">
+        <el-form-item label="Permissions" prop="PermissionIDList" :label-width="formLabelWidth">
             <el-checkbox-group id="txtRolePermissions" v-model="roleModel.PermissionIDList" :disabled="mode === 'view'">
                 <el-checkbox v-for="permission in Permissions" :label="permission.ID" :key="permission.ID">{{permission.Name}}</el-checkbox>
             </el-checkbox-group>
@@ -33,9 +33,27 @@ export default {
         }
     },
     data() {
+        const validatePermissionIDList = (rule, value, callback) => {
+            if (value === null || value.length === 0) {
+                callback(new Error('Permission is required.'));
+            } else {
+                callback();
+            }
+        };
+
         return {
             roleModel: {},
             Permissions: [],
+            rules:{
+                Name: [
+                    { required: true, message: 'Name is required.', trigger: 'blur' },
+                    { min: 2, max: 50, message: 'Name length should between 2 to 50.', trigger: 'blur' }
+                ],
+                PermissionIDList:[
+                    { required: true, message: 'Permission is required.', trigger: 'blur' },
+                    { validator: validatePermissionIDList, trigger: 'blur' }
+                ]
+            },
             formLabelWidth: "100px"
         }
     },
@@ -75,41 +93,23 @@ export default {
             }
         },
         handleSave() {
-            if (this.mode === "add") {
-                axiosPost("/RoleApi/Add", this.roleModel).then(response => {
-                    if (response.Status == 1) {
-                        this.$message({
-                            message: response.Message,
-                            type: 'success'
+            this.$refs["roleForm"].validate((valid) => {
+                if(valid){
+                    if (this.mode === "add") {
+                        axiosPost("/RoleApi/Add", this.roleModel).then(response => {
+                            if (response.Status == 1) {
+                                this.handleClose(true);
+                            }
                         });
-                        
-                        this.handleClose(true);
-                    }
-                    // else {
-                    //     this.$message({
-                    //         message: response.Message,
-                    //         type: 'warning'
-                    //     });
-                    // }
-                });
-            } else if (this.mode === "edit") {
-                    axiosPost("/RoleApi/edit", this.roleModel).then(response => {
-                    if (response.Status == 1) {
-                        this.$message({
-                            message: response.Message,
-                            type: 'success'
+                    } else if (this.mode === "edit") {
+                            axiosPost("/RoleApi/edit", this.roleModel).then(response => {
+                            if (response.Status == 1) {
+                                this.handleClose(true);
+                            }
                         });
-
-                        this.handleClose(true);
                     }
-                    // else {
-                    //     this.$message({
-                    //         message: response.Message,
-                    //         type: 'warning'
-                    //     });
-                    // }
-                });
-            }
+                }
+            })
 
         },
         handleOpen() {

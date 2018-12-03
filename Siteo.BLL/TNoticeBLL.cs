@@ -9,7 +9,11 @@ namespace Siteo.BLL
 {
     public class TNoticeBLL : BaseBLL<TNotice>
     {
+        public void Delete(int[] noticeIDs)
+        {
 
+            base.Delete(c => noticeIDs.Contains(c.ID));
+        }
 
     }
 }

@@ -163,7 +163,7 @@ namespace Siteo.WebAPI.Controllers.Api.System
             adminUserRoleBLL.SaveChanges();
 
             return Success();
-        }
+        } 
 
         [HttpPost]
         public APIJsonResult MultiDelete(int[] adminUserIDs)

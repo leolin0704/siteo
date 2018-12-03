@@ -1,7 +1,7 @@
 <script>
 import baseListPage from "./baseListPage";
-import EditDialog from "../components/role/formDialog";
-import pageTable from "../components/user/pageTable";
+import EditDialog from "../components/notice/formDialog";
+import pageTable from "../components/notice/pageTable";
 
 export default{
     extends:baseListPage,
@@ -16,7 +16,25 @@ export default{
                 api:"/NoticeApi/GetList"
             }
         };
-    }
+    },
+    methods:{
+      handleDeleteConfirm(index, row){
+           axiosPost("/NoticeApi/Delete", {noticeID:row.ID}).then(response => {
+              if (response.Status == 1) {
+                  this.loadData();
+              }
+          });
+      },
+      handleMultiDeleteConfirm(rows = []){
+          var ids = [];
+          rows.forEach( row => ids.push(row.ID));
+          axiosPost("/NoticeApi/MultiDelete", {noticeIDs:ids}).then(response => {
+              if (response.Status == 1) {
+                  this.loadData();
+              }
+          });
+      }
+  }
 };
 </script>
 
