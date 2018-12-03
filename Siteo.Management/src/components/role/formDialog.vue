@@ -6,7 +6,7 @@
         </el-form-item>
         <el-form-item label="Permissions" prop="PermissionIDList" :label-width="formLabelWidth">
             <el-checkbox-group id="txtRolePermissions" v-model="roleModel.PermissionIDList" :disabled="mode === 'view'">
-                <el-checkbox v-for="permission in Permissions" :label="permission.ID" :key="permission.ID">{{permission.Name}}</el-checkbox>
+                <el-checkbox at-key="chkPermission" v-for="permission in Permissions" :label="permission.ID" :key="permission.ID">{{permission.Name}}</el-checkbox>
             </el-checkbox-group>
         </el-form-item>
     </el-form>

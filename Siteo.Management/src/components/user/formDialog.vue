@@ -13,20 +13,22 @@
         <el-form-item label="Status" prop="Status" :label-width="formLabelWidth">
             <el-select id="selUserStatusList" :disabled="mode === 'view'" v-model="adminUserModel.Status" placeholder="Please select...">
                 <el-option
-                v-for="(value, key) in adminUserStatus"
-                :key="key"
-                :label="value"
-                :value="key">
+                    at-key="optUserStatus"
+                    v-for="(value, key) in adminUserStatus"
+                    :key="key"
+                    :label="value"
+                    :value="key">
                 </el-option>
             </el-select>
         </el-form-item>
         <el-form-item label="Role" prop="RoleID" :label-width="formLabelWidth">
             <el-select id="selUserRoles" :disabled="mode === 'view'" v-model="adminUserModel.RoleID" placeholder="Please select...">
                 <el-option
-                v-for="item in RoleList"
-                :key="item.ID"
-                :label="item.Name"
-                :value="item.ID">
+                    at-key="optUserRole"
+                    v-for="item in RoleList"
+                    :key="item.ID"
+                    :label="item.Name"
+                    :value="item.ID">
                 </el-option>
             </el-select>
         </el-form-item>
