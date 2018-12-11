@@ -3,8 +3,8 @@
     <slot></slot>
     <div slot="footer" class="dialog-footer">
         <slot name="button">
-            <el-button @click="handleClose">CANCEL</el-button>
-            <el-button v-if="mode !== 'view'" type="primary" @click="handleSave">SAVE</el-button>
+            <el-button at-key="btnDialogCancel" @click="handleClose">CANCEL</el-button>
+            <el-button at-key="btnDialogSave" v-if="mode !== 'view'" type="primary" @click="handleSave">SAVE</el-button>
         </slot>
     </div>
 </el-dialog>
