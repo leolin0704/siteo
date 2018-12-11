@@ -33,6 +33,29 @@ export default {
         }
     },
     data() {
+
+        const validateName = (rule, value, callback) => {
+                const newValue = value.trim();
+
+                if(!newValue){
+                    callback(new Error('Name is required.'));
+                    return;
+                }
+
+                if(newValue.length < 2 || newValue.length > 50){
+                    callback(new Error('Name length should between 2 to 50.'));
+                    return;
+                }
+
+                const uPattern = /^[a-zA-Z0-9_-\s]*$/;
+                if (!uPattern.test(newValue)) {
+                    callback(new Error('Name may only contain alphanumeric characters, underline or single hyphens.'));
+                    return;
+                }
+
+                callback();
+            };
+
         const validatePermissionIDList = (rule, value, callback) => {
             if (value === null || value.length === 0) {
                 callback(new Error('Permission is required.'));
@@ -47,7 +70,7 @@ export default {
             rules:{
                 Name: [
                     { required: true, message: 'Name is required.', trigger: 'blur' },
-                    { min: 2, max: 50, message: 'Name length should between 2 to 50.', trigger: 'blur' }
+                    { validator: validateName, trigger: 'blur' }
                 ],
                 PermissionIDList:[
                     { required: true, message: 'Permission is required.', trigger: 'blur' },
@@ -128,6 +151,7 @@ export default {
             });
         },
         handleClose(saved = false) {
+            this.$refs["roleForm"].resetFields();
             this.$emit("close", saved);
         }
     }

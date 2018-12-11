@@ -41,6 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Consts\Permissions.cs" />
+    <Compile Include="Consts\UserStatusList.cs" />
     <Compile Include="Helpers\CacheHelper.cs" />
     <Compile Include="Helpers\EncryptHelper.cs" />
     <Compile Include="Helpers\LambdaHelper.cs" />

@@ -1,5 +1,5 @@
 <template>
-<el-dialog :title="getTitle()" width="80%" append-to-body :visible="visible" @close="handleClose" @opened="handleOpened" @open="handleOpen">
+<el-dialog :title="getTitle()" width="80%" :close-on-click-modal="false" :close-on-press-escape="false" append-to-body :visible="visible" @close="handleClose" @opened="handleOpened" @open="handleOpen">
     <slot></slot>
     <div slot="footer" class="dialog-footer">
         <slot name="button">

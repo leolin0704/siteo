@@ -143,6 +143,7 @@ namespace Siteo.WebAPI.Controllers.Api.System
         // GET api/values/5
         public APIJsonResult Add(RoleModel roleModel)
         {
+            roleModel.Name = roleModel.Name.Trim();
             var roleBLL = new TRoleBLL();
             var role = new TRole();
             UtilHelper.CopyProperties(roleModel, role);

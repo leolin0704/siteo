@@ -11,3 +11,5 @@
 /Siteo.WebAPI/bin
 /Siteo.Common/obj
 /Siteo.Common/bin
+/Siteo.Frontend/Siteo.Frontend.csproj.user
+/Siteo.WebAPI/Siteo.WebAPI.csproj.user

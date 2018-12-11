@@ -26,7 +26,30 @@ axios.interceptors.request.use(function (config) {
     return Promise.reject(error);
   });
 
-var getUrl = (url) => {
+const HTMLEncode = (html) =>
+{ 
+    var temp = document.createElement ("div"); 
+    (temp.textContent != null) ? (temp.textContent = html) : (temp.innerText = html); 
+    var output = temp.innerHTML; 
+    temp = null; 
+    return output; 
+} 
+
+const transformRequest = (data) => {
+    let newData = {};
+
+    if(!data) {
+        return newData;
+    }
+    
+    for (let k in data) {
+        newData[k] = HTMLEncode(data[k] || "");
+    }
+
+    return newData;
+};
+
+const getUrl = (url) => {
 
     if(!url)
         return;
@@ -77,7 +100,7 @@ var processCommonResponse = (response) => {
 
 var get = (url, params) => {
     return axios.get(getUrl(url), {
-        params
+        params: transformRequest(params)
     }).then(result => {
         if(result && result.status === 200){
             return result.data;
@@ -86,7 +109,7 @@ var get = (url, params) => {
 }
 
 var post = (url, params) => {
-    return axios.post(getUrl(url),qs.stringify(params),{
+    return axios.post(getUrl(url),qs.stringify(transformRequest(params)),{
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         },

@@ -208,7 +208,6 @@
     <Compile Include="Framework\Filters\CheckPermissionFilter.cs" />
     <Compile Include="Framework\Filters\ValidRequestsFilter.cs" />
     <Compile Include="Framework\AdminUserStatusList.cs" />
-    <Compile Include="Framework\Permissions.cs" />
     <Compile Include="Framework\TokenManager.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

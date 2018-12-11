@@ -70,6 +70,28 @@ export default {
     },
     computed:{
         rules(){
+
+            const validateAccount = (rule, value, callback) => {
+                const newValue = value.trim();
+
+                if(!newValue){
+                    callback(new Error('Account is required.'));
+                    return;
+                }
+
+                if(newValue.length < 5 || newValue.length > 30){
+                    callback(new Error('Account length should between 5 to 30.'));
+                    return;
+                }
+
+                const uPattern = /^[a-zA-Z0-9_-]*$/;
+                if (!uPattern.test(newValue)) {
+                    callback(new Error('Account may only contain alphanumeric characters, underline or single hyphens.'));
+                } else {
+                    callback();
+                }
+            };
+
             const validatePass2 = (rule, value, callback) => {
                 if (value != this.adminUserModel.Password) {
                     callback(new Error('Confirm password must be same as password.'));
@@ -81,7 +103,7 @@ export default {
             return {
                 Account: [
                     { required: true, message: 'Account is required.', trigger: 'blur' },
-                    { min: 5, max: 30, message: 'Account length should between 5 to 30.', trigger: 'blur' }
+                    { validator: validateAccount, trigger: 'blur' }
                 ],
                 Password: [
                     { required: this.mode === "add", message: 'Password is required.', trigger: 'blur' },

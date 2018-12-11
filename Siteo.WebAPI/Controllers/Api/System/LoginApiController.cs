@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using Siteo.WebAPI.Models.AdminUser;
 using Siteo.EFModel;
 using Siteo.WebAPI.Models;
+using Siteo.Common.Consts;
 
 namespace Siteo.WebAPI.Controllers.Api.System
 {
@@ -35,7 +36,7 @@ namespace Siteo.WebAPI.Controllers.Api.System
         [AllowAnonymous]
         public APIJsonResult Login(LoginModel adminUserModel)
         {
-            var adminUser  = adminUserBLL.Find(user =>  user.Account == adminUserModel.Account);
+            var adminUser  = adminUserBLL.Find(user =>  user.Account == adminUserModel.Account && user.Status == UserStatusList.Active);
 
             if (adminUser == null || !UtilHelper.CompareByte(adminUser.Password, EncryptHelper.Encrypt(adminUserModel.Password))) {
                 return Failed("Account and password do not match.");
