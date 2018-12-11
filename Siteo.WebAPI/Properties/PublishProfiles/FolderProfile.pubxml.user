@@ -298,10 +298,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>12/10/2018 22:53:49</publishTime>
     </File>
     <File Include="bin/Siteo.WebAPI.dll">
-      <publishTime>12/10/2018 22:54:01</publishTime>
+      <publishTime>12/11/2018 22:46:32</publishTime>
     </File>
     <File Include="bin/Siteo.WebAPI.pdb">
-      <publishTime>12/10/2018 22:54:01</publishTime>
+      <publishTime>12/11/2018 22:46:32</publishTime>
     </File>
     <File Include="bin/System.Diagnostics.DiagnosticSource.dll">
       <publishTime>11/10/2018 19:18:28</publishTime>
