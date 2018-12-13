@@ -43,7 +43,15 @@ const transformRequest = (data) => {
     }
     
     for (let k in data) {
-        newData[k] = HTMLEncode(data[k] || "");
+        var value = data[k];
+
+        if(typeof(value) === "string"){
+            newData[k] = HTMLEncode(value || "");
+        } else if(typeof(value) === "object"){
+            newData[k] = transformRequest(value);
+        } else {
+            newData[k] = value;
+        }
     }
 
     return newData;
