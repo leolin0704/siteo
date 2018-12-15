@@ -11,7 +11,7 @@
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Account" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Password" Type="varbinary" MaxLength="100" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="100" />
           <Property Name="Status" Type="char" MaxLength="1" Nullable="false" />
           <Property Name="IsDeleted" Type="int" Nullable="false" />
           <Property Name="LastUpdateDate" Type="datetime" />
@@ -60,7 +60,7 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="ParentModuleID" Type="int" />
-          <Property Name="Key" Type="char" MaxLength="50" Nullable="false" />
+          <Property Name="Key" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Order" Type="int" Nullable="false" />
           <Property Name="IsDeleted" Type="int" Nullable="false" />
           <Property Name="LastUpdateDate" Type="datetime" />
@@ -332,7 +332,7 @@
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Account" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Password" Type="Binary" MaxLength="100" FixedLength="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
           <Property Name="Status" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="IsDeleted" Type="Int32" Nullable="false" />
           <Property Name="LastUpdateDate" Type="DateTime" Precision="3" />
@@ -384,7 +384,7 @@
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ParentModuleID" Type="Int32" />
-          <Property Name="Key" Type="String" MaxLength="50" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Key" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Order" Type="Int32" Nullable="false" />
           <Property Name="IsDeleted" Type="Int32" Nullable="false" />
           <Property Name="LastUpdateDate" Type="DateTime" Precision="3" />

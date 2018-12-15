@@ -268,40 +268,40 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/10/2018 19:18:28</publishTime>
     </File>
     <File Include="bin/Siteo.BLL.dll">
-      <publishTime>12/10/2018 22:53:50</publishTime>
+      <publishTime>12/15/2018 21:37:07</publishTime>
     </File>
     <File Include="bin/Siteo.BLL.pdb">
-      <publishTime>12/10/2018 22:53:50</publishTime>
+      <publishTime>12/15/2018 21:37:07</publishTime>
     </File>
     <File Include="bin/Siteo.Common.dll">
-      <publishTime>12/10/2018 22:53:49</publishTime>
+      <publishTime>12/15/2018 21:37:06</publishTime>
     </File>
     <File Include="bin/Siteo.Common.pdb">
-      <publishTime>12/10/2018 22:53:49</publishTime>
+      <publishTime>12/15/2018 21:37:06</publishTime>
     </File>
     <File Include="bin/Siteo.DAL.dll">
-      <publishTime>12/10/2018 22:53:50</publishTime>
+      <publishTime>12/15/2018 21:37:06</publishTime>
     </File>
     <File Include="bin/Siteo.DAL.dll.config">
       <publishTime>11/10/2018 19:18:27</publishTime>
     </File>
     <File Include="bin/Siteo.DAL.pdb">
-      <publishTime>12/10/2018 22:53:50</publishTime>
+      <publishTime>12/15/2018 21:37:06</publishTime>
     </File>
     <File Include="bin/Siteo.EFModel.dll">
-      <publishTime>12/10/2018 22:53:49</publishTime>
+      <publishTime>12/15/2018 21:37:06</publishTime>
     </File>
     <File Include="bin/Siteo.EFModel.dll.config">
       <publishTime>11/10/2018 19:38:19</publishTime>
     </File>
     <File Include="bin/Siteo.EFModel.pdb">
-      <publishTime>12/10/2018 22:53:49</publishTime>
+      <publishTime>12/15/2018 21:37:06</publishTime>
     </File>
     <File Include="bin/Siteo.WebAPI.dll">
-      <publishTime>12/11/2018 22:46:32</publishTime>
+      <publishTime>12/15/2018 21:37:16</publishTime>
     </File>
     <File Include="bin/Siteo.WebAPI.pdb">
-      <publishTime>12/11/2018 22:46:32</publishTime>
+      <publishTime>12/15/2018 21:37:16</publishTime>
     </File>
     <File Include="bin/System.Diagnostics.DiagnosticSource.dll">
       <publishTime>11/10/2018 19:18:28</publishTime>

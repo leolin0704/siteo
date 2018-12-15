@@ -22,7 +22,7 @@ namespace Siteo.EFModel
     
         public int ID { get; set; }
         public string Account { get; set; }
-        public byte[] Password { get; set; }
+        public string Password { get; set; }
         public string Status { get; set; }
         public int IsDeleted { get; set; }
         public Nullable<System.DateTime> LastUpdateDate { get; set; }

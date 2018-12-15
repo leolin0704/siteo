@@ -90,7 +90,7 @@ namespace Siteo.WebAPI.Controllers.Api.System
             var adminUser = new TAdminUser()
             {
                 Account = adminUserModel.Account.Trim(),
-                Password = EncryptHelper.Encrypt(adminUserModel.Password),
+                Password = EncryptHelper.EncryptString(adminUserModel.Password),
                 Status = adminUserModel.Status
             };
 
@@ -125,7 +125,7 @@ namespace Siteo.WebAPI.Controllers.Api.System
 
             if(!string.IsNullOrEmpty(adminUserModel.Password))
             {
-                adminUser.Password = EncryptHelper.Encrypt(adminUserModel.Password);
+                adminUser.Password = EncryptHelper.EncryptString(adminUserModel.Password);
             }
 
             adminUser.Status = adminUserModel.Status;

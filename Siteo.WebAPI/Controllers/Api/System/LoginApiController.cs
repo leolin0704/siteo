@@ -38,7 +38,7 @@ namespace Siteo.WebAPI.Controllers.Api.System
         {
             var adminUser  = adminUserBLL.Find(user =>  user.Account == adminUserModel.Account && user.Status == UserStatusList.Active);
 
-            if (adminUser == null || !UtilHelper.CompareByte(adminUser.Password, EncryptHelper.Encrypt(adminUserModel.Password))) {
+            if (adminUser == null || !UtilHelper.CompareString(adminUser.Password, EncryptHelper.EncryptString(adminUserModel.Password))) {
                 return Failed("Account and password do not match.");
             }
 

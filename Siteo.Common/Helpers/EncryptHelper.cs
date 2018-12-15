@@ -15,5 +15,13 @@ namespace Siteo.Common.Helpers
             UTF8Encoding encoder = new UTF8Encoding();
             return Hash.ComputeHash(encoder.GetBytes(password));
         }
+
+        public static string EncryptString(string inputString)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (byte b in Encrypt(inputString))
+                sb.Append(b.ToString("X2"));
+            return sb.ToString();
+        }
     }
 }

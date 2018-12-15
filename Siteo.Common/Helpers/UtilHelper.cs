@@ -8,24 +8,29 @@ namespace Siteo.Common.Helpers
 {
     public class UtilHelper
     {
-        public static bool CompareByte(byte[] userPassword, byte[] inputPassword)
+        public static bool CompareString(string a, string b)
         {
-            if (userPassword == inputPassword)
+            return string.Compare(a, b) == 0;
+        }
+
+        public static bool CompareByte(byte[] a, byte[] b)
+        {
+            if (a == b)
             {
                 return true;
             }
 
-            if (userPassword.Length != inputPassword.Length)
+            if (a.Length != b.Length)
             {
                 return false;
             }
 
             bool passwordMatch = true;
-            for (int i = 0; i < inputPassword.Length && i < userPassword.Length; i++)
+            for (int i = 0; i < b.Length && i < a.Length; i++)
             {
                 if (passwordMatch)
                 {
-                    if (userPassword[i] != inputPassword[i])
+                    if (a[i] != b[i])
                         passwordMatch = false;
                 }
             }
