@@ -10,7 +10,7 @@
         <div class="login-info">
             <el-row>
                 <el-col :span="10">Role:</el-col>
-                <el-col :span="14">{{adminUser.Role.Name}}</el-col>
+                <el-col :span="14">{{adminUser.Role && adminUser.Role.Name}}</el-col>
             </el-row>
             <el-row>
                 <el-col :span="10">Login Date:</el-col>

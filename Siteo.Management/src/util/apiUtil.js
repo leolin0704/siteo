@@ -76,7 +76,7 @@ const getUrl = (url) => {
 
 var processCommonResponse = (response) => {
     if(response.Status === responseStatusList.NO_PERMISSION){
-        router.push("/");
+        router.push("/home");
     }else if(response.Status === responseStatusList.NOT_LOGIN){
         router.push("/login");
     }else{

@@ -45,7 +45,7 @@ export default {
                 });
                 this.$store.dispatch('login/logout').then(response => {
                     if(response.Status === 1){
-                        window.location = web.siteBase + "login";
+                        window.location = web.siteBase;
                     }
                 });
             });

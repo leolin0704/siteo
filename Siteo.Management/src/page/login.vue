@@ -27,6 +27,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 export default {
     data: function () {
         return {
@@ -49,6 +51,14 @@ export default {
             }
         }
     },
+    computed: mapState({
+        adminUser: state => state.login.user
+    }),
+    created(){
+        if(this.adminUser.ID){
+            this.$router.push('/home');
+        }
+    },
     methods: {
         submitForm(formName) {
             this.$refs[formName].validate((valid) => {
@@ -61,7 +71,7 @@ export default {
                     })
                     .then((response) => {
                         if(response.Status === 1){
-                            this.$router.push('/');
+                            this.$router.push('/home');
                         }                       
                         this.loading = false;
                     });
