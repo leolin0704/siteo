@@ -4,13 +4,14 @@ import qs from "qs";
 import router from '../route/index.js';
 import { Message, Notification } from 'element-ui';
 import { responseStatusList } from '../config/consts.js';
+import { getToken } from './tokenHelper';
 
 
 
 // 添加一个请求拦截器
 axios.interceptors.request.use(function (config) {
     
-    config.headers.token = localStorage.getItem("token");
+    config.headers.token = getToken();
 
 
     config.headers.common = { ...config.headers.common, ...{

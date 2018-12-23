@@ -65,7 +65,7 @@ namespace Siteo.WebAPI.Controllers.Api.System
             {
                 return Failed("No module found.");
             }
-            var permissions = new TAdminUserBLL().GetPermissions(loginUser.TAdminUserRole);
+            var permissions = new TRoleBLL().GetPermissions(loginUser.RoleID);
 
             var moduleBLL = new TModuleBLL();
             var modules = moduleBLL.GetUserModules(permissions);

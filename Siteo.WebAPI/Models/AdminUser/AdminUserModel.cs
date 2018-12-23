@@ -50,5 +50,17 @@ namespace Siteo.WebAPI.Models.AdminUser
             get;
             set;
         }
+
+        public string Token
+        {
+            get;
+            set;
+        }
+
+        public DateTime TokenExpired
+        {
+            get;
+            set;
+        }
     }
 }

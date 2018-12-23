@@ -1,5 +1,5 @@
 <template>
-    <el-card shadow="hover" class="card" v-loading="loading">
+    <el-card shadow="hover" class="card">
         <div slot="header">
             <span>Welcome Back!</span>
         </div>
@@ -8,6 +8,10 @@
             <h3>{{adminUser.Account}}</h3>
         </div>
         <div class="login-info">
+            <el-row>
+                <el-col :span="10">Role:</el-col>
+                <el-col :span="14">{{adminUser.Role.Name}}</el-col>
+            </el-row>
             <el-row>
                 <el-col :span="10">Login Date:</el-col>
                 <el-col :span="14">{{adminUser.LastLoginDate | date}}</el-col>
@@ -20,29 +24,18 @@
     </el-card>
 </template>
 <script>
-import { get } from "../util/apiUtil.js";
 import avatar from "../assets/images/avatar.jpg";
+import { mapState } from 'vuex';
 export default {
     name: "loginInfo",
     data() {
         return {
-            avatar,
-            adminUser:{},
-            loading:false
+            avatar
         }
     },
-    components: {
-    },
-    mounted(){
-        this.loading = true;
-        get("/LoginApi/GetLoginUser").then(response => {
-            if(response.Status === 1){
-                this.adminUser = response.Data.AdminUser || {};
-            }
-
-             this.loading = false;
-        })
-    }
+    computed: mapState({
+        adminUser: state => state.login.user
+    })
 };
 </script>
 <style scoped>

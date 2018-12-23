@@ -20,15 +20,9 @@ namespace Siteo.WebAPI.Controllers.Api.System
         public APIJsonResult GetLoginUser()
         {
             var adminUser = TokenManager.GetLoginUser();
-            var sessionUserModel = new AdminUserModel();
-            UtilHelper.CopyProperties(adminUser, sessionUserModel, new string[] {
-                "Account" ,
-                "Avatar",
-                "LastLoginDate",
-                "LastLoginIP"
-            });
+
             return Success("", new {
-                AdminUser = sessionUserModel
+                AdminUser = adminUser
             });
         }
 
@@ -46,12 +40,20 @@ namespace Siteo.WebAPI.Controllers.Api.System
 
             adminUser.LastLoginDate = DateTime.Now;
             adminUser.LastLoginIP = Request.ServerVariables.Get("Remote_Addr").ToString();
-
             adminUserBLL.SaveChanges();
 
             return Success("", new {
-                Token = token
+                Token = token,
+                AdminUser = TokenManager.GetLoginUser(token)
             });
+        }
+
+        [HttpPost]
+        public APIJsonResult Logout()
+        {
+            TokenManager.RemoveLoginUser();
+
+            return Success();
         }
     }
 }

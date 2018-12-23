@@ -35,47 +35,6 @@ namespace Siteo.BLL
             roleBLL.SaveChanges();
         }
 
-
-        public bool CheckAdminUserPermissions(TAdminUser adminUser, string[] requriedPermissionList)
-        {
-            if (requriedPermissionList == null || requriedPermissionList.Length == 0)
-            {
-                return true;
-            }
-
-            if (adminUser == null)
-            {
-                return false;
-            }
-
-            var adminUserRoles = adminUser.TAdminUserRole;
-            if (adminUserRoles == null || adminUserRoles.Count == 0)
-            {
-                return false;
-            }
-
-            List<TPermission> result = GetPermissions(adminUserRoles);
-
-            if (result.Count == 0)
-            {
-                return false;
-            }
-
-            foreach (var permission in result)
-            {
-                foreach (var reqPermissionStr in requriedPermissionList)
-                {
-                    if (string.Compare(permission.Name, reqPermissionStr) == 0)
-                    {
-                        return true;
-                    }
-                }
-            }
-
-            return false;
-        }
-
-
         private string saAccount = "admin";
 
         public new void Delete(int adminID)
@@ -101,7 +60,6 @@ namespace Siteo.BLL
 
             base.Delete(c => adminUserIDs.Contains(c.ID));
         }
-
 
         public List<TPermission> GetPermissions(ICollection<TAdminUserRole> adminUserRoles)
         {

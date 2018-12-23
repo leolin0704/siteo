@@ -1,4 +1,5 @@
 import Vue from 'vue/dist/vue.js';
+import store from './store'
 import router from './route/index';
 import Router from 'vue-router';
 Vue.use(Router);
@@ -16,7 +17,6 @@ import "./assets/css/common.scss";
 
 Vue.config.productionTip = false;
 
-
 import * as fiters from './filters'
 
 Object.keys(fiters).forEach(key => {
@@ -25,5 +25,6 @@ Object.keys(fiters).forEach(key => {
 
 new Vue({
   router,
+  store,
   render: h => h(App)
 }).$mount('#app')

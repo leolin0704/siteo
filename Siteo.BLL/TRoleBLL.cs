@@ -1,6 +1,7 @@
 ﻿using Siteo.Common;
 using Siteo.Common.Helpers;
 using Siteo.EFModel;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Siteo.BLL
@@ -75,5 +76,58 @@ namespace Siteo.BLL
 
             base.Delete(c => roleIDs.Contains(c.ID));
         }
+
+
+        public List<TPermission> GetPermissions(int roleID)
+        {
+            var role = Find(r => r.ID == roleID);
+            var result = new List<TPermission>();
+            if (role != null && role.TRolePermission != null)
+            {
+                foreach (var rolePermission in role.TRolePermission)
+                {
+                    if (rolePermission.TPermission != null)
+                    {
+                        result.Add(rolePermission.TPermission);
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        public bool CheckRolePermissions(int roleID, string[] requriedPermissionList)
+        {
+            if (requriedPermissionList == null || requriedPermissionList.Length == 0)
+            {
+                return true;
+            }
+
+            if (roleID == 0)
+            {
+                return false;
+            }
+
+            List<TPermission> result = GetPermissions(roleID);
+
+            if (result.Count == 0)
+            {
+                return false;
+            }
+
+            foreach (var permission in result)
+            {
+                foreach (var reqPermissionStr in requriedPermissionList)
+                {
+                    if (string.Compare(permission.Name, reqPermissionStr) == 0)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
     }
 }

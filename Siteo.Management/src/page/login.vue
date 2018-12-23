@@ -27,8 +27,6 @@
 </template>
 
 <script>
-import { post } from "../util/apiUtil.js";
-
 export default {
     data: function () {
         return {
@@ -56,23 +54,17 @@ export default {
             this.$refs[formName].validate((valid) => {
                 if (valid) {
                     this.loading = true;
-                    post("/LoginApi/Login", {
-                        Account:this.ruleForm.Account,
-                        Password:this.ruleForm.Password
-                    }).then((response) => {
-                         if(response.Status === 1){
-                            localStorage.setItem("token",response.Data.Token);
+                    console.log(this.$store);
+                    this.$store.dispatch('login/login', {
+                        account: this.ruleForm.Account,
+                        password: this.ruleForm.Password
+                    })
+                    .then((response) => {
+                        if(response.Status === 1){
                             this.$router.push('/');
-                        }else{
-                            // this.$message({
-                            //     message: response.Message,
-                            //     type: 'warning'
-                            // });
-                        }
-                        
+                        }                       
                         this.loading = false;
                     });
-                    
                 } else {
                     this.$message
                     return false;

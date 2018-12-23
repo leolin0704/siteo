@@ -5,6 +5,7 @@
             <el-col :span="24" class="header-line">
                 <h1 class="title">Siteo Management</h1>
                 <main-header></main-header>
+                <user-info class="header-user-info"></user-info>
             </el-col>
         </el-row>
     </el-header>
@@ -17,27 +18,45 @@
 </template>
 <script>
 import mainHeader from "./mainHeader";
+import userInfo from "./userInfo";
 export default {
     name: "layout",
     components: {
-        mainHeader
+        mainHeader,
+        userInfo
     }
 };
 </script>
 <style scoped lang="scss">
  .header-line {
      position: relative;
-    .title{
+
+    @mixin positionItem(){
         height: 60px;
         line-height: 60px;
         position: absolute;
         margin: 0;
         padding: 0;
+        top:0;
+        z-index:2;
+    }
+
+    .title{
+        @include positionItem();
     }
     
     &>ul{
         margin-left: 250px;
     }
+
+    .header-user-info{
+        @include positionItem();
+        right:0;
+        width:100px;
+        text-align:right;
+    }
  }
+
+
     
 </style>

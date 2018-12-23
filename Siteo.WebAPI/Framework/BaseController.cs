@@ -51,6 +51,11 @@ namespace Siteo.WebAPI.Framework
             return Success(null);
         }
 
+        public APIJsonResult Success(string message)
+        {
+            return Success(message, null);
+        }
+
         public APIJsonResult Success(object data)
         {
             return Success("Operation suceeded.", data);

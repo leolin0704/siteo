@@ -51,7 +51,7 @@ namespace Siteo.WebAPI.Framework.Filters
                 return;
             }
 
-            var hasPermission = new TAdminUserBLL().CheckAdminUserPermissions(adminUser, permissionAttr.ToList()[0].PermissionList);
+            var hasPermission = new TRoleBLL().CheckRolePermissions(adminUser.RoleID, permissionAttr.ToList()[0].PermissionList);
             if (!hasPermission) {
                 ProcessNoPermission(filterContext);
             }
