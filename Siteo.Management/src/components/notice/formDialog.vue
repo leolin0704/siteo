@@ -4,13 +4,20 @@
         <el-form-item label="Title" prop="Title" :label-width="formLabelWidth">
             <el-input id="txtNoticeTitle" :disabled="mode === 'view'" v-model="noticeModel.Title" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="Content" prop="Content" :label-width="formLabelWidth">
+        <!-- <el-form-item label="Content" prop="Content" :label-width="formLabelWidth">
             <el-input id="txtNoticeContent"
                 type="textarea"
                 :rows="6"
                 :disabled="mode === 'view'" 
                 v-model="noticeModel.Content" 
                 autocomplete="off"></el-input>
+        </el-form-item> -->
+        <el-form-item label="Content" prop="Content" :label-width="formLabelWidth">
+            <simpleRichEditor
+                ref="editor"
+                v-model="noticeModel.Content"
+                :disabled="mode === 'view'"
+            ></simpleRichEditor>
         </el-form-item>
     </el-form>
 </baseDialog>
@@ -18,9 +25,14 @@
 
 <script>
 import baseDialog from "../common/baseDialog";
+import simpleRichEditor from "../common/simpleRichEditor";
 
 export default {
     name: "ViewNotice",
+    components: {
+        baseDialog,
+        simpleRichEditor
+    },
     props: {
         visible: {
             type: Boolean,
@@ -51,16 +63,13 @@ export default {
             formLabelWidth: "100px"
         }
     },
-    components: {
-        baseDialog
-    },
     mounted() {
 
     },
     methods: {
         loadData() {
             if (this.mode === "edit" || this.mode === "view") {
-                return axiosGet("/NoticeApi/Get", {
+                return window.axiosGet("/NoticeApi/Get", {
                     id: this.model.ID
                 }).then(response => {
                     if (response.Status == 1) {
@@ -68,6 +77,8 @@ export default {
                     } else {
                         this.noticeModel = {};
                     }
+
+                    this.$refs.editor.refresh();
                 });
             } else {
                 return Promise.resolve();
@@ -77,13 +88,13 @@ export default {
             this.$refs["noticeForm"].validate((valid) => {
                 if(valid){
                     if (this.mode === "add") {
-                        axiosPost("/NoticeApi/Add", this.noticeModel).then(response => {
+                        window.axiosPost("/NoticeApi/Add", this.noticeModel).then(response => {
                             if (response.Status == 1) {                       
                                 this.handleClose(true);
                             }
                         });
                     } else if (this.mode === "edit") {
-                            axiosPost("/NoticeApi/edit", this.noticeModel).then(response => {
+                        window.axiosPost("/NoticeApi/edit", this.noticeModel).then(response => {
                             if (response.Status == 1) {
                                 this.handleClose(true);
                             }

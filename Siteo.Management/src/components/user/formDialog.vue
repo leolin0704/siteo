@@ -125,7 +125,7 @@ export default {
     },
     methods: {
         loadRoles() {
-            return axiosGet("/RoleApi/GetList?pageSize=9999&pageIndex=1&keywords=").then(response => {
+            return window.axiosGet("/RoleApi/GetList?pageSize=9999&pageIndex=1&keywords=").then(response => {
                 if (response.Status == 1) {
                     this.RoleList = response.Data.List;
                 } else {
@@ -136,7 +136,7 @@ export default {
         },
         loadData() {
             if (this.mode === "edit" || this.mode === "view") {
-                return axiosGet("/AdminUserApi/Get", {
+                return window.axiosGet("/AdminUserApi/Get", {
                     id: this.model.ID
                 }).then(response => {
                     if (response.Status == 1) {
@@ -153,38 +153,16 @@ export default {
             this.$refs["adminUserForm"].validate((valid) => {
                 if (valid) {
                     if (this.mode === "add") {
-                        axiosPost("/AdminUserApi/Add", this.adminUserModel).then(response => {
+                        window.axiosPost("/AdminUserApi/Add", this.adminUserModel).then(response => {
                             if (response.Status == 1) {
-                                this.$message({
-                                    message: response.Message,
-                                    type: 'success'
-                                });
-                                
-                                this.handleClose(true);
-                            } 
-                            // else {
-                            //     this.$message({
-                            //         message: response.Message,
-                            //         type: 'warning'
-                            //     });
-                            // }
-                        });
-                    } else if (this.mode === "edit") {
-                            axiosPost("/AdminUserApi/edit", this.adminUserModel).then(response => {
-                            if (response.Status == 1) {
-                                this.$message({
-                                    message: response.Message,
-                                    type: 'success'
-                                });
-
                                 this.handleClose(true);
                             }
-                            // else {
-                            //     this.$message({
-                            //         message: response.Message,
-                            //         type: 'warning'
-                            //     });
-                            // }
+                        });
+                    } else if (this.mode === "edit") {
+                            window.axiosPost("/AdminUserApi/edit", this.adminUserModel).then(response => {
+                            if (response.Status == 1) {
+                                this.handleClose(true);
+                            }
                         });
                     }
 

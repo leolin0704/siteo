@@ -1,6 +1,6 @@
 <template>
 <span class="user-info-box">
-    Welcome, 
+    Welcome,
     <el-popover
     placement="bottom"
     width="220"

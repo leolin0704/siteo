@@ -88,7 +88,7 @@ export default {
     },
     methods: {
         loadPermissions() {
-            return axiosGet("/RoleApi/GetPermissionList").then(response => {
+            return window.axiosGet("/RoleApi/GetPermissionList").then(response => {
                 if (response.Status == 1) {
                     this.Permissions = response.Data.List;
                 } else {
@@ -99,7 +99,7 @@ export default {
         },
         loadData() {
             if (this.mode === "edit" || this.mode === "view") {
-                return axiosGet("/RoleApi/Get", {
+                return window.axiosGet("/RoleApi/Get", {
                     id: this.model.ID
                 }).then(response => {
                     if (response.Status == 1) {
@@ -119,13 +119,13 @@ export default {
             this.$refs["roleForm"].validate((valid) => {
                 if(valid){
                     if (this.mode === "add") {
-                        axiosPost("/RoleApi/Add", this.roleModel).then(response => {
+                        window.axiosPost("/RoleApi/Add", this.roleModel).then(response => {
                             if (response.Status == 1) {
                                 this.handleClose(true);
                             }
                         });
                     } else if (this.mode === "edit") {
-                            axiosPost("/RoleApi/edit", this.roleModel).then(response => {
+                            window.axiosPost("/RoleApi/edit", this.roleModel).then(response => {
                             if (response.Status == 1) {
                                 this.handleClose(true);
                             }

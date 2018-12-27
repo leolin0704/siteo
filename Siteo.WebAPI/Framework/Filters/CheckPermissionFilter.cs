@@ -38,7 +38,7 @@ namespace Siteo.WebAPI.Framework.Filters
 
             //url获取token
             var content = filterContext.HttpContext;
-            var adminUser = TokenManager.GetLoginUser();
+            var adminUser = LoginManager.GetLoginUser();
 
             if (adminUser == null) { // not logined
                 ProcessNotLogin(filterContext);

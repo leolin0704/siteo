@@ -19,7 +19,7 @@ namespace Siteo.WebAPI.Controllers.Api.System
         // GET api/values/5
         public APIJsonResult GetLoginUser()
         {
-            var adminUser = TokenManager.GetLoginUser();
+            var adminUser = LoginManager.GetLoginUser();
 
             return Success("", new {
                 AdminUser = adminUser
@@ -36,22 +36,26 @@ namespace Siteo.WebAPI.Controllers.Api.System
                 return Failed("Account and password do not match.");
             }
 
-            var token = TokenManager.SaveToken(adminUser, false);
-
             adminUser.LastLoginDate = DateTime.Now;
             adminUser.LastLoginIP = Request.ServerVariables.Get("Remote_Addr").ToString();
+            adminUser.Token = LoginManager.GenerateToken();
+            adminUser.TokenExpired = DateTime.Now.AddHours(2);
             adminUserBLL.SaveChanges();
 
+            LoginManager.SaveLoginUser(adminUser);
+
+         
+
             return Success("", new {
-                Token = token,
-                AdminUser = TokenManager.GetLoginUser(token)
+                Token = adminUser.Token,
+                AdminUser = LoginManager.GetLoginUser(adminUser.Token)
             });
         }
 
         [HttpPost]
         public APIJsonResult Logout()
         {
-            TokenManager.RemoveLoginUser();
+            LoginManager.RemoveLoginUser();
 
             return Success();
         }

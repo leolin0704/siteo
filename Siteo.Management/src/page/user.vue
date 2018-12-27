@@ -19,7 +19,7 @@ export default {
     },
     methods:{
       handleDeleteConfirm(index, row){
-           axiosPost("/AdminUserApi/Delete", {adminUserID:row.ID}).then(response => {
+           window.axiosPost("/AdminUserApi/Delete", {adminUserID:row.ID}).then(response => {
               if (response.Status == 1) {
                   this.loadData();
               }
@@ -28,7 +28,7 @@ export default {
       handleMultiDeleteConfirm(rows = []){
           var ids = [];
           rows.forEach( row => ids.push(row.ID));
-          axiosPost("/AdminUserApi/MultiDelete", {adminUserIDs:ids}).then(response => {
+          window.axiosPost("/AdminUserApi/MultiDelete", {adminUserIDs:ids}).then(response => {
               if (response.Status == 1) {
                   this.loadData();
               }

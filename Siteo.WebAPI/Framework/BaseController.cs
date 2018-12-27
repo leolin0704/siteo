@@ -18,7 +18,7 @@ namespace Siteo.WebAPI.Framework
             var createByProperty = type.GetProperty("CreateBy");
             var createDateProperty = type.GetProperty("CreateDate");
 
-            var loginUser = TokenManager.GetLoginUser();
+            var loginUser = LoginManager.GetLoginUser();
 
             if(loginUser == null)
             {
@@ -35,7 +35,7 @@ namespace Siteo.WebAPI.Framework
             var lastUpdateByProperty = type.GetProperty("LastUpdateBy");
             var lastUpdateDateProperty = type.GetProperty("LastUpdateDate");
 
-            var loginUser = TokenManager.GetLoginUser();
+            var loginUser = LoginManager.GetLoginUser();
 
             if (loginUser == null)
             {
@@ -48,7 +48,7 @@ namespace Siteo.WebAPI.Framework
 
         public APIJsonResult Success()
         {
-            return Success(null);
+            return Success(string.Empty);
         }
 
         public APIJsonResult Success(string message)

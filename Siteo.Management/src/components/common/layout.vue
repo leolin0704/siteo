@@ -52,8 +52,10 @@ export default {
     .header-user-info{
         @include positionItem();
         right:0;
-        width:100px;
+        width:120px;
         text-align:right;
+        white-space:nowrap;
+        overflow: hidden;
     }
  }
 

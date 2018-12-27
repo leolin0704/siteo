@@ -9,7 +9,7 @@ using System.Web;
 
 namespace Siteo.WebAPI.Framework
 {
-    public class TokenManager
+    public class LoginManager
     {
         public static string GenerateToken()
         {
@@ -21,22 +21,12 @@ namespace Siteo.WebAPI.Framework
             return HttpContext.Current.Request.Headers["token"] as string;
         }
 
-        public static string SaveToken(TAdminUser adminUser, bool saveDB)
+        public static void SaveLoginUser(TAdminUser adminUser)
         {
             if (!string.IsNullOrEmpty(adminUser.Token))
             {
                 CacheHelper.RemoveAllCache(adminUser.Token);
             }
-
-            adminUser.Token = GenerateToken();
-            adminUser.TokenExpired = DateTime.Now.AddHours(2);
-
-            if (saveDB) { 
-                var adminUserBLL = new TAdminUserBLL();
-                adminUserBLL.Edit(adminUser, new string[] { "Token", "TokenExpired" });
-                adminUserBLL.SaveChanges();
-            }
-
 
             var sessionUserModel = new AdminUserModel();
             UtilHelper.CopyProperties(adminUser, sessionUserModel, new string[] {
@@ -61,8 +51,6 @@ namespace Siteo.WebAPI.Framework
             sessionUserModel.Role = role;
 
             CacheHelper.SetCache(adminUser.Token, sessionUserModel, new TimeSpan(0, 30, 0));
-
-            return adminUser.Token;
         }
 
         public static void RemoveLoginUser()
@@ -70,10 +58,12 @@ namespace Siteo.WebAPI.Framework
             string token = GetRequestToken();
             var adminUserBLL = new TAdminUserBLL();
             var refreshAdminUser = adminUserBLL.Find(u => u.Token == token);
-
-            refreshAdminUser.Token = string.Empty;
-            refreshAdminUser.TokenExpired = null;
-            adminUserBLL.SaveChanges();
+            if (refreshAdminUser != null)
+            {
+                refreshAdminUser.Token = string.Empty;
+                refreshAdminUser.TokenExpired = null;
+                adminUserBLL.SaveChanges();
+            }
 
             CacheHelper.RemoveAllCache(token);
         }

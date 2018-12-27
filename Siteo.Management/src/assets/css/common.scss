@@ -100,3 +100,26 @@ a{
 a:hover{
   text-decoration: underline;
 }
+
+
+.quill-editor {
+    /*工具栏内用*/
+    .ql-font {
+      span[data-value="Arial"]::before {
+        content: "Arial" !important;
+        font-family: "Arial";
+      }
+      span[data-value="Microsoft YaHei"]::before {
+        content: "MS YaHei" !important;
+        font-family: "Microsoft YaHei";
+      }
+      span[data-value="monospace"]::before {
+        content: "monospacei" !important;
+        font-family: "monospace";
+      }
+      span[data-value="cursive"]::before {
+        content: "cursive" !important;
+        font-family: "cursive";
+      }
+    }
+}

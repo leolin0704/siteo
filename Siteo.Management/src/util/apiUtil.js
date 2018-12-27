@@ -5,7 +5,7 @@ import router from '../route/index.js';
 import { Message, Notification } from 'element-ui';
 import { responseStatusList } from '../config/consts.js';
 import { getToken } from './tokenHelper';
-
+import { HTMLEncode } from './commonUtil';
 
 
 // 添加一个请求拦截器
@@ -27,14 +27,6 @@ axios.interceptors.request.use(function (config) {
     return Promise.reject(error);
   });
 
-const HTMLEncode = (html) =>
-{ 
-    var temp = document.createElement ("div"); 
-    (temp.textContent != null) ? (temp.textContent = html) : (temp.innerText = html); 
-    var output = temp.innerHTML; 
-    temp = null; 
-    return output; 
-} 
 
 const transformRequest = (data) => {
     let newData = {};
@@ -81,6 +73,7 @@ var processCommonResponse = (response) => {
         router.push("/login");
     }else{
         var message = "";
+
         if(response.MessageList){
             message = response.MessageList.join("<br />");
         }else if(response.Message){

@@ -60,7 +60,7 @@ namespace Siteo.WebAPI.Controllers.Api.System
         // GET api/values/5
         public APIJsonResult GetModuleList()
         {
-            var loginUser = TokenManager.GetLoginUser();
+            var loginUser = LoginManager.GetLoginUser();
             if(loginUser == null)
             {
                 return Failed("No module found.");

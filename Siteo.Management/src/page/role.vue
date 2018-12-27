@@ -20,7 +20,7 @@ export default {
   },
   methods:{
       handleDeleteConfirm(index, row){
-           axiosPost("/RoleApi/Delete", {roleID:row.ID}).then(response => {
+           window.axiosPost("/RoleApi/Delete", {roleID:row.ID}).then(response => {
               if (response.Status == 1) {
                   this.loadData();
               }
@@ -29,7 +29,7 @@ export default {
       handleMultiDeleteConfirm(rows = []){
           var ids = [];
           rows.forEach( row => ids.push(row.ID));
-          axiosPost("/RoleApi/MultiDelete", {roleIDs:ids}).then(response => {
+          window.axiosPost("/RoleApi/MultiDelete", {roleIDs:ids}).then(response => {
               if (response.Status == 1) {
                   this.loadData();
               }
