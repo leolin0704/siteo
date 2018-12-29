@@ -48,6 +48,22 @@ export default {
         }
     },
     data() {
+        const validateContent = (rule, value, callback) => {
+            const length = value.length;
+            if(length < 2 || length >4000){
+                callback(new Error('Content length should between 2 to 4000.'));
+                return;
+            }
+
+            const text = value.replace(/<[^>]+>/g,"").trim();
+            if (text === '') {
+                callback(new Error('Content is required.'));
+            } else {
+                callback();
+            }
+        };
+
+
         return {
             noticeModel: {},
             rules:{
@@ -57,7 +73,7 @@ export default {
                 ],
                 Content: [
                     { required: true, message: 'Content is required.', trigger: 'blur' },
-                    { min: 2, max: 4000, message: 'Content length should between 2 to 4000.', trigger: 'blur' }
+                    { validator: validateContent, trigger: 'blur' }
                 ],
             },
             formLabelWidth: "100px"
@@ -78,7 +94,7 @@ export default {
                         this.noticeModel = {};
                     }
 
-                    this.$refs.editor.refresh();
+                    this.$nextTick(() => this.$refs.editor.reload());
                 });
             } else {
                 return Promise.resolve();
@@ -109,6 +125,8 @@ export default {
                 Title: "",
                 Content:""
             };
+
+            this.$nextTick(() => this.$refs.editor.reload());
         },
         handleOpened() {
             let loading = this.$loading({

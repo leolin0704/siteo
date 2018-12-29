@@ -3,7 +3,6 @@ import pageDialog from "../components/role/formDialog";
 import pageTable from "../components/role/pageTable";
 import baseListPage from "./baseListPage";
 
-import { get } from "../util/apiUtil.js";
 export default {
   extends:baseListPage,
   name: "role",

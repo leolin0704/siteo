@@ -13,6 +13,7 @@ locale.use(lang);
 
 import App from './App.vue';
 import "./assets/css/common.scss";
+import "./assets/fonts/iconfont.css";
 
 Vue.config.productionTip = false;
 
